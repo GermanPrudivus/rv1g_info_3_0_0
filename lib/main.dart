@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primaryColor: const Color.fromRGBO(43, 86, 147, 1),
           ),
-          home: SignInPage(),
+            home: const SignInPage(),
         );
       }
     );
