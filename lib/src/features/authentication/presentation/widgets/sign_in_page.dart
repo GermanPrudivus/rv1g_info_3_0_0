@@ -6,14 +6,23 @@ import 'package:rv1g_info/src/constants/auth_const.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_up_page.dart';
 
 import '../controllers/sign_in_controller.dart';
-import '../states/sign_in_state.dart';
 
-class SignInPage extends ConsumerWidget {
+class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notvisibility = ref.watch(notVisibilityStateProvider);
+  ConsumerState<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends ConsumerState<SignInPage> {
+
+  bool notVisibility = true;
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
 
     final AsyncValue<void> signInState =
         ref.watch(signInScreenControllerProvider);
@@ -53,6 +62,7 @@ class SignInPage extends ConsumerWidget {
               Padding(
                 padding: EdgeInsets.only(left: 30.w, top: 25.h, right: 30.w),
                 child: TextFormField(
+                  controller: emailController,
                   style: TextStyle(
                     fontSize: 14.h,
                     color: blue,
@@ -80,6 +90,7 @@ class SignInPage extends ConsumerWidget {
               Padding(
                 padding: EdgeInsets.only(left: 30.w, top: 15.h, right: 30.w),
                 child: TextFormField(
+                  controller: passwordController,
                   style: TextStyle(
                     fontSize: 14.h,
                     color: blue,
@@ -102,19 +113,21 @@ class SignInPage extends ConsumerWidget {
                     ),
                     suffixIcon: GestureDetector(
                       onTap: () {
-                        if (notvisibility == false) {
-                          ref.read(notVisibilityStateProvider.notifier).state = true;
-                        } else {
-                          ref.read(notVisibilityStateProvider.notifier).state = false;
-                        }
+                        setState(() {
+                          if(notVisibility == false) {
+                            notVisibility = true;
+                          } else {
+                            notVisibility = false;
+                          }
+                        });
                       },
-                      child: Icon(notvisibility
+                      child: Icon(notVisibility
                           ? Icons.visibility_off_outlined
                           : Icons.visibility_outlined),
                     ),
                     suffixIconColor: lightGrey,
                   ),
-                  obscureText: notvisibility,
+                  obscureText: notVisibility,
                   cursorColor: blue,
                 ),
               ),
@@ -148,10 +161,12 @@ class SignInPage extends ConsumerWidget {
                   onPressed: () {
                     if (signInState.isLoading) {
                       const CircularProgressIndicator();
+                    } else if(signInState.hasError) {
+
                     } else {
                       ref
                           .read(signInScreenControllerProvider.notifier)
-                          .signIn("", "");
+                          .signIn(emailController.text, passwordController.text);
                     }
                   },
                   style: ElevatedButton.styleFrom(
