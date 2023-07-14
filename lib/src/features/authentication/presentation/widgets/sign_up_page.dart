@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:rv1g_info/src/constants/auth_const.dart';
+import 'package:rv1g_info/src/exception/auth_exception.dart';
 import 'package:the_validator/the_validator.dart';
 
 import '../controllers/sign_up_controller.dart';
@@ -29,6 +34,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  late String imagePath = "";
+
   @override
   void dispose() {
     emailController.dispose();
@@ -39,48 +46,69 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     super.dispose();
   }
 
+  Future pickImageFromGallery() async {
+    final XFile? image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 521,
+      maxWidth: 512,
+      imageQuality: 100,
+    );
+
+    File imageFile;
+
+    setState(() {
+      imageFile = File(image!.path);
+      imagePath = imageFile.path;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    ref.listen<AsyncValue>(
+      signUpScreenControllerProvider,
+      (_, state) => state.showSnackbarOnError(context),
+    );
 
     final AsyncValue<void> signUpState =
         ref.watch(signUpScreenControllerProvider);
 
-    List<String> dropdownValues = const [
-      "Choose your class",
-      "7.a klase",
-      "7.b klase",
-      "7.c klase",
-      "7.d klase",
-      "8.a klase",
-      "8.b klase",
-      "8.c klase",
-      "8.d klase",
-      "9.a klase",
-      "9.b klase",
-      "9.c klase",
-      "9.d klase",
-      "10.a klase",
-      "10.b klase",
-      "10.c klase",
-      "10.d klase",
-      "10.e klase",
-      "10.f klase",
-      "10.g klase",
-      "11.a klase",
-      "11.b klase",
-      "11.c klase",
-      "11.d klase",
-      "11.e klase",
-      "11.f klase",
-      "11.g klase",
-      "12.a klase",
-      "12.b klase",
-      "12.c klase",
-      "12.d klase",
-      "12.e klase",
-      "12.f klase",
-      "12.g klase",
-    ];
+    Map<String, int> dropdownValues = const {
+      "Choose your class": -1,
+      "7.a klase" : 1,
+      "7.b klase" : 2,
+      "7.c klase" : 3,
+      "7.d klase" : 4,
+      "8.a klase" : 5,
+      "8.b klase" : 6,
+      "8.c klase" : 7,
+      "8.d klase" : 8,
+      "9.a klase" : 9,
+      "9.b klase" : 10,
+      "9.c klase" : 11,
+      "9.d klase" : 12,
+      "10.a klase" : 13,
+      "10.b klase" : 14,
+      "10.c klase" : 15,
+      "10.d klase" : 16,
+      "10.e klase" : 17,
+      "10.f klase" : 18,
+      "10.sb klase" : 19,
+      "11.a klase" : 20,
+      "11.b klase" : 21,
+      "11.c klase" : 22,
+      "11.d klase" : 23,
+      "11.e klase" : 24,
+      "11.f klase" : 25,
+      "11.sb klase" : 26,
+      "12.a klase" : 27,
+      "12.b klase" : 28,
+      "12.c klase" : 29,
+      "12.d klase" : 30,
+      "12.e klase" : 31,
+      "12.f klase" : 32,
+      "12.sb klase" : 33,
+    };
 
     return Scaffold(
       key: _scaffoldKey,
@@ -124,17 +152,38 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        print("Avatar");
+                      onTap: () async {
+                        PermissionStatus storageStatus = await Permission.storage.request();
+
+                        if(storageStatus == PermissionStatus.granted){
+                          pickImageFromGallery();
+                        }
+ 
+                        if(storageStatus == PermissionStatus.denied){
+                          if(mounted){
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('You need to provide Gallery access to upload photo')));
+                          }
+                        }
+  
+                        if(storageStatus == PermissionStatus.permanentlyDenied){
+                          openAppSettings();
+                        }
                       },
                       child: CircleAvatar(
                         radius: 50.h,
                         backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.white,
-                          size: 80.h,
-                        ),
+                        child: (imagePath != "")
+                            ? ClipOval(
+                                child: Image.file(
+                                  File(imagePath), 
+                                  fit: BoxFit.fill
+                                ),
+                              )
+                            : Icon(
+                                Icons.person,
+                                color: Colors.white,
+                                size: 80.h,
+                              ),
                       )
                     )
                   ]
@@ -230,7 +279,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       dropdownValue = newValue.toString();
                     });
                   },
-                  items: dropdownValues
+                  items: dropdownValues.keys
                       .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -336,23 +385,19 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      print("OK");
-
                       if (signUpState.isLoading) {
                         const CircularProgressIndicator();
                       } else {
                         ref
                             .read(signUpScreenControllerProvider.notifier)
                             .signUp(
-                              "",
+                              imagePath,
                               emailController.text,
                               fullNameController.text,
-                              0,
+                              dropdownValues[dropdownValue]!,
                               passwordController.text
                             );
                       }
-                    } else {
-                      print("Error");
                     }
                   },
                   style: ElevatedButton.styleFrom(

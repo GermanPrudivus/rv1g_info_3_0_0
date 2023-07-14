@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rv1g_info/src/constants/auth_const.dart';
+import 'package:rv1g_info/src/exception/auth_exception.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_up_page.dart';
 
 import '../controllers/sign_in_controller.dart';
@@ -23,6 +24,11 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    ref.listen<AsyncValue>(
+      signInScreenControllerProvider,
+      (_, state) => state.showSnackbarOnError(context),
+    );
 
     final AsyncValue<void> signInState =
         ref.watch(signInScreenControllerProvider);
@@ -161,8 +167,6 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   onPressed: () {
                     if (signInState.isLoading) {
                       const CircularProgressIndicator();
-                    } else if(signInState.hasError) {
-
                     } else {
                       ref
                           .read(signInScreenControllerProvider.notifier)
