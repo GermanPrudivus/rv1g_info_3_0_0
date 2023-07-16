@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,7 +66,18 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
     ref.listen<AsyncValue>(
       signUpScreenControllerProvider,
-      (_, state) => state.showSnackbarOnError(context),
+      (_, state) {
+        if(state.isLoading){
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => const Center(child: CircularProgressIndicator(),)
+          );
+        } else {
+          Navigator.pop(context);
+        }
+        state.showSnackbarOnError(context);
+      },
     );
 
     final AsyncValue<void> signUpState =
@@ -161,7 +171,13 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
  
                         if(storageStatus == PermissionStatus.denied){
                           if(mounted){
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('You need to provide Gallery access to upload photo')));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'You need to provide Gallery access to upload photo'
+                                )
+                              )
+                            );
                           }
                         }
   
@@ -169,22 +185,21 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           openAppSettings();
                         }
                       },
-                      child: CircleAvatar(
-                        radius: 50.h,
-                        backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-                        child: (imagePath != "")
-                            ? ClipOval(
-                                child: Image.file(
-                                  File(imagePath), 
-                                  fit: BoxFit.fill
-                                ),
-                              )
-                            : Icon(
-                                Icons.person,
-                                color: Colors.white,
-                                size: 80.h,
-                              ),
-                      )
+                      child: imagePath == ""
+                        ? CircleAvatar(
+                          radius: 50.h,
+                          backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.white,
+                            size: 80.h,
+                          )
+                        )
+                        : CircleAvatar(
+                            radius: 50.h,
+                            backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+                            backgroundImage: FileImage(File(imagePath)),
+                          )
                     )
                   ]
                 ),
@@ -217,9 +232,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   ),
                   cursorColor: blue,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (email) => email != null && !EmailValidator.validate(email)
-                        ? 'Enter a valid email'
-                        : null,
+                  validator: FieldValidator.email(message: "Type a valid email"),
                 ),
               ),
 
@@ -250,7 +263,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   ),
                   cursorColor: blue,
                   validator: FieldValidator.required(
-                    message: "Your full name is required"
+                    message: "Type your full name"
                   ),
                 ),
               ),
@@ -384,20 +397,25 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 padding: EdgeInsets.only(top: 35.h, left: 30.w, right: 30.w),
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      if (signUpState.isLoading) {
-                        const CircularProgressIndicator();
-                      } else {
-                        ref
-                            .read(signUpScreenControllerProvider.notifier)
-                            .signUp(
-                              imagePath,
-                              emailController.text,
-                              fullNameController.text,
-                              dropdownValues[dropdownValue]!,
-                              passwordController.text
-                            );
-                      }
+                    if (_formKey.currentState!.validate() && dropdownValue != "Choose your class" && fullNameController.text.split(' ').length > 1) {
+                      ref
+                        .read(signUpScreenControllerProvider.notifier)
+                        .signUp(
+                          imagePath,
+                          emailController.text,
+                          fullNameController.text,
+                          dropdownValues[dropdownValue]!,
+                          passwordController.text
+                        );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(
+                            'Please fill all forms with appropriative values!'
+                          )
+                        )
+                      );
                     }
                   },
                   style: ElevatedButton.styleFrom(

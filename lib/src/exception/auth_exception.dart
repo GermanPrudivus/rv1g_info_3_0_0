@@ -5,7 +5,10 @@ extension AsyncValueSignInUI on AsyncValue {
   void showSnackbarOnError(BuildContext context) {
     if (!isRefreshing && hasError) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Something went wrong!Please try again!")),
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(error.toString())
+        ),
       );
     }
   }

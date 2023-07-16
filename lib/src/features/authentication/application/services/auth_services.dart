@@ -13,8 +13,12 @@ class AuthService {
     await authRepository.signIn(email, password);
   }
 
-  Future<void> signUp(String avatarUrl, String email, String fullName, int form, String password) async {
-    await authRepository.signUp(avatarUrl, email, fullName, form, password);
+  Future<void> signUp(String avatarPath, String email, String fullName, int form, String password) async {
+    if(!await authRepository.findCurrentUser(email)){
+      await authRepository.signUp(avatarPath, email, fullName, form, password);
+    } else {
+      print('User already exists');
+    }
   }
 }
 
