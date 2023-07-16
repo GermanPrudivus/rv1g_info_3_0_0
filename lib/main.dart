@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           theme: ThemeData(
-            primaryColor: const Color.fromRGBO(43, 86, 147, 1),
+            primaryColor: blue,
           ),
             home: const SignInPage(),
         );
