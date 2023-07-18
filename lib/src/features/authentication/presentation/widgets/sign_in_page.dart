@@ -169,8 +169,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                       const CircularProgressIndicator();
                     } else {
                       ref
-                          .read(signInScreenControllerProvider.notifier)
-                          .signIn(emailController.text, passwordController.text);
+                        .read(signInScreenControllerProvider.notifier)
+                        .signIn(emailController.text, passwordController.text);
                     }
                   },
                   style: ElevatedButton.styleFrom(

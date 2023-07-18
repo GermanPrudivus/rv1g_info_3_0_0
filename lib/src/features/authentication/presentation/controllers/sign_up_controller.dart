@@ -12,7 +12,7 @@ class SignUpScreenController extends StateNotifier<AsyncValue<void>> {
   Future<void> signUp(String avatarPath, String email, String fullName, int form, String password) async {
     // set the state to loading
     state = const AsyncLoading<void>();
-    // call `authRepository.signUn` and await for the result
+    // call `authRepository.signUp` and await for the result
     state = await AsyncValue.guard<void>(
       () => authService.signUp(avatarPath, email, fullName, form, password),
     );

@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rv1g_info/src/constants/auth_const.dart';
 import 'package:rv1g_info/src/exception/auth_exception.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/widgets/email_verification_page.dart';
 import 'package:the_validator/the_validator.dart';
 
 import '../controllers/sign_up_controller.dart';
@@ -66,15 +67,22 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
     ref.listen<AsyncValue>(
       signUpScreenControllerProvider,
-      (_, state) {
-        if(state.isLoading){
+      (_, state) async {
+        if(state.isLoading) {
           showDialog(
             context: context,
             barrierDismissible: false,
             builder: (context) => const Center(child: CircularProgressIndicator(),)
           );
+        } else if(state.asData == null) {
+          Navigator.pop(context);
         } else {
           Navigator.pop(context);
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (pushContext) => const EmailVerificationPage()),
+          );
         }
         state.showSnackbarOnError(context);
       },
@@ -134,7 +142,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text(
-                                  'You need to provide Gallery access to upload photo'
+                                  'You need to provide Gallery access to upload photo!'
                                 )
                               )
                             );

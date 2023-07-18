@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-String loginSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/assets/undraw_Login_re_4vu2%201.svg";
+String loginSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/assets/undraw_login_re_4vu2.svg";
 Color blue = const Color.fromRGBO(43, 86, 147, 1);
 Color lightGrey = const Color.fromRGBO(172, 177, 193, 1);
 Color transparentLightGrey = const Color.fromRGBO(172, 177, 193, 0.70);
@@ -51,3 +51,5 @@ const Map<String, int> dropdownValues = {
       "12.f klase" : 32,
       "12.sb klase" : 33,
     };
+
+String emailSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/assets/undraw_message_sent_re_q2kl.svg";

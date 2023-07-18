@@ -14,12 +14,20 @@ class AuthService {
   }
 
   Future<void> signUp(String avatarPath, String email, String fullName, int form, String password) async {
+    await authRepository.signUp(email, password);
     if(!await authRepository.findCurrentUser(email)){
-      await authRepository.signUp(avatarPath, email, fullName, form, password);
-    } else {
-      print('User already exists');
+      await authRepository.createUserInDB(avatarPath, email, fullName, form, password);
     }
   }
+
+  Future<void> verifyEmail() async{
+    await authRepository.verifyEmail();
+  }
+
+  Future authStateChanges() async {
+    authRepository.authStateChange;
+  }
+
 }
 
 final authServiceProvider = Provider<AuthService>((ref) {
