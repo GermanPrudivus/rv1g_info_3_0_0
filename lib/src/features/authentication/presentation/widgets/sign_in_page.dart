@@ -8,7 +8,6 @@ import 'package:rv1g_info/src/utils/auth_exception.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_up_page.dart';
 
 import '../../../../constants/theme_colors.dart';
-import '../../../news/presentation/widgets/news_page.dart';
 import '../controllers/sign_in_controller.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
