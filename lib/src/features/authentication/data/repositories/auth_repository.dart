@@ -104,6 +104,37 @@ class AuthRepository {
       );
   }
 
+  Future<void> resetPassword(String email) async {
+    final supabase = Supabase.instance.client;
+
+    await supabase
+      .auth
+      .resetPasswordForEmail(email);
+  }
+
+  /*Future<void> resetPassword(String email, String password) async {
+
+    final supabase = Supabase.instance.client;
+
+    await supabase
+      .auth
+      .updateUser(
+        UserAttributes(
+          password: password
+        )
+      );
+
+    String hashedPassword = DBCrypt().hashpw(password, DBCrypt().gensalt());
+
+    await supabase
+      .from('users')
+      .update({'password':hashedPassword})
+      .eq('email', email);
+
+    await supabase.auth.signOut();
+  }
+  */
+
   Stream<AuthState> authStateChange() async*{
     Supabase.instance.client.auth.onAuthStateChange;
   }

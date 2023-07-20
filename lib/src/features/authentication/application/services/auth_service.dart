@@ -20,6 +20,10 @@ class AuthService {
     }
   }
 
+  Future<void> resetPassword(String email) async {
+    await authRepository.resetPassword(email);
+  }
+
   Future authStateChanges() async {
     authRepository.authStateChange;
   }

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rv1g_info/main.dart';
 import 'package:rv1g_info/src/constants/auth_const.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/widgets/forgot_password_page.dart';
 import 'package:rv1g_info/src/utils/auth_exception.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_up_page.dart';
 
@@ -48,9 +49,6 @@ class _SignInPageState extends ConsumerState<SignInPage> {
         state.showSnackbarOnError(context);
       }
     );
-
-    final AsyncValue<void> signInState =
-        ref.watch(signInScreenControllerProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -164,6 +162,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     child: GestureDetector(
                       onTap: () {
                         //Nav to forgot password page
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context) => const ForgotPasswordPage()
+                          )
+                        );
                       },
                       child: Container(
                         height: 30.h,
@@ -184,13 +188,9 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                 padding: EdgeInsets.only(top: 17.h, left: 30.w, right: 30.w),
                 child: ElevatedButton(
                   onPressed: () {
-                    if (signInState.isLoading) {
-                      const CircularProgressIndicator();
-                    } else {
-                      ref
-                        .read(signInScreenControllerProvider.notifier)
-                        .signIn(emailController.text, passwordController.text);
-                    }
+                    ref
+                      .read(signInScreenControllerProvider.notifier)
+                      .signIn(emailController.text, passwordController.text);
                   },
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(1.sw, 50.h),
