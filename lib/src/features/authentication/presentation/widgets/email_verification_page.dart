@@ -26,16 +26,16 @@ class EmailVerificationPage extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 70.h),
+              padding: EdgeInsets.only(top: 100.h),
               child: SizedBox(
-                height: 200.h,
+                height: 220.h,
                 child: SvgPicture.network(emailSvg),
               ),
             ),
             Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 45.h, left: 30.w),
+                  padding: EdgeInsets.only(top: 60.h, left: 30.w),
                   child: Text(
                     "Email\nverification",
                     style: TextStyle(
@@ -56,7 +56,7 @@ class EmailVerificationPage extends StatelessWidget {
                     child: Text(
                       "Verify your email to secure your account and access exclusive app features.",
                       style: TextStyle(
-                        fontSize: 18.h,
+                        fontSize: 16.h,
                         color: lightGrey,    
                       )
                     ),

@@ -64,7 +64,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 40.h),
+                  padding: EdgeInsets.only(top: 65.h),
                   child: SizedBox(
                     height: 166.h,
                     child: SvgPicture.network(forgotPasswordSvg),
@@ -74,7 +74,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                 Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 55.h, left: 30.w),
+                      padding: EdgeInsets.only(top: 30.h, left: 30.w),
                       child: Text(
                         "Forgot\npassword?",
                         style: TextStyle(
