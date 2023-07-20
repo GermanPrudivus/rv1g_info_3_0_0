@@ -20,10 +20,6 @@ class AuthService {
     }
   }
 
-  Future<void> verifyEmail() async{
-    await authRepository.verifyEmail();
-  }
-
   Future authStateChanges() async {
     authRepository.authStateChange;
   }

@@ -1,9 +1,5 @@
-import 'dart:ui';
 
 String loginSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/assets/undraw_login_re_4vu2.svg";
-Color blue = const Color.fromRGBO(43, 86, 147, 1);
-Color lightGrey = const Color.fromRGBO(172, 177, 193, 1);
-Color transparentLightGrey = const Color.fromRGBO(172, 177, 193, 0.70);
 
 const String supabaseUrl = String.fromEnvironment(
   'SUPABASE_URL',

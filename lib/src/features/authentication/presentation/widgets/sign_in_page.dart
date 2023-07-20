@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rv1g_info/main.dart';
 import 'package:rv1g_info/src/constants/auth_const.dart';
-import 'package:rv1g_info/src/exception/auth_exception.dart';
+import 'package:rv1g_info/src/utils/auth_exception.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_up_page.dart';
 
+import '../../../../constants/theme_colors.dart';
+import '../../../news/presentation/widgets/news_page.dart';
 import '../controllers/sign_in_controller.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
@@ -27,7 +30,24 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 
     ref.listen<AsyncValue>(
       signInScreenControllerProvider,
-      (_, state) => state.showSnackbarOnError(context),
+      (_, state) {
+        if(state.isLoading) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => const Center(child: CircularProgressIndicator(),)
+          );
+        } else if (state.asData == null){
+          Navigator.pop(context);
+        } else {
+          Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(builder: (context) => const MyHomePage()),
+            (route) => true
+          );
+        }
+        state.showSnackbarOnError(context);
+      }
     );
 
     final AsyncValue<void> signInState =
@@ -233,12 +253,11 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     GestureDetector(
                       onTap: () {
                         //Nav to signup page
-                        Navigator.pushAndRemoveUntil(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const SignUpPage()
                           ),
-                          (route) => true
                         );
                       },
                       child: Container(

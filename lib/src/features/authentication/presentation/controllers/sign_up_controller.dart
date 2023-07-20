@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../application/services/auth_services.dart';
+import '../../application/services/auth_service.dart';
 
 class SignUpScreenController extends StateNotifier<AsyncValue<void>> {
   // set the initial value

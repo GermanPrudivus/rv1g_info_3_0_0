@@ -6,10 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rv1g_info/src/constants/auth_const.dart';
-import 'package:rv1g_info/src/exception/auth_exception.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/email_verification_page.dart';
+import 'package:rv1g_info/src/utils/auth_exception.dart';
 import 'package:the_validator/the_validator.dart';
 
+import '../../../../constants/theme_colors.dart';
 import '../controllers/sign_up_controller.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {
@@ -67,21 +68,21 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
     ref.listen<AsyncValue>(
       signUpScreenControllerProvider,
-      (_, state) async {
+      (_, state) {
         if(state.isLoading) {
           showDialog(
             context: context,
             barrierDismissible: false,
             builder: (context) => const Center(child: CircularProgressIndicator(),)
           );
-        } else if(state.asData == null) {
+        } else if (state.asData == null){
           Navigator.pop(context);
         } else {
           Navigator.pop(context);
-
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (pushContext) => const EmailVerificationPage()),
+          Navigator.pop(context);
+          Navigator.push(
+            context, 
+            MaterialPageRoute(builder: (context) => const EmailVerificationPage()),
           );
         }
         state.showSnackbarOnError(context);

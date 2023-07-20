@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rv1g_info/src/features/authentication/presentation/controllers/email_verification_controller.dart';
 
 import '../../../../constants/auth_const.dart';
+import '../../../../constants/theme_colors.dart';
 
-class EmailVerificationPage extends ConsumerWidget {
+class EmailVerificationPage extends StatelessWidget {
   const EmailVerificationPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-
-    ref
-      .read(emailVerificationScreenControllerProvider.notifier)
-      .verifyEmail();
+  Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(

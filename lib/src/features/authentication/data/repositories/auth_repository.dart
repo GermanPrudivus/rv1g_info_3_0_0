@@ -7,7 +7,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 class AuthRepository {
 
   Future<void> signIn(String email, String password) async {
-    print(email+" "+password);
+    final supabase = Supabase.instance.client;
+
+    await supabase
+      .auth
+      .signInWithPassword(
+        email: email,
+        password: password
+      );
   }
 
   Future findCurrentUser(String email) async{
@@ -37,29 +44,13 @@ class AuthRepository {
       );
   }
 
-  Future<bool> verifyEmail() async{
-    final supabase = Supabase.instance.client;
-
-    String verified = "";
-
-    verified = supabase.auth.currentUser!.emailConfirmedAt!;
-
-    print(verified);
-
-    if(verified=="") {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   Future<void> createUserInDB(
     String avatarPath, String email, String fullName, int form, String password) async {
 
     final supabase = Supabase.instance.client;
 
     final res = await supabase.from('users').select(
-          '*',
+          'id',
           const FetchOptions(
             count: CountOption.exact,
           ),
@@ -80,13 +71,6 @@ class AuthRepository {
       surname = fullname[1];
     }
 
-    await supabase
-      .auth
-      .signUp(
-        email: email,
-        password: password,
-      );
-
     String imageUrlResponse = "";
 
     if(avatarPath != "") {
@@ -98,9 +82,9 @@ class AuthRepository {
             filePath,
             bytes,
           );
-      imageUrlResponse = await supabase.storage
+      imageUrlResponse = supabase.storage
           .from('avatars')
-          .createSignedUrl(filePath, 60 * 60 * 24 * 365 * 20);
+          .getPublicUrl(filePath);
     }
 
     await supabase
