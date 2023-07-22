@@ -16,8 +16,6 @@ extension AsyncValueSignInUpUI on AsyncValue {
           content: Text(displayedError)
         ),
       );
-
-      print(error.toString());
     }
   }
 }
