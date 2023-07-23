@@ -77,6 +77,31 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           fontWeight: FontWeight.bold
         ),
       ),
+
+      actions: [
+        if(widget.add)
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(
+                  builder: (context) => widget.navigateTo
+                )
+              );
+            },
+            child: Container(
+              color: Colors.transparent,
+              height: 60.h,
+              width: 40.w,
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.add,
+                color: blue,
+                size: 30.h,
+              ),
+            ),
+          )
+      ],
     );
   }
 }

@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
             indicatorColor: blue,
           ),
           child: NavigationBar(
-            height: 60.h,
+            height: 50.h,
             backgroundColor: navigationBarColor,
             labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
             selectedIndex: index,

@@ -59,7 +59,7 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
           alignment: Alignment.centerRight,
           child: profilePicUrl == ""
             ? CircleAvatar(
-                radius: 20.h,
+                radius: 18.h,
                 backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
                 child: Icon(
                   Icons.person,
@@ -68,7 +68,7 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
                 )
               )
             : CircleAvatar(
-                radius: 20.h,
+                radius: 18.h,
                 backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
                 backgroundImage: NetworkImage(profilePicUrl),
               ),
@@ -84,6 +84,31 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
           fontWeight: FontWeight.bold
         ),
       ),
+
+      actions: [
+        if(widget.add)
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(
+                  builder: (context) => widget.navigateTo
+                )
+              );
+            },
+            child: Container(
+              color: Colors.white,
+              height: 60.h,
+              width: 40.w,
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.add,
+                color: blue,
+                size: 30.h,
+              ),
+            ),
+          )
+      ],
 
       bottom: TabBar(
           indicatorColor: blue,
