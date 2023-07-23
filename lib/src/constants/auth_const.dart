@@ -51,4 +51,3 @@ const Map<String, int> dropdownValues = {
 String emailSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/assets/undraw_message_sent_re_q2kl.svg";
 
 String forgotPasswordSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/assets/undraw_forgot_password_re_hxwm.svg";
-String resetPasswordSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/assets/undraw_my_password_re_ydq7.svg";

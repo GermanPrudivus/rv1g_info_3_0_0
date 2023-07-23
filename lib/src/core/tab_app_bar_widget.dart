@@ -3,23 +3,29 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/constants/theme_colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AppBarWidget extends StatefulWidget {
+class TabAppBarWidget extends StatefulWidget {
   final String title;
+  final int tabQuant;
+  final List<String> tabNames;
   final bool add;
   final Widget navigateTo;
+  late TabController tabController;
 
-  const AppBarWidget({
+  TabAppBarWidget({
     super.key, 
-    required this.title,
+    required this.title, 
+    required this.tabQuant,
+    required this.tabNames,
+    required this.tabController,
     required this.add,
-    required this.navigateTo
+    required this.navigateTo,
   });
 
   @override
-  State<AppBarWidget> createState() => _AppBarWidgetState();
+  State<TabAppBarWidget> createState() => _TabAppBarWidgetState();
 }
 
-class _AppBarWidgetState extends State<AppBarWidget> {
+class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderStateMixin {
 
   String profilePicUrl = "";
 
@@ -49,6 +55,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         },
         child: Container(
           height: 60.h,
+          color: Colors.white,
           alignment: Alignment.centerRight,
           child: profilePicUrl == ""
             ? CircleAvatar(
@@ -77,6 +84,24 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           fontWeight: FontWeight.bold
         ),
       ),
+
+      bottom: TabBar(
+          indicatorColor: blue,
+          indicatorWeight: 2.5.h,
+          controller: widget.tabController,
+          labelColor: Colors.black,
+          unselectedLabelColor: Colors.black45,
+          labelStyle: TextStyle(
+            fontSize: 16.h,
+          ),
+          tabs: <Widget>[
+            for(int i=0;i<widget.tabQuant;i++)
+              SizedBox(
+                height: 30.h,
+                child: Tab(text: widget.tabNames[i],),
+              )
+          ],
+        ),
     );
   }
 }

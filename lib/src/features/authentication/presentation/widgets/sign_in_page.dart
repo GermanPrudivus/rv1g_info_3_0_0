@@ -58,7 +58,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 90.h),
+                padding: EdgeInsets.only(top: 100.h),
                 child: SizedBox(
                   height: 146.h,
                   child: SvgPicture.network(loginSvg),
