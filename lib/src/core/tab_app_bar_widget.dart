@@ -50,9 +50,7 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
       toolbarHeight: 60.h,
 
       leading: GestureDetector(
-        onTap: () {
-          print('avatar tap');
-        },
+        onTap: () {},
         child: Container(
           height: 60.h,
           color: Colors.white,
@@ -107,26 +105,27 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
                 size: 30.h,
               ),
             ),
-          )
+          ),
+          SizedBox(width: 2.5.w)
       ],
 
       bottom: TabBar(
-          indicatorColor: blue,
-          indicatorWeight: 2.5.h,
-          controller: widget.tabController,
-          labelColor: Colors.black,
-          unselectedLabelColor: Colors.black45,
-          labelStyle: TextStyle(
-            fontSize: 16.h,
-          ),
-          tabs: <Widget>[
-            for(int i=0;i<widget.tabQuant;i++)
-              SizedBox(
-                height: 30.h,
-                child: Tab(text: widget.tabNames[i],),
-              )
-          ],
+        indicatorColor: blue,
+        indicatorWeight: 2.5.h,
+        controller: widget.tabController,
+        labelColor: Colors.black,
+        unselectedLabelColor: Colors.black45,
+        labelStyle: TextStyle(
+          fontSize: 16.h,
         ),
+        tabs: <Widget>[
+          for(int i=0;i<widget.tabQuant;i++)
+            SizedBox(
+              height: 30.h,
+              child: Tab(text: widget.tabNames[i],),
+            )
+        ],
+      ),
     );
   }
 }

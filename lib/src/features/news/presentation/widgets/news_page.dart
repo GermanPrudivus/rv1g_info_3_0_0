@@ -34,7 +34,7 @@ class _NewsPageState extends ConsumerState<NewsPage> with TickerProviderStateMix
           tabNames: const ["Skola","E-klase"],
           tabController: _tabController,
           add: true,
-          navigateTo: _tabController.length == 2
+          navigateTo: _tabController.index == 0
             ? const AddSchoolNewsPage(
                 edit: false,
                 text: "",
@@ -42,7 +42,7 @@ class _NewsPageState extends ConsumerState<NewsPage> with TickerProviderStateMix
                 poll: 0,
                 images: [],
               )
-            : AboutDialog(),
+            : const AboutDialog(),
         ),
       ),
       backgroundColor: Colors.white,

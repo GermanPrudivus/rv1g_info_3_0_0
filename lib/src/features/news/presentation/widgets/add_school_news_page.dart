@@ -27,15 +27,29 @@ class AddSchoolNewsPage extends ConsumerStatefulWidget {
 class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
 
   late String text;
-
   late bool pin;
+  late List<String> images;
+  late bool showNewPoll;
+
+  String question = "";
+  String answer1 = "";
+  String answer2 = "";
+  String answer3 = "";
+  String answer4 = "";
+
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    text = widget.text;
+    pin = widget.pin;
+    images = widget.images;
+    showNewPoll = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    text = widget.text;
-    pin = widget.pin;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -81,41 +95,51 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                           ),
                         ),
                       ),
-                      TextFormField(
-                        initialValue: text,
-                        textInputAction: TextInputAction.next,
-                        style: TextStyle(
-                          fontSize: 14.h
-                        ),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              width: 2.h,
-                              color: Colors.black
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              width: 2.h,
-                              color: blue
-                            ),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: 'Ieraksti ziņas tekstu',
-                          hintStyle: TextStyle(
+                      Form(
+                        key: _formKey,
+                        child: TextFormField(
+                          initialValue: text,
+                          textInputAction: TextInputAction.next,
+                          style: TextStyle(
                             fontSize: 14.h
-                          )
+                          ),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                width: 2.h,
+                                color: Colors.black
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                width: 2.h,
+                                color: blue
+                              ),
+                            ),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: 'Ieraksti ziņas tekstu',
+                            hintStyle: TextStyle(
+                              fontSize: 14.h
+                            )
+                          ),
+                          minLines: 25,
+                          maxLines: 1000,
+                          onChanged: (value) {
+                            setState(() {
+                              text = value;
+                            });
+                          },
+                          cursorColor: blue,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter title';
+                            }
+                              return null;
+                            },
                         ),
-                        minLines: 25,
-                        maxLines: 1000,
-                        onChanged: (value) {
-                          setState(() {
-                            text = value;
-                          });
-                        },
-                      ),
+                      )
                     ],
                   )
                 ),
@@ -132,30 +156,37 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
 
                 Padding(
                   padding: EdgeInsets.only(top: 2.h),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: pin,
-                        checkColor: Colors.white,
-                        activeColor: blue,
-                        side: BorderSide(
-                          width: 1.h,
-                          color: blue
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        pin = !pin;
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: pin,
+                          checkColor: Colors.white,
+                          activeColor: blue,
+                          side: BorderSide(
+                            width: 1.h,
+                            color: blue
+                          ),
+                          onChanged: (_) {
+                            setState(() {
+                              pin = !pin;
+                            });
+                          }
                         ),
-                        onChanged: (value) {
-                          setState(() {
-                            pin = value!;
-                          });
-                        }
-                      ),
-                      Text(
-                        "Piestiprināt ziņu augšā",
-                        style: TextStyle(
-                          fontSize: 14.h,
-                        ),
-                      )
-                    ],
-                  ),
+                        Text(
+                          "Piestiprināt ziņu augšā",
+                          style: TextStyle(
+                            fontSize: 14.h,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
                 ),
 
                 Text(
@@ -165,12 +196,99 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                   ),
                 ),
 
-                if(widget.poll == 0)
-                  GestureDetector(
+                if(widget.poll != 0 || showNewPoll)
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
                     child: Container(
-                      color: Colors.white,
-                      height: 80.h,
-                      alignment: Alignment.center,
+                      height: 400.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.h),
+                        color: transparentLightGrey
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 12.5.h, left: 10.w, right: 10.w),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(right: 5.w),
+                                  width: 255.w,
+                                  child: TextFormField(
+                                    initialValue: question,
+                                    textInputAction: TextInputAction.next,
+                                    style: TextStyle(
+                                      fontSize: 12.h
+                                    ),
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                          width: 2.h,
+                                          color: Colors.black
+                                        ),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                          width: 2.h,
+                                          color: blue
+                                        ),
+                                      ),
+                                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                                      hintText: 'Ieraksti jautājumu',
+                                      hintStyle: TextStyle(
+                                        fontSize: 12.h
+                                      )
+                                    ),
+                                    cursorColor: blue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        question = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                GestureDetector(
+                                  child: ClipOval(
+                                    child: Container(
+                                      height: 35.h,
+                                      width: 35.h,
+                                      color: Colors.red,
+                                      alignment: Alignment.center,
+                                      child: Icon(
+                                        Icons.delete,
+                                        size: 20.h,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      showNewPoll = false;
+                                      question = "";
+                                      answer1 = "";
+                                      answer2 = "";
+                                      answer3 = "";
+                                      answer4 = "";
+                                    });
+                                  },
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ),
+                  ),
+
+                if(!showNewPoll)
+                  Container(
+                    color: Colors.white,
+                    height: 80.h,
+                    alignment: Alignment.center,
+                    child: GestureDetector(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -189,12 +307,14 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                           )
                         ],
                       ),
+                      onTap: () {
+                        setState(() {
+                          showNewPoll = true;
+                        });
+                      },
                     ),
-                    onTap: () {
-  
-                    },
                   ),
- 
+
                 Text(
                   "Peivienot attēlu:",
                   style: TextStyle(
@@ -202,7 +322,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                   ),
                 ),
                 
-                if(widget.images.isNotEmpty)
+                if(images.isNotEmpty)
                   SizedBox(height: 10.h,),
                   ListView.builder(
                     shrinkWrap: true,
@@ -212,14 +332,14 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                     }
                   ),
 
-                GestureDetector(
-                  child: Container(
-                    color: Colors.white,
-                    height: widget.images.isEmpty
-                      ? 100.h
-                      : 80.h,
-                    alignment: Alignment.center,
-                    child: Row(
+                Container(
+                  color: Colors.white,
+                  height: images.isEmpty
+                    ? 100.h
+                    : 60.h,
+                  alignment: Alignment.center,
+                  child: GestureDetector(
+                    child:Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
@@ -237,18 +357,17 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                         )
                       ],
                     ),
+                    onTap: () {
+                      print("attēls");
+                    },
                   ),
-                  onTap: () {
-
-                  },
                 ),
 
                 //Button
                 Padding(
-                  padding: EdgeInsets.only(top: 20.h, bottom: 30.h),
+                  padding: EdgeInsets.only(top: 10.h, bottom: 20.h),
                   child: ElevatedButton(
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(1.sw, 50.h),
                       backgroundColor: blue,
@@ -259,8 +378,8 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                     ),
                     child: Text(
                       widget.edit 
-                      ? "Rediģēt ziņu"
-                      : "Pievienot ziņu",
+                        ? "Rediģēt ziņu"
+                        : "Pievienot ziņu",
                       style: TextStyle(
                         fontSize: 16.h,
                         fontWeight: FontWeight.bold,

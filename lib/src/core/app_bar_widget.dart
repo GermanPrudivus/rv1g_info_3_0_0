@@ -44,9 +44,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       toolbarHeight: 60.h,
 
       leading: GestureDetector(
-        onTap: () {
-          print('avatar tap');
-        },
+        onTap: () {},
         child: Container(
           height: 60.h,
           alignment: Alignment.centerRight,
