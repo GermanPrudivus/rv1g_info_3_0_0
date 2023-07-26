@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/core/tab_app_bar_widget.dart';
-import 'package:rv1g_info/src/features/news/presentation/widgets/add_school_news_page.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/eklase_page.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/school_page.dart';
 
@@ -34,15 +33,6 @@ class _NewsPageState extends ConsumerState<NewsPage> with TickerProviderStateMix
           tabNames: const ["Skola","E-klase"],
           tabController: _tabController,
           add: true,
-          navigateTo: _tabController.index == 0
-            ? const AddSchoolNewsPage(
-                edit: false,
-                text: "",
-                pin: false,
-                poll: 0,
-                images: [],
-              )
-            : const AboutDialog(),
         ),
       ),
       backgroundColor: Colors.white,

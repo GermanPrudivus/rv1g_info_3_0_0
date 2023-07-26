@@ -100,7 +100,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     iconColor: lightGrey,
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: transparentLightGrey, width: 2.h
+                        color: transparentLightGrey, 
+                        width: 2.h
                       )
                     ),
                     focusedBorder: UnderlineInputBorder(
@@ -128,7 +129,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     iconColor: lightGrey,
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: transparentLightGrey, width: 2.h
+                        color: transparentLightGrey, 
+                        width: 2.h
                       )
                     ),
                     focusedBorder: UnderlineInputBorder(

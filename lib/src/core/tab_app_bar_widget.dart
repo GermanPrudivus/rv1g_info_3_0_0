@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/constants/theme_colors.dart';
+import 'package:rv1g_info/src/features/news/presentation/widgets/add_school_news_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TabAppBarWidget extends StatefulWidget {
@@ -8,7 +9,6 @@ class TabAppBarWidget extends StatefulWidget {
   final int tabQuant;
   final List<String> tabNames;
   final bool add;
-  final Widget navigateTo;
   late TabController tabController;
 
   TabAppBarWidget({
@@ -18,7 +18,6 @@ class TabAppBarWidget extends StatefulWidget {
     required this.tabNames,
     required this.tabController,
     required this.add,
-    required this.navigateTo,
   });
 
   @override
@@ -90,7 +89,9 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
               Navigator.push(
                 context, 
                 MaterialPageRoute(
-                  builder: (context) => widget.navigateTo
+                  builder: (context) => widget.tabController.index == 0
+                    ? const AddSchoolNewsPage(edit: false, text: "", pin: false, poll: 0, images: [])
+                    : const AboutDialog()
                 )
               );
             },

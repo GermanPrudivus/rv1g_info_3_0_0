@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,6 +37,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
   String answer2 = "";
   String answer3 = "";
   String answer4 = "";
+  DateTime pollEnd = DateTime.now();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -101,7 +103,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                           initialValue: text,
                           textInputAction: TextInputAction.next,
                           style: TextStyle(
-                            fontSize: 14.h
+                            fontSize: 12.h
                           ),
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -121,7 +123,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: 'Ieraksti ziņas tekstu',
                             hintStyle: TextStyle(
-                              fontSize: 14.h
+                              fontSize: 12.h
                             )
                           ),
                           minLines: 25,
@@ -200,85 +202,282 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                   Padding(
                     padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
                     child: Container(
-                      height: 400.h,
+                      height: 525.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.h),
-                        color: transparentLightGrey
+                        color: Colors.white,
+                        border: Border.all(),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 12.5.h, left: 10.w, right: 10.w),
-                        child: Column(
-                          children: [
-                            Row(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: 12.5.h, left: 10.w, right: 10.w),
+                            child: Column(
                               children: [
-                                Container(
-                                  margin: EdgeInsets.only(right: 5.w),
-                                  width: 255.w,
-                                  child: TextFormField(
-                                    initialValue: question,
-                                    textInputAction: TextInputAction.next,
-                                    style: TextStyle(
+                                Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(right: 5.w),
+                                      width: 255.w,
+                                      child: TextFormField(
+                                        initialValue: question,
+                                        textInputAction: TextInputAction.next,
+                                        style: TextStyle(
+                                          fontSize: 12.h
+                                        ),
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: BorderSide(
+                                              width: 2.h,
+                                              color: Colors.black
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              width: 2.h,
+                                              color: blue
+                                            ),
+                                          ),
+                                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                                          hintText: 'Ieraksti jautājumu',
+                                          hintStyle: TextStyle(
+                                            fontSize: 12.h
+                                          )
+                                        ),
+                                        cursorColor: blue,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            question = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      child: ClipOval(
+                                        child: Container(
+                                          height: 35.h,
+                                          width: 35.h,
+                                          color: Colors.red,
+                                          alignment: Alignment.center,
+                                          child: Icon(
+                                            Icons.delete,
+                                            size: 20.h,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          showNewPoll = false;
+                                          question = "";
+                                          answer1 = "";
+                                          answer2 = "";
+                                          answer3 = "";
+                                          answer4 = "";
+                                        });
+                                      },
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 20.h),
+                                TextFormField(
+                                  initialValue: question,
+                                  textInputAction: TextInputAction.next,
+                                  style: TextStyle(
+                                    fontSize: 12.h
+                                  ),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: BorderSide(
+                                        width: 2.h,
+                                        color: Colors.black
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: BorderSide(
+                                        width: 2.h,
+                                        color: blue
+                                      ),
+                                    ),
+                                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                                    hintText: '1. Atbilde',
+                                    hintStyle: TextStyle(
                                       fontSize: 12.h
+                                    )
+                                  ),
+                                  cursorColor: blue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      answer1 = value;
+                                    });
+                                  },
+                                ),
+                                SizedBox(height: 10.h),
+                                TextFormField(
+                                  initialValue: question,
+                                  textInputAction: TextInputAction.next,
+                                  style: TextStyle(
+                                    fontSize: 12.h
+                                  ),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: BorderSide(
+                                        width: 2.h,
+                                        color: Colors.black
+                                      ),
                                     ),
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide(
-                                          width: 2.h,
-                                          color: Colors.black
-                                        ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: BorderSide(
+                                        width: 2.h,
+                                        color: blue
                                       ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide(
-                                          width: 2.h,
-                                          color: blue
-                                        ),
+                                    ),
+                                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                                    hintText: '2. Atbilde',
+                                    hintStyle: TextStyle(
+                                      fontSize: 12.h
+                                    )
+                                  ),
+                                  cursorColor: blue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      answer2 = value;
+                                    });
+                                  },
+                                ),
+                                SizedBox(height: 10.h),
+                                TextFormField(
+                                  initialValue: question,
+                                  textInputAction: TextInputAction.next,
+                                  style: TextStyle(
+                                    fontSize: 12.h
+                                  ),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: BorderSide(
+                                        width: 2.h,
+                                        color: Colors.black
                                       ),
-                                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                                      hintText: 'Ieraksti jautājumu',
-                                      hintStyle: TextStyle(
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: BorderSide(
+                                        width: 2.h,
+                                        color: blue
+                                      ),
+                                    ),
+                                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                                    hintText: '3. Atbilde (opcionāli)',
+                                    hintStyle: TextStyle(
+                                      fontSize: 12.h
+                                    )
+                                  ),
+                                  cursorColor: blue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      answer3 = value;
+                                    });
+                                  },
+                                ),
+                                SizedBox(height: 10.h),
+                                TextFormField(
+                                  initialValue: question,
+                                  textInputAction: TextInputAction.next,
+                                  style: TextStyle(
+                                    fontSize: 12.h
+                                  ),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: BorderSide(
+                                        width: 2.h,
+                                        color: Colors.black
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: BorderSide(
+                                        width: 2.h,
+                                        color: blue
+                                      ),
+                                    ),
+                                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                                    hintText: '4. Atbilde (opcionāli)',
+                                    hintStyle: TextStyle(
+                                      fontSize: 12.h
+                                    )
+                                  ),
+                                  cursorColor: blue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      answer4 = value;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          Divider(
+                            color: Colors.black,
+                            height: 17.5.h,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Aptaujas ilgums:",
+                                      style: TextStyle(
                                         fontSize: 12.h
-                                      )
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 5.h),
+                                SizedBox(
+                                  height: 200.h,
+                                  child: CupertinoDatePicker(
+                                    use24hFormat: true,
+                                    initialDateTime: DateTime(
+                                      pollEnd.year,
+                                      pollEnd.month,
+                                      pollEnd.day,
+                                      pollEnd.hour,
+                                      pollEnd.minute
                                     ),
-                                    cursorColor: blue,
-                                    onChanged: (value) {
+                                    mode: CupertinoDatePickerMode.dateAndTime,
+                                    onDateTimeChanged: (value) {
                                       setState(() {
-                                        question = value;
+                                        pollEnd = DateTime(
+                                          value.year, 
+                                          value.month, 
+                                          value.day,
+                                          value.hour,
+                                          value.minute
+                                        );
                                       });
                                     },
                                   ),
                                 ),
-                                GestureDetector(
-                                  child: ClipOval(
-                                    child: Container(
-                                      height: 35.h,
-                                      width: 35.h,
-                                      color: Colors.red,
-                                      alignment: Alignment.center,
-                                      child: Icon(
-                                        Icons.delete,
-                                        size: 20.h,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  ),
-                                  onTap: () {
-                                    setState(() {
-                                      showNewPoll = false;
-                                      question = "";
-                                      answer1 = "";
-                                      answer2 = "";
-                                      answer3 = "";
-                                      answer4 = "";
-                                    });
-                                  },
-                                )
                               ],
-                            )
-                          ],
-                        ),
+                            ),
+                          )
+                        ],
                       )
                     ),
                   ),
