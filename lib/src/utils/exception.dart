@@ -16,7 +16,6 @@ extension AsyncValueUI on AsyncValue {
           content: Text(displayedError)
         ),
       );
-      print(displayedError);
     }
   }
 }

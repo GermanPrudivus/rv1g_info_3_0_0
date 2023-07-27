@@ -38,8 +38,7 @@ class NewsRepository {
         final res = supabase.storage
           .from('news')
           .getPublicUrl(filePath);
-        
-        print(res);
+
         images.add(res);
       }
     }
@@ -65,8 +64,6 @@ class NewsRepository {
       )
       .select();
 
-    print(res[0]['id']);
-
     return res[0]['id'];
   }
 
@@ -87,7 +84,6 @@ class NewsRepository {
       )
       .select();
 
-    print(res[0]);
     int pollId = res[0]['id'];
 
     await supabase
