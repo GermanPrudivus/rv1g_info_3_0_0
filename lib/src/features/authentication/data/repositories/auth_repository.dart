@@ -49,15 +49,6 @@ class AuthRepository {
 
     final supabase = Supabase.instance.client;
 
-    final res = await supabase.from('users').select(
-          'id',
-          const FetchOptions(
-            count: CountOption.exact,
-          ),
-        );
-
-    final count = res.count;
-
     final fullname = fullName.split(" ");
 
     late String name;
@@ -91,15 +82,14 @@ class AuthRepository {
       .from('users')
       .insert(
         toJson({
-          'id': count+1,
-          'profilePicUrl': imageUrlResponse,
+          'profile_pic_url': imageUrlResponse,
           'name': name,
           'surname': surname,
-          'formId': form,
+          'form_id': form,
           'email': email,
           'password': DBCrypt().hashpw(password, DBCrypt().gensalt()),
           'verified': false,
-          'createdDateTime': DateTime.now().toIso8601String()
+          'created_datetime': DateTime.now().toIso8601String()
         })
       );
   }

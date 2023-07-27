@@ -90,7 +90,14 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
                 context, 
                 MaterialPageRoute(
                   builder: (context) => widget.tabController.index == 0
-                    ? const AddSchoolNewsPage(edit: false, text: "", pin: false, poll: 0, images: [])
+                    ? const AddSchoolNewsPage(
+                        edit: false,
+                        newsId: 0,
+                        text: "", 
+                        pin: false, 
+                        poll: 0, 
+                        images: []
+                      )
                     : const AboutDialog()
                 )
               );
@@ -137,10 +144,10 @@ Future<String> getProfilePicUrl() async{
   final email = supabase.auth.currentUser?.email;
   final res = await supabase
     .from('users')
-    .select('profilePicUrl')
+    .select('profile_pic_url')
     .eq('email', email);
 
-  final profilePicUrl = res[0]['profilePicUrl'];
+  final profilePicUrl = res[0]['profile_pic_url'];
 
   return await profilePicUrl;
 }

@@ -143,7 +143,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text(
-                                  'You need to provide Gallery access to upload photo!'
+                                  'You need to provide a Gallery access to upload photo!'
                                 )
                               )
                             );

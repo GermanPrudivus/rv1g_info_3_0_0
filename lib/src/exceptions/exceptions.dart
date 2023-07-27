@@ -6,3 +6,8 @@ Map<String, String> authExceptions = {
   "AuthException(message: Email not confirmed, statusCode: 400)"
   :"Please verify your email to login!",
 };
+
+Map<String, String> exceptions = {
+  "ClientException with SocketException: Failed host lookup: 'mznfnrsqtgzhhltmpwwh.supabase.co' (OS Error: No address associated with hostname, errno = 7), uri=https://mznfnrsqtgzhhltmpwwh.supabase.co/auth/v1/token?grant_type=password"
+  :"Please check your internet connection!",
+};

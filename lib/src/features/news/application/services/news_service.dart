@@ -9,8 +9,21 @@ class NewsService {
 
   final NewsRepository newsRepository;
 
-  Future<String> getProfilePicUrl() async {
-    return await newsRepository.getProfilePicUrl();
+  Future<int> addSchoolNews(String text, List imagesPath, bool pin, bool hasPoll) async {
+    return await newsRepository.addSchoolNews(text, imagesPath, pin, hasPoll);
+  }
+
+  Future<void> addPoll(
+    String title, String answer1, String answer2, String answer3, String answer4, DateTime pollEnd, int newsId) async {
+    await newsRepository.addPoll(
+      title,
+      answer1,
+      answer2,
+      answer3,
+      answer4,
+      pollEnd,
+      newsId
+    );
   }
 
 }

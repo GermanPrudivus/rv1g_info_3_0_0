@@ -23,25 +23,24 @@ class AppUser {
 
   static AppUser fromJson(Map<String, dynamic> json) => AppUser(
     id: json['id'],
-    profilePicUrl: json['profilePicUrl'],
+    profilePicUrl: json['profile_pic_url'],
     name: json['name'],
     surname: json['surname'],
-    formId: json['formId'],
+    formId: json['form_id'],
     email: json['email'],
     password: json['password'],
     verified: json['verifid'],
-    createdDateTime: json['createdDateTime']
+    createdDateTime: json['created_datetime']
   );
  
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'id': id,
-    'profilePicUrl': profilePicUrl,
+    'profile_pic_url': profilePicUrl,
     'name': name,
     'surname': surname,
-    'formId': formId,
+    'form_id': formId,
     'email': email,
     'password': password,
     'verified': verified,
-    'createdDateTime': createdDateTime
+    'created_datetime': createdDateTime
   };
 }
