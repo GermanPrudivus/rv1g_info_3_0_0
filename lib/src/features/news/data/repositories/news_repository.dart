@@ -1,11 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:rv1g_info/src/features/news/domain/models/author_data.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 
+import '../../domain/models/answer.dart';
+import '../../domain/models/poll.dart';
+import '../../domain/models/school_news.dart';
+
 class NewsRepository {
-  Future<int> addSchoolNews(String text, List imagesPath, bool pin, bool hasPoll) async{
+  Future<int> addSchoolNews(String text, List imagesPath, bool pin) async{
     final supabase = Supabase.instance.client;
 
     final email = supabase.auth.currentUser!.email;
@@ -58,7 +63,6 @@ class NewsRepository {
           'media': jsonImages,
           'likes': 0,
           'pin': pin,
-          'has_poll': hasPoll,
           'created_datetime': DateTime.now().toIso8601String()
         })
       )
@@ -129,6 +133,83 @@ class NewsRepository {
           })
         );
     }
+  }
+
+  Future<List<SchoolNews>> getSchoolNews() async{
+    final supabase = Supabase.instance.client;
+
+    final res = await supabase
+      .from('news')
+      .select();
+
+    List<SchoolNews> news = [];
+
+    for(int i=0;i<res.length;i++){
+      news.add(SchoolNews.fromJson(res[i]));
+    }
+
+    return news;
+  }
+
+  Future<List<AuthorData>> getAuthorData(List<int> authorId) async{
+    final supabase = Supabase.instance.client;
+
+    List<AuthorData> authorData = [];
+
+    for(int i=0;i<authorId.length;i++){
+      final res = await supabase
+        .from('users')
+        .select()
+        .eq('id', authorId[i]);
+
+      authorData.add(AuthorData(
+        id: authorId[i], 
+        fullName: "${res[0]['name']} ${res[0]['surname']}", 
+        avatarUrl: res[0]['profile_pic_url']
+      ));
+    }
+    
+    return authorData;
+  }
+
+  Future<Map<int, Poll>> getPolls(List<int> newsId) async{
+    final supabase = Supabase.instance.client;
+
+    Map<int, Poll> polls = {};
+    
+    for(int i=0;i<newsId.length;i++){
+      final res = await supabase
+        .from('poll')
+        .select()
+        .eq('news_id', newsId[i]);
+
+      if(res != []){
+        polls[newsId[i]] = Poll.fromJson(res[0]);
+      }
+    }
+
+    return polls;
+  }
+
+  Future<List<Answer>> getAnswers(List<int> pollsId) async{
+    final supabase = Supabase.instance.client;
+
+    List<Answer> answers = [];
+
+    for(int j=0;j<pollsId.length;j++){
+      final res = await supabase
+        .from('answer')
+        .select()
+        .eq('poll_id', pollsId[j]);
+    
+      if(res != []){
+        for(int i=0;i<res.length;i++){
+          answers.add(Answer.fromJson(res[i]));
+        }
+      }
+    }
+    
+    return answers;
   }
 
 }

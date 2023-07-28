@@ -90,13 +90,18 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
                 context, 
                 MaterialPageRoute(
                   builder: (context) => widget.tabController.index == 0
-                    ? const AddSchoolNewsPage(
+                    ? AddSchoolNewsPage(
                         edit: false,
                         newsId: 0,
                         text: "", 
                         pin: false, 
-                        poll: 0, 
-                        images: []
+                        title: "",
+                        answer1: "",
+                        answer2: "",
+                        answer3: "",
+                        answer4: "",
+                        pollEnd: DateTime.now(),
+                        images: const []
                       )
                     : const AboutDialog()
                 )

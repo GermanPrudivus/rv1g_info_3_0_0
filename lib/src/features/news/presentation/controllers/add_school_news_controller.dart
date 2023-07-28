@@ -2,27 +2,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rv1g_info/src/features/news/application/services/news_service.dart';
 
 class AddSchoolNewsController extends StateNotifier<AsyncValue<void>> {
-  // set the initial value
   AddSchoolNewsController({required this.newsService})
       : super(const AsyncData<void>(null));
 
   NewsService newsService;
 
-  Future<int?> addSchoolNews(String text, List imagesPath, bool pin, bool hasPoll) async {
-    // set the state to loading
+  Future<int?> addSchoolNews(String text, List imagesPath, bool pin) async {
     state = const AsyncLoading<void>();
-    // call `authRepository.signUp` and await for the result
-    state = await AsyncValue.guard<void>(() {
-        return newsService.addSchoolNews(text, imagesPath, pin, hasPoll);
+    final AsyncValue<int> asyncValue = await AsyncValue.guard<int>(() {
+      return newsService.addSchoolNews(text, imagesPath, pin);
     });
-    return 0;
+    state = asyncValue;
+    return asyncValue.value;
   }
 
   Future<void> addPoll(
     String title, String answer1, String answer2, String answer3, String answer4, DateTime pollEnd, int newsId) async {
-    // set the state to loading
     state = const AsyncLoading<void>();
-    // call `authRepository.signUp` and await for the result
     state = await AsyncValue.guard<void>(
       () => newsService.addPoll(
         title,

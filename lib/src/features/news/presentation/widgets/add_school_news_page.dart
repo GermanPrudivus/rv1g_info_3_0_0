@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:rv1g_info/src/features/news/presentation/controllers/add_school_news_page.dart';
+import 'package:rv1g_info/src/features/news/presentation/controllers/add_school_news_controller.dart';
 import 'package:rv1g_info/src/utils/exception.dart';
 
 import '../../../../constants/theme_colors.dart';
@@ -17,7 +18,12 @@ class AddSchoolNewsPage extends ConsumerStatefulWidget {
   final int newsId;
   final String text;
   final bool pin;
-  final int poll;
+  final String title;
+  final String answer1;
+  final String answer2;
+  final String answer3;
+  final String answer4;
+  final DateTime pollEnd;
   final List<String> images;
 
   const AddSchoolNewsPage({
@@ -26,7 +32,12 @@ class AddSchoolNewsPage extends ConsumerStatefulWidget {
     required this.newsId,
     required this.text,
     required this.pin,
-    required this.poll,
+    required this.title,
+    required this.answer1,
+    required this.answer2,
+    required this.answer3,
+    required this.answer4,
+    required this.pollEnd,
     required this.images
   });
 
@@ -40,14 +51,14 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
   late String text;
   late bool pin;
   late List<String> images;
-  late bool showNewPoll;
+  bool showNewPoll = false;
 
-  String title = "";
-  String answer1 = "";
-  String answer2 = "";
-  String answer3 = "";
-  String answer4 = "";
-  DateTime pollEnd = DateTime.now();
+  late String title;
+  late String answer1;
+  late String answer2;
+  late String answer3;
+  late String answer4;
+  late DateTime pollEnd;
 
   List imagesPath = [];
 
@@ -59,8 +70,13 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
     newsId = widget.newsId;
     text = widget.text;
     pin = widget.pin;
+    title = widget.title;
+    answer1 = widget.answer1;
+    answer2 = widget.answer2;
+    answer3 = widget.answer3;
+    answer4 = widget.answer4;
+    pollEnd = widget.pollEnd;
     images = widget.images;
-    showNewPoll = false;
     super.initState();
   }
 
@@ -135,11 +151,11 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 5.w),
+                        padding: EdgeInsets.only(left: 5.w, bottom: 5.h),
                         child: Text(
                           "Teksts",
                           style: TextStyle(
-                            fontSize: 14.h,
+                            fontSize: 13.h,
                           ),
                         ),
                       ),
@@ -147,7 +163,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                         initialValue: text,
                         textInputAction: TextInputAction.next,
                         style: TextStyle(
-                          fontSize: 12.h
+                          fontSize: 14.h
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -167,7 +183,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti ziņas tekstu',
                           hintStyle: TextStyle(
-                            fontSize: 12.h
+                            fontSize: 14.h
                           )
                         ),
                         minLines: 25,
@@ -186,7 +202,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                 Padding(
                   padding: EdgeInsets.only(top: 10.h),
                   child: Text(
-                    '<b></b> - lai uztaisītu bold tekstu\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu italic tekstu\n<link href="your_link"></link> - lai pievienotu saiti',
+                    '<b></b> - lai uztaisītu bold tekstu\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu italic tekstu\n<link href=your_link></link> - lai pievienotu saiti',
                     style: TextStyle(
                       fontSize: 14.h
                     ),
@@ -235,7 +251,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                   ),
                 ),
 
-                if(widget.poll != 0 || showNewPoll)
+                if(widget.title != "" || showNewPoll)
                   Padding(
                     padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
                     child: Container(
@@ -264,7 +280,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                           initialValue: title,
                                           textInputAction: TextInputAction.next,
                                           style: TextStyle(
-                                            fontSize: 12.h
+                                            fontSize: 13.h
                                           ),
                                           decoration: InputDecoration(
                                             isDense: true,
@@ -285,7 +301,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                             floatingLabelBehavior: FloatingLabelBehavior.always,
                                             hintText: 'Ieraksti jautājumu',
                                             hintStyle: TextStyle(
-                                              fontSize: 12.h
+                                              fontSize: 13.h
                                             )
                                           ),
                                           cursorColor: blue,
@@ -303,31 +319,32 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                         ),
                                       )
                                     ),
-                                    GestureDetector(
-                                      child: ClipOval(
-                                        child: Container(
-                                          height: 35.h,
-                                          width: 35.h,
-                                          color: Colors.red,
-                                          alignment: Alignment.center,
-                                          child: Icon(
-                                            Icons.delete,
-                                            size: 20.h,
-                                            color: Colors.white,
-                                          ),
-                                        )
-                                      ),
-                                      onTap: () {
-                                        setState(() {
-                                          showNewPoll = false;
-                                          title = "";
-                                          answer1 = "";
-                                          answer2 = "";
-                                          answer3 = "";
-                                          answer4 = "";
-                                        });
-                                      },
-                                    )
+                                    if(!widget.edit)
+                                      GestureDetector(
+                                        child: ClipOval(
+                                          child: Container(
+                                            height: 35.h,
+                                            width: 35.h,
+                                            color: Colors.red,
+                                            alignment: Alignment.center,
+                                            child: Icon(
+                                              Icons.delete,
+                                              size: 20.h,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            showNewPoll = false;
+                                            title = "";
+                                            answer1 = "";
+                                            answer2 = "";
+                                            answer3 = "";
+                                            answer4 = "";
+                                          });
+                                        },
+                                      )
                                   ],
                                 ),
                                 SizedBox(height: 20.h),
@@ -339,7 +356,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                         initialValue: answer1,
                                         textInputAction: TextInputAction.next,
                                         style: TextStyle(
-                                          fontSize: 12.h
+                                          fontSize: 13.h
                                         ),
                                         decoration: InputDecoration(
                                           isDense: true,
@@ -360,7 +377,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                           floatingLabelBehavior: FloatingLabelBehavior.always,
                                           hintText: '1. Atbilde',
                                           hintStyle: TextStyle(
-                                            fontSize: 12.h
+                                            fontSize: 13.h
                                           )
                                         ),
                                         cursorColor: blue,
@@ -381,7 +398,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                         initialValue: answer2,
                                         textInputAction: TextInputAction.next,
                                         style: TextStyle(
-                                          fontSize: 12.h
+                                          fontSize: 13.h
                                         ),
                                         decoration: InputDecoration(
                                           isDense: true,
@@ -402,7 +419,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                           floatingLabelBehavior: FloatingLabelBehavior.always,
                                           hintText: '2. Atbilde',
                                           hintStyle: TextStyle(
-                                            fontSize: 12.h
+                                            fontSize: 13.h
                                           )
                                         ),
                                         cursorColor: blue,
@@ -426,7 +443,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                   initialValue: answer3,
                                   textInputAction: TextInputAction.next,
                                   style: TextStyle(
-                                    fontSize: 12.h
+                                    fontSize: 13.h
                                   ),
                                   decoration: InputDecoration(
                                     isDense: true,
@@ -447,7 +464,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                     floatingLabelBehavior: FloatingLabelBehavior.always,
                                     hintText: '3. Atbilde (opcionāli)',
                                     hintStyle: TextStyle(
-                                      fontSize: 12.h
+                                      fontSize: 13.h
                                     )
                                   ),
                                   cursorColor: blue,
@@ -462,7 +479,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                   initialValue: answer4,
                                   textInputAction: TextInputAction.next,
                                   style: TextStyle(
-                                    fontSize: 12.h
+                                    fontSize: 13.h
                                   ),
                                   decoration: InputDecoration(
                                     isDense: true,
@@ -483,7 +500,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                     floatingLabelBehavior: FloatingLabelBehavior.always,
                                     hintText: '4. Atbilde (opcionāli)',
                                     hintStyle: TextStyle(
-                                      fontSize: 12.h
+                                      fontSize: 13.h
                                     )
                                   ),
                                   cursorColor: blue,
@@ -510,7 +527,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                     Text(
                                       "Aptaujas ilgums:",
                                       style: TextStyle(
-                                        fontSize: 12.h
+                                        fontSize: 13.h
                                       ),
                                     )
                                   ],
@@ -550,7 +567,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                   ),
                   ),
 
-                if(!showNewPoll)
+                if(!showNewPoll && title == "")
                   Container(
                     color: Colors.white,
                     height: 80.h,
@@ -583,7 +600,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                   ),
 
                 Text(
-                  "Peivienot attēlu:",
+                  "Pievienot attēlu:",
                   style: TextStyle(
                     fontSize: 14.h
                   ),
@@ -606,7 +623,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                             )
                           ],
                         ),
-                        child: Image.network(images[i]),
+                        child: Image.network(json.decode(images[i])['image_url']),
                       ),
                     ),
 
@@ -700,8 +717,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                             .addSchoolNews(
                               text,
                               imagesPath, 
-                              pin, 
-                              showNewPoll
+                              pin
                             ).then((value) {
                               setState(() {
                                 newsId = value!;
