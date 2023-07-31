@@ -71,6 +71,59 @@ class NewsRepository {
     return res[0]['id'];
   }
 
+  Future<void> editSchoolNews(int id, String text, List imagesUrls, List imagesPath, bool pin) async{
+    final supabase = Supabase.instance.client;
+
+    final email = supabase.auth.currentUser!.email;
+
+    List paragraphs = text.split('\n');
+
+    List jsonParagraphs = paragraphs.map((paragraph) {
+      return json.encode({
+        "text": paragraph,
+      });
+    }).toList();
+
+    List<String> images = [];
+
+    if(imagesPath.isNotEmpty) {
+      for(int i=0;i<imagesPath.length;i++){
+        final bytes = await File(imagesPath[i]).readAsBytes();
+        final fileExt = File(imagesPath[i]).path.split('.').last;
+        final fileName = '$email.${DateTime.now().toIso8601String()}.$fileExt';
+        final filePath = fileName;
+        await supabase.storage.from('news').uploadBinary(
+            filePath,
+            bytes,
+          );
+        final res = supabase.storage
+          .from('news')
+          .getPublicUrl(filePath);
+
+        images.add(res);
+      }
+    }
+
+    List jsonImages = images.map((image) {
+      return json.encode({
+        "image_url": image,
+      });
+    }).toList();
+
+    jsonImages = imagesUrls + jsonImages;
+
+    await supabase
+      .from('news')
+      .update(
+        toJson({
+          'text': jsonParagraphs,
+          'media': jsonImages,
+          'pin': pin,
+        })
+      )
+      .eq('id', id);
+  }
+
   Future<void> addPoll(
     String title, String answer1, String answer2, String answer3, String answer4, DateTime pollEnd, int newsId) async{
     final supabase = Supabase.instance.client;
@@ -135,12 +188,100 @@ class NewsRepository {
     }
   }
 
+  Future<void> editPoll(
+    int id, String title, int answer1Id, int answer2Id, int answer3Id, int answer4Id, 
+    String answer1, String answer2, String answer3, String answer4, DateTime pollEnd) async{
+
+    final supabase = Supabase.instance.client;
+
+    await supabase
+      .from('poll')
+      .update(
+        toJson({
+          'title': title,
+          'poll_end': pollEnd.toIso8601String(),
+        })
+      )
+      .eq('id', id);
+
+    await supabase
+      .from('answer')
+      .update(
+        toJson({
+          'answer': answer1,
+        })
+      )
+      .eq('id', answer1Id);
+
+    await supabase
+      .from('answer')
+      .update(
+        toJson({
+          'answer': answer2,
+        })
+      )
+      .eq('id', answer2Id);
+
+    if(answer3 == "" && answer3Id != 0){
+      await supabase
+        .from('answer')
+        .delete()
+        .eq('id', answer3Id);
+    } else if (answer3 != "" && answer3Id == 0){
+      await supabase
+        .from('answer')
+        .insert(
+          toJson({
+            'answer': answer3,
+            'votes': 0,
+            'poll_id':id
+          })
+        );
+    } else if (answer3Id != 0){
+      await supabase
+        .from('answer')
+        .update(
+          toJson({
+            'answer': answer3,
+          })
+        )
+        .eq('id', answer3Id);
+    }
+
+    if(answer4 == "" && answer4Id != 0){
+      await supabase
+        .from('answer')
+        .delete()
+        .eq('id', answer4Id);
+    } else if (answer4 != "" && answer4Id == 0){
+      await supabase
+        .from('answer')
+        .insert(
+          toJson({
+            'answer': answer4,
+            'votes': 0,
+            'poll_id':id
+          })
+        );
+    } else if (answer4Id != 0){
+      await supabase
+        .from('answer')
+        .update(
+          toJson({
+            'answer': answer4,
+          })
+        )
+        .eq('id', answer4Id);
+    }
+  }
+
   Future<List<SchoolNews>> getSchoolNews() async{
     final supabase = Supabase.instance.client;
 
     final res = await supabase
       .from('news')
-      .select();
+      .select()
+      .order('created_datetime', ascending: false);
 
     List<SchoolNews> news = [];
 
@@ -183,7 +324,7 @@ class NewsRepository {
         .select()
         .eq('news_id', newsId[i]);
 
-      if(res != []){
+      if(res.isNotEmpty){
         polls[newsId[i]] = Poll.fromJson(res[0]);
       }
     }
@@ -210,6 +351,23 @@ class NewsRepository {
     }
     
     return answers;
+  }
+
+  Future<void> deleteImage(int id, List images, String imageUrl) async {
+    final supabase = Supabase.instance.client;
+
+    List imagesEdited = images;
+    imagesEdited.remove(imageUrl);
+
+    await supabase
+      .from('news')
+      .update({'media':imagesEdited})
+      .eq('id', id);
+
+    await supabase
+      .storage
+      .from("news")
+      .remove([json.decode(imageUrl)['image_url'].split("/").last]);
   }
 
 }

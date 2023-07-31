@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/constants/theme_colors.dart';
-import 'package:rv1g_info/src/features/news/presentation/widgets/add_school_news_page.dart';
+import 'package:rv1g_info/src/features/news/presentation/widgets/crud_school_news_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TabAppBarWidget extends StatefulWidget {
@@ -93,9 +93,14 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
                     ? AddSchoolNewsPage(
                         edit: false,
                         newsId: 0,
-                        text: "", 
+                        text: "",
                         pin: false, 
+                        pollId: 0,
                         title: "",
+                        answer1Id: 0,
+                        answer2Id: 0,
+                        answer3Id: 0,
+                        answer4Id: 0,
                         answer1: "",
                         answer2: "",
                         answer3: "",

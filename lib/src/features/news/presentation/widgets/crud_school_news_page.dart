@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:rv1g_info/src/features/news/presentation/controllers/add_school_news_controller.dart';
+import 'package:rv1g_info/src/features/news/presentation/controllers/crud_school_news_controller.dart';
 import 'package:rv1g_info/src/utils/exception.dart';
 
 import '../../../../constants/theme_colors.dart';
@@ -18,7 +18,12 @@ class AddSchoolNewsPage extends ConsumerStatefulWidget {
   final int newsId;
   final String text;
   final bool pin;
+  final int pollId;
   final String title;
+  final int answer1Id;
+  final int answer2Id;
+  final int answer3Id;
+  final int answer4Id;
   final String answer1;
   final String answer2;
   final String answer3;
@@ -32,7 +37,12 @@ class AddSchoolNewsPage extends ConsumerStatefulWidget {
     required this.newsId,
     required this.text,
     required this.pin,
+    required this.pollId,
     required this.title,
+    required this.answer1Id,
+    required this.answer2Id,
+    required this.answer3Id,
+    required this.answer4Id,
     required this.answer1,
     required this.answer2,
     required this.answer3,
@@ -53,6 +63,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
   late List<String> images;
   bool showNewPoll = false;
 
+  late int pollId;
   late String title;
   late String answer1;
   late String answer2;
@@ -62,14 +73,12 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
 
   List imagesPath = [];
 
-  final _formKey1 = GlobalKey<FormState>();
-  final _formKey2 = GlobalKey<FormState>();
-
   @override
   void initState() {
     newsId = widget.newsId;
     text = widget.text;
     pin = widget.pin;
+    pollId = widget.pollId;
     title = widget.title;
     answer1 = widget.answer1;
     answer2 = widget.answer2;
@@ -202,7 +211,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                 Padding(
                   padding: EdgeInsets.only(top: 10.h),
                   child: Text(
-                    '<b></b> - lai uztaisītu bold tekstu\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu italic tekstu\n<link href=your_link></link> - lai pievienotu saiti',
+                    '<b></b> - lai uztaisītu bold tekstu\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu italic tekstu\n<link href="your_link"></link> - lai pievienotu saiti',
                     style: TextStyle(
                       fontSize: 14.h
                     ),
@@ -245,7 +254,9 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                 ),
 
                 Text(
-                  "Peivienot aptauju:",
+                  widget.edit
+                    ? "Rediģēt aptauju:"
+                    : "Peivienot aptauju:",
                   style: TextStyle(
                     fontSize: 14.h
                   ),
@@ -274,170 +285,163 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                     Container(
                                       margin: EdgeInsets.only(right: 5.w),
                                       width: 255.w,
-                                      child: Form(
-                                        key: _formKey1,
-                                        child: TextFormField(
-                                          initialValue: title,
-                                          textInputAction: TextInputAction.next,
-                                          style: TextStyle(
-                                            fontSize: 13.h
-                                          ),
-                                          decoration: InputDecoration(
-                                            isDense: true,
-                                            border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(10),
-                                              borderSide: BorderSide(
-                                                width: 2.h,
-                                                color: Colors.black
-                                              ),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(10),
-                                              borderSide: BorderSide(
-                                                width: 2.h,
-                                                color: blue
-                                              ),
-                                            ),
-                                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                                            hintText: 'Ieraksti jautājumu',
-                                            hintStyle: TextStyle(
-                                              fontSize: 13.h
-                                            )
-                                          ),
-                                          cursorColor: blue,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              title = value;
-                                            });
-                                          },
-                                          validator: (value) {
-                                            if (value == null || value.isEmpty) {
-                                              return 'Please enter question';
-                                            } 
-                                            return null;
-                                          },
+                                      child: TextFormField(
+                                        initialValue: title,
+                                        textInputAction: TextInputAction.next,
+                                        style: TextStyle(
+                                          fontSize: 13.h
                                         ),
-                                      )
-                                    ),
-                                    if(!widget.edit)
-                                      GestureDetector(
-                                        child: ClipOval(
-                                          child: Container(
-                                            height: 35.h,
-                                            width: 35.h,
-                                            color: Colors.red,
-                                            alignment: Alignment.center,
-                                            child: Icon(
-                                              Icons.delete,
-                                              size: 20.h,
-                                              color: Colors.white,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: BorderSide(
+                                              width: 2.h,
+                                              color: Colors.black
                                             ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: BorderSide(
+                                              width: 2.h,
+                                              color: blue
+                                            ),
+                                          ),
+                                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                                          hintText: 'Ieraksti jautājumu',
+                                          hintStyle: TextStyle(
+                                            fontSize: 13.h
                                           )
                                         ),
-                                        onTap: () {
+                                        cursorColor: blue,
+                                        onChanged: (value) {
                                           setState(() {
-                                            showNewPoll = false;
-                                            title = "";
-                                            answer1 = "";
-                                            answer2 = "";
-                                            answer3 = "";
-                                            answer4 = "";
+                                            title = value;
                                           });
                                         },
-                                      )
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter question';
+                                          } 
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      child: ClipOval(
+                                        child: Container(
+                                          height: 35.h,
+                                          width: 35.h,
+                                          color: Colors.red,
+                                          alignment: Alignment.center,
+                                          child: Icon(
+                                            Icons.delete,
+                                            size: 20.h,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          showNewPoll = false;
+                                          title = "";
+                                          answer1 = "";
+                                          answer2 = "";
+                                          answer3 = "";
+                                          answer4 = "";
+                                        });
+                                      },
+                                    )
                                   ],
                                 ),
                                 SizedBox(height: 20.h),
-                                Form(
-                                  key: _formKey2,
-                                  child: Column(
-                                    children: [
-                                      TextFormField(
-                                        initialValue: answer1,
-                                        textInputAction: TextInputAction.next,
-                                        style: TextStyle(
-                                          fontSize: 13.h
-                                        ),
-                                        decoration: InputDecoration(
-                                          isDense: true,
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(5),
-                                            borderSide: BorderSide(
-                                              width: 2.h,
-                                              color: Colors.black
-                                            ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(5),
-                                            borderSide: BorderSide(
-                                              width: 2.h,
-                                              color: blue
-                                            ),
-                                          ),
-                                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                                          hintText: '1. Atbilde',
-                                          hintStyle: TextStyle(
-                                            fontSize: 13.h
-                                          )
-                                        ),
-                                        cursorColor: blue,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            answer1 = value;
-                                          });
-                                        },
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Please enter answer';
-                                          } 
-                                          return null;
-                                        },
+                                Column(
+                                  children: [
+                                    TextFormField(
+                                      initialValue: answer1,
+                                      textInputAction: TextInputAction.next,
+                                      style: TextStyle(
+                                        fontSize: 13.h
                                       ),
-                                      SizedBox(height: 10.h),
-                                      TextFormField(
-                                        initialValue: answer2,
-                                        textInputAction: TextInputAction.next,
-                                        style: TextStyle(
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(5),
+                                          borderSide: BorderSide(
+                                            width: 2.h,
+                                            color: Colors.black
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(5),
+                                          borderSide: BorderSide(
+                                            width: 2.h,
+                                            color: blue
+                                          ),
+                                        ),
+                                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                                        hintText: '1. Atbilde',
+                                        hintStyle: TextStyle(
                                           fontSize: 13.h
-                                        ),
-                                        decoration: InputDecoration(
-                                          isDense: true,
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(5),
-                                            borderSide: BorderSide(
-                                              width: 2.h,
-                                              color: Colors.black
-                                            ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(5),
-                                            borderSide: BorderSide(
-                                              width: 2.h,
-                                              color: blue
-                                            ),
-                                          ),
-                                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                                          hintText: '2. Atbilde',
-                                          hintStyle: TextStyle(
-                                            fontSize: 13.h
-                                          )
-                                        ),
-                                        cursorColor: blue,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            answer2 = value;
-                                          });
-                                        },
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Please enter answer';
-                                          } 
-                                          return null;
-                                        },
+                                        )
                                       ),
-                                      SizedBox(height: 10.h),
-                                    ],
-                                  ),
+                                      cursorColor: blue,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          answer1 = value;
+                                        });
+                                      },
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter answer';
+                                        } 
+                                        return null;
+                                      },
+                                    ),
+                                    SizedBox(height: 10.h),
+                                    TextFormField(
+                                      initialValue: answer2,
+                                      textInputAction: TextInputAction.next,
+                                      style: TextStyle(
+                                        fontSize: 13.h
+                                      ),
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(5),
+                                          borderSide: BorderSide(
+                                            width: 2.h,
+                                            color: Colors.black
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(5),
+                                          borderSide: BorderSide(
+                                            width: 2.h,
+                                            color: blue
+                                          ),
+                                        ),
+                                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                                        hintText: '2. Atbilde',
+                                        hintStyle: TextStyle(
+                                          fontSize: 13.h
+                                        )
+                                      ),
+                                      cursorColor: blue,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          answer2 = value;
+                                        });
+                                      },
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter answer';
+                                        } 
+                                        return null;
+                                      },
+                                    ),
+                                    SizedBox(height: 10.h),
+                                  ],
                                 ),
                                 TextFormField(
                                   initialValue: answer3,
@@ -615,7 +619,16 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                           motion: const ScrollMotion(),
                           children: [
                             SlidableAction(
-                              onPressed: (context) {},
+                              onPressed: (context) {
+                                ref
+                                  .read(addSchoolNewsControllerProvider.notifier)
+                                  .deleteImage(newsId, images, images[i])
+                                  .whenComplete(() {
+                                    setState(() {
+                                      images = images;
+                                    });
+                                  });
+                              },
                               backgroundColor: Colors.red,
                               foregroundColor: Colors.white,
                               icon: Icons.delete,
@@ -708,45 +721,47 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                   padding: EdgeInsets.only(top: 10.h, bottom: 20.h),
                   child: ElevatedButton(
                     onPressed: () {
-                      if(_formKey1.currentState!.validate() && _formKey2.currentState!.validate()){
-                        if(widget.edit) {
-
-                        } else {
-                          ref
-                            .read(addSchoolNewsControllerProvider.notifier)
-                            .addSchoolNews(
-                              text,
-                              imagesPath, 
-                              pin
-                            ).then((value) {
-                              setState(() {
-                                newsId = value!;
-                              });
-                              if(showNewPoll){
-                                ref
-                                  .read(addSchoolNewsControllerProvider.notifier)
-                                  .addPoll(
-                                    title, 
-                                    answer1, 
-                                    answer2, 
-                                    answer3, 
-                                    answer4, 
-                                    pollEnd, 
-                                    newsId
-                                  );
-                                Navigator.pop(context);
-                              }
-                            });
-                        }
+                      if(widget.edit) {
+                        ref
+                          .read(addSchoolNewsControllerProvider.notifier)
+                          .editSchoolNews(
+                            newsId,
+                            text,
+                            images,
+                            imagesPath,
+                            pin,
+                            showNewPoll,
+                            pollId,
+                            title,
+                            widget.answer1Id,
+                            widget.answer2Id,
+                            widget.answer3Id,
+                            widget.answer4Id,
+                            answer1, 
+                            answer2, 
+                            answer3, 
+                            answer4, 
+                            pollEnd,
+                          ).whenComplete(() {
+                            Navigator.pop(context);
+                          });
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Text(
-                              'Please fill all forms with appropriative values!'
-                            )
-                          )
-                        );
+                        ref
+                          .read(addSchoolNewsControllerProvider.notifier)
+                          .addSchoolNews(
+                            text,
+                            imagesPath, 
+                            pin,
+                            showNewPoll,
+                            title, 
+                            answer1, 
+                            answer2, 
+                            answer3, 
+                            answer4, 
+                            pollEnd
+                          ).whenComplete(() {
+                            Navigator.pop(context);
+                          });
                       }
                     },
                     style: ElevatedButton.styleFrom(

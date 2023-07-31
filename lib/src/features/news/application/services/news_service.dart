@@ -13,21 +13,66 @@ class NewsService {
 
   final NewsRepository newsRepository;
 
-  Future<int> addSchoolNews(String text, List imagesPath, bool pin) async {
-    return await newsRepository.addSchoolNews(text, imagesPath, pin);
+  Future<void> addSchoolNews(
+    String text, List imagesPath, bool pin, bool showNewPoll, String title, 
+    String answer1, String answer2, String answer3, String answer4, DateTime pollEnd) async {
+
+    return newsRepository
+      .addSchoolNews(text, imagesPath, pin)
+      .then((value) {
+        if(showNewPoll){
+          newsRepository
+            .addPoll(
+              title, 
+              answer1, 
+              answer2, 
+              answer3, 
+              answer4, 
+              pollEnd, 
+              value
+            );
+        }
+      });
   }
 
-  Future<void> addPoll(
-    String title, String answer1, String answer2, String answer3, String answer4, DateTime pollEnd, int newsId) async {
-    await newsRepository.addPoll(
-      title,
-      answer1,
-      answer2,
-      answer3,
-      answer4,
-      pollEnd,
-      newsId
-    );
+  Future<void> editSchoolNews(
+    int newsId, String text, List imagesUrls, List imagesPath, bool pin, bool showNewPoll,
+    int pollId, String title, int answer1Id, int answer2Id, int answer3Id, int answer4Id, 
+    String answer1, String answer2, String answer3, String answer4, DateTime pollEnd) async {
+    
+    return newsRepository
+      .editSchoolNews(newsId, text, imagesUrls, imagesPath, pin)
+      .whenComplete(() {
+        if(pollId != 0){
+          newsRepository.editPoll(
+            pollId, 
+            title, 
+            answer1Id, 
+            answer2Id, 
+            answer3Id, 
+            answer4Id, 
+            answer1, 
+            answer2, 
+            answer3, 
+            answer4, 
+            pollEnd
+          );
+        } else if(showNewPoll){
+          newsRepository.addPoll(
+            title, 
+            answer1, 
+            answer2, 
+            answer3, 
+            answer4, 
+            pollEnd, 
+            newsId
+          );               
+        }
+      });
+  }
+
+  Future<void> deleteImage(int id, List images, String imageUrl) async {
+    return await newsRepository.deleteImage(id, images, imageUrl);
   }
 
   Future<List<SchoolNews>> getSchoolNews() async {

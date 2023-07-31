@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/features/news/presentation/controllers/school_controller.dart';
-import 'package:rv1g_info/src/features/news/presentation/widgets/add_school_news_page.dart';
+import 'package:rv1g_info/src/features/news/presentation/widgets/crud_school_news_page.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -39,48 +39,56 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref
-        .read(schoolControllerProvider.notifier)
-        .getSchoolNews()
-        .then((value) {
-          setState(() {
-            news = value!;
-            for(int i=0;i<news.length;i++){
-              authorId.add(news[i].authorId);
-              newsId.add(news[i].id);
-            }
-            ref
-              .read(schoolControllerProvider.notifier)
-              .getAuthorData(authorId)
-                .then((value) {
-                  setState(() {
-                    authorData = value!;
-                  });
-              });
-            ref
-              .read(schoolControllerProvider.notifier)
-              .getPolls(newsId)
-                .then((value) {
-                  setState(() {
-                    polls = value!;
-                    for(int i=1;i<=polls.length;i++){
-                      pollsId.add(polls[i]!.id);
-                    }
-                    ref
-                      .read(schoolControllerProvider.notifier)
-                      .getAnswers(pollsId)
-                      .then((value) {
-                        setState(() {
-                          answers = value!;
-                        });
-                      });
-                  });
-              });
-            
-          });
-        });
+      getNews();
     });
     super.initState();
+  }
+
+  Future<void> getNews() async{
+    ref
+      .read(schoolControllerProvider.notifier)
+      .getSchoolNews()
+      .then((value) {
+        setState(() {
+          news = value!;
+          authorId.clear();
+          newsId.clear();
+          for(int i=0;i<news.length;i++){
+            authorId.add(news[i].authorId);
+            newsId.add(news[i].id);
+          }
+          ref
+            .read(schoolControllerProvider.notifier)
+            .getAuthorData(authorId)
+            .then((value) {
+              setState(() {
+                authorData = value!;
+              });
+            });
+          ref
+            .read(schoolControllerProvider.notifier)
+            .getPolls(newsId)
+            .then((value) {
+              setState(() {
+                polls = value!;
+                pollsId.clear();
+                if(polls.isNotEmpty){
+                  for(int i=1;i<=polls.length;i++){
+                    pollsId.add(polls[i]!.id);
+                  }
+                  ref
+                    .read(schoolControllerProvider.notifier)
+                    .getAnswers(pollsId)
+                    .then((value) {
+                      setState(() {
+                        answers = value!;
+                      });
+                    });
+                }
+              });
+            });
+        });
+      });
   }
 
   @override
@@ -100,14 +108,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
               : Expanded(
                   child: RefreshIndicator(
                     onRefresh: () async {
-                      ref
-                        .read(schoolControllerProvider.notifier)
-                        .getSchoolNews()
-                        .then((value) {
-                          setState(() {
-                            news = value!;
-                          });
-                        });
+                      getNews();
                     },
                     child: ListView.builder(
                       itemCount: news.length,
@@ -119,7 +120,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                         String authorAvatar = "";
                         DateTime created = DateTime.now();
                         String title = "";
-                        List<String> answersForNews = ["","","",""];
+                        List<Answer> answersForNews = [];
                         DateTime pollEnd = DateTime.now();
 
                         if(authorData.isNotEmpty){
@@ -134,7 +135,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                           if(answers.isNotEmpty){
                             for(int i=0;i<answers.length;i++){
                               if(answers[i].pollId == polls[index+1]!.id){
-                                answersForNews[i] = answers[i].answer;
+                                answersForNews.add(answers[i]);
                               }
                             }
                           }
@@ -206,7 +207,8 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                               color: Colors.grey,
                                             ),
                                           ),
-                                        if(DateTime.now().difference(created).inDays == 0)
+                                        if(DateTime.now().difference(created).inDays == 0 
+                                            && DateTime.now().difference(created).inHours > 0)
                                           Text(
                                             '${DateTime.now().hour-created.hour}h',
                                             style: TextStyle(
@@ -214,8 +216,16 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                               color: Colors.grey,
                                             ),
                                           ),
+                                        if(DateTime.now().difference(created).inHours == 0)
+                                          Text(
+                                            '${DateTime.now().difference(created).inMinutes}m',
+                                            style: TextStyle(
+                                              fontSize: 13.h,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
                                         if(edit)
-                                          SizedBox(width: 80.w,),
+                                          SizedBox(width: 90.w,),
                                         if(edit)
                                           GestureDetector(
                                             onTap: () {
@@ -233,23 +243,49 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                                         formatedText = formatedText + json.decode(text[i])['text'];
                                                       }
                                                     }
+                                                    formatedText = formatedText+json.decode(text[text.length-1])['text'];
 
                                                     return AddSchoolNewsPage(
                                                       edit: true,
                                                       newsId: news[index].id,
                                                       text: formatedText,
                                                       pin: news[index].pin,
-                                                      title: title,
-                                                      answer1: answersForNews[0],
-                                                      answer2: answersForNews[1],
-                                                      answer3: answersForNews[2],
-                                                      answer4: answersForNews[3],
+                                                      pollId: answersForNews.isNotEmpty
+                                                                ? polls[index+1]!.id
+                                                                : 0,
+                                                      title: answersForNews.isNotEmpty
+                                                              ? title
+                                                              : "",
+                                                      answer1Id: answersForNews.isNotEmpty
+                                                                  ? answersForNews[0].id
+                                                                  : 0,
+                                                      answer2Id: answersForNews.isNotEmpty
+                                                                  ? answersForNews[1].id
+                                                                  : 0,
+                                                      answer3Id: answersForNews.length < 3
+                                                                  ? 0
+                                                                  : answersForNews[2].id,
+                                                      answer4Id: answersForNews.length < 4
+                                                                  ? 0
+                                                                  : answersForNews[3].id,
+                                                      answer1: answersForNews.isNotEmpty
+                                                                ? answersForNews[0].answer
+                                                                : "",
+                                                      answer2: answersForNews.isNotEmpty
+                                                                ? answersForNews[1].answer
+                                                                : "",
+                                                      answer3: answersForNews.length < 3
+                                                                ? ""
+                                                                : answersForNews[2].answer,
+                                                      answer4: answersForNews.length < 4
+                                                                ? ""
+                                                                : answersForNews[3].answer,
                                                       pollEnd: pollEnd,
                                                       images: media,
                                                     );
                                                   }
                                                 )
-                                              );
+                                              ).whenComplete(() => getNews());
                                             },
                                             child: Container(
                                               height: 30.h,
