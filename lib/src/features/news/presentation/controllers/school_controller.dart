@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rv1g_info/src/features/news/application/services/news_service.dart';
 
 import '../../domain/models/answer.dart';
-import '../../domain/models/author_data.dart';
 import '../../domain/models/poll.dart';
 import '../../domain/models/school_news.dart';
 
@@ -16,15 +15,6 @@ class SchoolController extends StateNotifier<AsyncValue<void>> {
     state = const AsyncLoading<void>();
     final AsyncValue<List<SchoolNews>> asyncValue = await AsyncValue.guard<List<SchoolNews>>(() {
       return newsService.getSchoolNews();
-    });
-    state = asyncValue;
-    return asyncValue.value;
-  }
-
-  Future<List<AuthorData>?> getAuthorData(List<int> authorId) async {
-    state = const AsyncLoading<void>();
-    final AsyncValue<List<AuthorData>> asyncValue = await AsyncValue.guard<List<AuthorData>>(() {
-      return newsService.getAuthorData(authorId);
     });
     state = asyncValue;
     return asyncValue.value;

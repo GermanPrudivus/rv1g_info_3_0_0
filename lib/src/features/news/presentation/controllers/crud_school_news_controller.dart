@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rv1g_info/src/features/news/application/services/news_service.dart';
 
-class AddSchoolNewsController extends StateNotifier<AsyncValue<void>> {
-  AddSchoolNewsController({required this.newsService})
+class CrudSchoolNewsController extends StateNotifier<AsyncValue<void>> {
+  CrudSchoolNewsController({required this.newsService})
       : super(const AsyncData<void>(null));
 
   NewsService newsService;
@@ -35,19 +35,33 @@ class AddSchoolNewsController extends StateNotifier<AsyncValue<void>> {
     });
   }
 
+  Future<void> deleteSchoolNews(int id, List images, int pollId, List<int> answers) async {
+    state = const AsyncLoading<void>();
+    state = await AsyncValue.guard<void>(() {
+      return newsService.deleteSchoolNews(id, images, pollId, answers);
+    });
+  }
+
   Future<void> deleteImage(int id, List images, String imageUrl) async {
     state = const AsyncLoading<void>();
     state = await AsyncValue.guard<void>(() {
       return newsService.deleteImage(id, images, imageUrl);
     });
   }
+
+  Future<void> deleteIPoll(int id, List<int> answers) async {
+    state = const AsyncLoading<void>();
+    state = await AsyncValue.guard<void>(() {
+      return newsService.deletePoll(id, answers);
+    });
+  }
 }
 
-final addSchoolNewsControllerProvider =
+final crudSchoolNewsControllerProvider =
     // StateNotifierProvider takes the controller class and state class as type arguments
-    StateNotifierProvider.autoDispose<AddSchoolNewsController, AsyncValue<void>>(
+    StateNotifierProvider.autoDispose<CrudSchoolNewsController, AsyncValue<void>>(
         (ref) {
-  return AddSchoolNewsController(
+  return CrudSchoolNewsController(
     newsService: ref.watch(newsServiceProvider),
   );
 });

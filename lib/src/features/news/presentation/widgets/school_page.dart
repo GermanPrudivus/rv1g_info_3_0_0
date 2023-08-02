@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_polls/flutter_polls.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/features/news/presentation/controllers/school_controller.dart';
@@ -10,7 +11,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants/theme_colors.dart';
 import '../../domain/models/answer.dart';
-import '../../domain/models/author_data.dart';
 import '../../domain/models/poll.dart';
 import '../../domain/models/school_news.dart';
 
@@ -24,9 +24,6 @@ class SchoolPage extends ConsumerStatefulWidget {
 class _SchoolPageState extends ConsumerState<SchoolPage> {
 
   List<SchoolNews> news = [];
-
-  List<int> authorId = [];
-  List<AuthorData> authorData = [];
   
   List<int> newsId = [];
   Map<int, Poll> polls = {};
@@ -51,20 +48,10 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
       .then((value) {
         setState(() {
           news = value!;
-          authorId.clear();
           newsId.clear();
           for(int i=0;i<news.length;i++){
-            authorId.add(news[i].authorId);
             newsId.add(news[i].id);
           }
-          ref
-            .read(schoolControllerProvider.notifier)
-            .getAuthorData(authorId)
-            .then((value) {
-              setState(() {
-                authorData = value!;
-              });
-            });
           ref
             .read(schoolControllerProvider.notifier)
             .getPolls(newsId)
@@ -73,8 +60,10 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                 polls = value!;
                 pollsId.clear();
                 if(polls.isNotEmpty){
-                  for(int i=1;i<=polls.length;i++){
-                    pollsId.add(polls[i]!.id);
+                  for(int i=1;i<=news.length;i++){
+                    if(polls.containsKey(i)){
+                      pollsId.add(polls[i]!.id);
+                    }
                   }
                   ref
                     .read(schoolControllerProvider.notifier)
@@ -91,6 +80,41 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
       });
   }
 
+  String differenceInDates(DateTime later, DateTime earlier) {
+    later = DateTime.utc(later.year, later.month, later.day, later.hour, later.minute);
+    earlier = DateTime.utc(earlier.year, earlier.month, earlier.day, earlier.hour, earlier.minute);
+
+    if(later.difference(earlier).inDays > 0){
+      return "${later.difference(earlier).inDays}d";
+    } else if (later.difference(earlier).inDays == 0 && later.difference(earlier).inHours > 0){
+      return "${later.difference(earlier).inHours}h";
+    } else if (later.difference(earlier).inHours == 0 && later.difference(earlier).inMinutes > 0){
+      return "${later.difference(earlier).inMinutes}m";
+    } else {
+      return "${later.difference(earlier).inSeconds}s";
+    }
+  }
+
+  String formatedText(List<String> text) {
+    String formatedText = "";
+    for(int i=0;i<text.length-1;i++){
+      if(json.decode(text[i])['text']==""){
+        formatedText = "$formatedText\n\n";
+      } else if(json.decode(text[i])['text']!="" && json.decode(text[i+1])['text']!=""){
+        formatedText = '${formatedText + json.decode(text[i])['text']}\n';
+      } else {
+        formatedText = formatedText + json.decode(text[i])['text'];
+      }
+    }
+
+    if(text.isNotEmpty) {
+      formatedText = formatedText+json.decode(text[text.length-1])['text'];
+    }
+
+    return formatedText;
+  }
+  
+
   @override
   Widget build(BuildContext context) {
 
@@ -99,7 +123,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
       body: SafeArea(
         child: Column(
           children:[
-            news.isEmpty || authorData.isEmpty
+            news.isEmpty || polls.isEmpty || answers.isEmpty
               ? Expanded(
                   child: Center(
                     child: CircularProgressIndicator(color: blue),
@@ -107,34 +131,31 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                 )
               : Expanded(
                   child: RefreshIndicator(
-                    onRefresh: () async {
-                      getNews();
+                    onRefresh: () {
+                      return getNews();
                     },
                     child: ListView.builder(
                       itemCount: news.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
+                        int newsId = news[index].id;
                         List<String> text = news[index].text;
                         List<String> media = news[index].media;
-                        String authorName = "";
-                        String authorAvatar = "";
-                        DateTime created = DateTime.now();
+                        String authorName = news[index].authorName;
+                        String authorAvatar = news[index].authorAvatar;
+                        DateTime created = DateTime.parse(news[index].createdDateTime);
                         String title = "";
                         List<Answer> answersForNews = [];
+                        bool hasVoted = false;
+                        int choosedAnswer = 0;
                         DateTime pollEnd = DateTime.now();
 
-                        if(authorData.isNotEmpty){
-                          authorName = authorData[index].fullName;
-                          authorAvatar = authorData[index].avatarUrl;
-                          created = DateTime.parse(news[index].createdDateTime);
-                        }
-
-                        if(polls.isNotEmpty && polls.containsKey(index+1)){
-                          title = polls[index+1]!.title;
-                          pollEnd = DateTime.parse(polls[index+1]!.pollEnd);
+                        if(polls.isNotEmpty && polls.containsKey(newsId)){
+                          title = polls[newsId]!.title;
+                          pollEnd = DateTime.parse(polls[newsId]!.pollEnd);
                           if(answers.isNotEmpty){
                             for(int i=0;i<answers.length;i++){
-                              if(answers[i].pollId == polls[index+1]!.id){
+                              if(answers[i].pollId == polls[newsId]!.id){
                                 answersForNews.add(answers[i]);
                               }
                             }
@@ -142,7 +163,19 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                         }
 
                         return Container(
-                          margin: EdgeInsets.only(left: 7.5.w, right: 15.w, top: 10.h, bottom: 10.h),
+                          padding: EdgeInsets.only(top: 10.h, left: 7.5.w, right: 15.w, bottom: 10.h),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: news[index].pin
+                                  ? blue
+                                  : Colors.grey,
+                                width: news[index].pin
+                                  ? 1.5.h
+                                  : 0.5.h,
+                              )
+                            )
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +192,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                       child: Icon(
                                         Icons.person,
                                         color: Colors.white,
-                                        size: 10.h,
+                                        size: 30.h,
                                       )
                                     )
                                     : CircleAvatar(
@@ -178,54 +211,41 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    if(!edit)
-                                      SizedBox(height: 7.h),
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          authorName,
-                                          style: TextStyle(
-                                            fontSize: 14.h,
-                                            fontWeight: FontWeight.bold,
+                                        SizedBox(
+                                          width: 260.w,
+                                          child: Row(
+                                            children: [
+                                              Flexible(
+                                                child: Text(
+                                                  authorName,
+                                                  style: TextStyle(
+                                                    fontSize: 14.h,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(width: 7.5.w),
+                                              ClipOval(
+                                                child: Container(
+                                                  color: Colors.grey,
+                                                  height: 3.h,
+                                                  width: 3.h,
+                                                ),
+                                              ),
+                                              SizedBox(width: 7.5.w),
+                                              Text(
+                                                differenceInDates(DateTime.now(), created),
+                                                style: TextStyle(
+                                                  fontSize: 13.h,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                        SizedBox(width: 7.5.w),
-                                        ClipOval(
-                                          child: Container(
-                                            color: Colors.grey,
-                                            height: 3.h,
-                                            width: 3.h,
-                                          ),
-                                        ),
-                                        SizedBox(width: 7.5.w),
-                                        if(DateTime.now().difference(created).inDays > 0)
-                                          Text(
-                                            '${DateTime.now().difference(created).inDays}d',
-                                            style: TextStyle(
-                                              fontSize: 13.h,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        if(DateTime.now().difference(created).inDays == 0 
-                                            && DateTime.now().difference(created).inHours > 0)
-                                          Text(
-                                            '${DateTime.now().hour-created.hour}h',
-                                            style: TextStyle(
-                                              fontSize: 13.h,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        if(DateTime.now().difference(created).inHours == 0)
-                                          Text(
-                                            '${DateTime.now().difference(created).inMinutes}m',
-                                            style: TextStyle(
-                                              fontSize: 13.h,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        if(edit)
-                                          SizedBox(width: 90.w,),
                                         if(edit)
                                           GestureDetector(
                                             onTap: () {
@@ -233,25 +253,13 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) {
-                                                    String formatedText = "";
-                                                    for(int i=0;i<text.length-1;i++){
-                                                      if(json.decode(text[i])['text']==""){
-                                                        formatedText = "$formatedText\n\n";
-                                                      } else if(json.decode(text[i])['text']!="" && json.decode(text[i+1])['text']!=""){
-                                                        formatedText = '${formatedText + json.decode(text[i])['text']}\n';
-                                                      } else {
-                                                        formatedText = formatedText + json.decode(text[i])['text'];
-                                                      }
-                                                    }
-                                                    formatedText = formatedText+json.decode(text[text.length-1])['text'];
-
-                                                    return AddSchoolNewsPage(
+                                                    return CRUDSchoolNewsPage(
                                                       edit: true,
-                                                      newsId: news[index].id,
-                                                      text: formatedText,
+                                                      newsId: newsId,
+                                                      text: formatedText(text),
                                                       pin: news[index].pin,
                                                       pollId: answersForNews.isNotEmpty
-                                                                ? polls[index+1]!.id
+                                                                ? polls[newsId]!.id
                                                                 : 0,
                                                       title: answersForNews.isNotEmpty
                                                               ? title
@@ -285,24 +293,20 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                                     );
                                                   }
                                                 )
-                                              ).whenComplete(() => getNews());
+                                              ).whenComplete(() {
+                                                WidgetsBinding.instance.addPostFrameCallback((_) {
+                                                  getNews();
+                                                });
+                                              });
                                             },
-                                            child: Container(
-                                              height: 30.h,
-                                              width: 40.h,
-                                              alignment: Alignment.center,
-                                              color: Colors.white,
-                                              child: const Icon(
-                                                Icons.edit,
-                                                color: Colors.grey,
-                                              ),
+                                            child: Icon(
+                                              Icons.edit,
+                                              color: Colors.grey,
+                                              size: 20.h,
                                             ),
                                           )
                                       ],
                                     ),
-                                  
-                                    if(!edit)
-                                      SizedBox(height: 5.h),
 
                                     //main text
                                     for(int i=0;i<text.length;i++)
@@ -324,8 +328,75 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                           ),
                                         },
                                       ),
-                                  
 
+                                    //poll
+                                    if(polls.containsKey(newsId))
+                                      FlutterPolls(
+                                        onVoted: (PollOption pollOption, int newTotalVotes) async {  
+                                          print('Voted: ${pollOption.id}');
+                                          throw();
+                                        }, 
+                                        pollId: polls[newsId]!.id.toString(),
+                                        pollTitle: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                              polls[newsId]!.title,
+                                              style: TextStyle(
+                                                fontSize: 14.h
+                                              ),
+                                            ),
+                                        ),
+                                        pollEnded: DateTime.now() == pollEnd,
+                                        hasVoted: hasVoted,
+                                        userVotedOptionId: choosedAnswer,
+                                        pollOptions: [
+                                          for(int i=0;i<answersForNews.length;i++)
+                                            PollOption(
+                                              id: answersForNews[i].id,
+                                              title: Padding(
+                                                padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                                                child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text(
+                                                    answersForNews[i].answer,
+                                                    style: TextStyle(
+                                                      fontSize: 13.h
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              votes: answersForNews[i].votes
+                                            )
+                                        ],
+                                        voteInProgressColor: blue,
+                                        votedBackgroundColor: Colors.white,
+                                        votedProgressColor: blue,
+                                        votedPercentageTextStyle: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black
+                                        ),
+                                        metaWidget: Row(
+                                          children: [
+                                            SizedBox(width: 7.5.w),
+                                            ClipOval(
+                                              child: Container(
+                                                color: Colors.black,
+                                                height: 3.h,
+                                                 width: 3.h,
+                                              ),
+                                            ),
+                                            SizedBox(width: 7.5.w),
+                                            Text(
+                                              "${differenceInDates(pollEnd, DateTime.now())} palika nobalsot",
+                                              style: TextStyle(
+                                                fontSize: 13.h,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ]
+                                        )
+                                      ),
+                                    
                                     //images
                                     for(int i=0;i<media.length;i++)
                                       Container(
@@ -340,7 +411,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                             fit: BoxFit.cover
                                           ),
                                         ),
-                                      )
+                                      ),
                                   ]
                                 )
                               )

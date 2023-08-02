@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/repositories/news_repository.dart';
 import '../../domain/models/answer.dart';
-import '../../domain/models/author_data.dart';
 import '../../domain/models/poll.dart';
 import '../../domain/models/school_news.dart';
 
@@ -13,6 +12,7 @@ class NewsService {
 
   final NewsRepository newsRepository;
 
+  //CRUD SCHOOL NEWS PAGE
   Future<void> addSchoolNews(
     String text, List imagesPath, bool pin, bool showNewPoll, String title, 
     String answer1, String answer2, String answer3, String answer4, DateTime pollEnd) async {
@@ -71,16 +71,32 @@ class NewsService {
       });
   }
 
-  Future<void> deleteImage(int id, List images, String imageUrl) async {
-    return await newsRepository.deleteImage(id, images, imageUrl);
+  Future<void> deleteSchoolNews(int id, List images, int pollId, List<int> answers) async{
+    await newsRepository.deleteSchoolNews(id);
+
+    if(images.isNotEmpty){
+      for(int i=0;i<images.length;i++){
+        newsRepository.deleteImage(images[i]);
+      }
+    }
+
+    if(pollId != 0){
+      newsRepository.deletePoll(pollId, answers);
+    }
   }
 
+  Future<void> deleteImage(int id, List images, String imageUrl) async {
+    await newsRepository.updateImages(id, images, imageUrl);
+    await newsRepository.deleteImage(imageUrl);
+  }
+
+  Future<void> deletePoll(int id, List<int> answers) async {
+    return await newsRepository.deletePoll(id, answers);
+  }
+
+  //SCHOOL PAGE
   Future<List<SchoolNews>> getSchoolNews() async {
     return await newsRepository.getSchoolNews();
-  }
-
-  Future<List<AuthorData>> getAuthorData(List<int> authorId) async {
-    return await newsRepository.getAuthorData(authorId);
   }
 
   Future<Map<int, Poll>> getPolls(List<int> newsId) async {

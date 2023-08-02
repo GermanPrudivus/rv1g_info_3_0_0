@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:rv1g_info/src/features/news/domain/models/author_data.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 
@@ -10,6 +9,8 @@ import '../../domain/models/poll.dart';
 import '../../domain/models/school_news.dart';
 
 class NewsRepository {
+
+  //CRUD SCHOOL NEWS PAGE
   Future<int> addSchoolNews(String text, List imagesPath, bool pin) async{
     final supabase = Supabase.instance.client;
 
@@ -20,13 +21,17 @@ class NewsRepository {
       .select('id')
       .eq('email', email);
 
-    List paragraphs = text.split('\n');
+    List jsonParagraphs = [];
 
-    List jsonParagraphs = paragraphs.map((paragraph) {
-      return json.encode({
-        "text": paragraph,
-      });
-    }).toList();
+    if(text != ""){
+      List paragraphs = text.split('\n');
+
+      jsonParagraphs = paragraphs.map((paragraph) {
+        return json.encode({
+          "text": paragraph,
+        });
+      }).toList();
+    }
 
     List<String> images = [];
 
@@ -76,13 +81,17 @@ class NewsRepository {
 
     final email = supabase.auth.currentUser!.email;
 
-    List paragraphs = text.split('\n');
+    List jsonParagraphs = [];
 
-    List jsonParagraphs = paragraphs.map((paragraph) {
-      return json.encode({
-        "text": paragraph,
-      });
-    }).toList();
+    if(text != ""){
+      List paragraphs = text.split('\n');
+
+      jsonParagraphs = paragraphs.map((paragraph) {
+        return json.encode({
+          "text": paragraph,
+        });
+      }).toList();
+    }
 
     List<String> images = [];
 
@@ -275,42 +284,85 @@ class NewsRepository {
     }
   }
 
+  Future<void> updateImages(int id, List images, String imageUrl) async{
+    final supabase = Supabase.instance.client;
+
+    List imagesEdited = images;
+    imagesEdited.remove(imageUrl);
+
+    await supabase
+      .from('news')
+      .update({'media':imagesEdited})
+      .eq('id', id);
+  }
+
+  Future<void> deleteImage(String imageUrl) async {
+    final supabase = Supabase.instance.client;
+
+    await supabase
+      .storage
+      .from("news")
+      .remove([json.decode(imageUrl)['image_url'].split("/").last]);
+  }
+
+  Future<void> deleteSchoolNews(int id) async {
+    final supabase = Supabase.instance.client;
+
+    await supabase
+      .from('news')
+      .delete()
+      .eq('id', id);
+  }
+
+  Future<void> deletePoll(int id, List<int> answers) async {
+    final supabase = Supabase.instance.client;
+
+    await supabase
+      .from('poll')
+      .delete()
+      .eq('id', id);
+
+    for(int i=0;i<4;i++){
+      if(answers[i] != 0){
+        await supabase
+          .from('answer')
+          .delete()
+          .eq('id', answers[i]);
+      }
+    }
+  }
+
+  //SCHOOL PAGE
   Future<List<SchoolNews>> getSchoolNews() async{
     final supabase = Supabase.instance.client;
 
-    final res = await supabase
+    final resNews = await supabase
       .from('news')
       .select()
+      .order('pin', ascending: false)
       .order('created_datetime', ascending: false);
 
     List<SchoolNews> news = [];
 
-    for(int i=0;i<res.length;i++){
-      news.add(SchoolNews.fromJson(res[i]));
+    for(int i=0;i<resNews.length;i++){
+      final resAuthor = await supabase
+        .from('users')
+        .select()
+        .eq('id', resNews[i]['author_id']);
+
+      news.add(SchoolNews(
+        id: resNews[i]['id'], 
+        authorName: "${resAuthor[0]['name']} ${resAuthor[0]['surname']}", 
+        authorAvatar: resAuthor[0]['profile_pic_url'], 
+        text: List.from(resNews[i]['text']), 
+        media: List.from(resNews[i]['media']), 
+        likes: resNews[i]['likes'], 
+        pin: resNews[i]['pin'], 
+        createdDateTime: resNews[i]['created_datetime']
+      ));
     }
 
     return news;
-  }
-
-  Future<List<AuthorData>> getAuthorData(List<int> authorId) async{
-    final supabase = Supabase.instance.client;
-
-    List<AuthorData> authorData = [];
-
-    for(int i=0;i<authorId.length;i++){
-      final res = await supabase
-        .from('users')
-        .select()
-        .eq('id', authorId[i]);
-
-      authorData.add(AuthorData(
-        id: authorId[i], 
-        fullName: "${res[0]['name']} ${res[0]['surname']}", 
-        avatarUrl: res[0]['profile_pic_url']
-      ));
-    }
-    
-    return authorData;
   }
 
   Future<Map<int, Poll>> getPolls(List<int> newsId) async{
@@ -351,23 +403,6 @@ class NewsRepository {
     }
     
     return answers;
-  }
-
-  Future<void> deleteImage(int id, List images, String imageUrl) async {
-    final supabase = Supabase.instance.client;
-
-    List imagesEdited = images;
-    imagesEdited.remove(imageUrl);
-
-    await supabase
-      .from('news')
-      .update({'media':imagesEdited})
-      .eq('id', id);
-
-    await supabase
-      .storage
-      .from("news")
-      .remove([json.decode(imageUrl)['image_url'].split("/").last]);
   }
 
 }

@@ -13,7 +13,7 @@ import 'package:rv1g_info/src/utils/exception.dart';
 
 import '../../../../constants/theme_colors.dart';
 
-class AddSchoolNewsPage extends ConsumerStatefulWidget {
+class CRUDSchoolNewsPage extends ConsumerStatefulWidget {
   final bool edit;
   final int newsId;
   final String text;
@@ -31,7 +31,7 @@ class AddSchoolNewsPage extends ConsumerStatefulWidget {
   final DateTime pollEnd;
   final List<String> images;
 
-  const AddSchoolNewsPage({
+  const CRUDSchoolNewsPage({
     super.key,
     required this.edit,
     required this.newsId,
@@ -52,10 +52,10 @@ class AddSchoolNewsPage extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AddSchoolNewsPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _CRUDSchoolNewsPageState();
 }
 
-class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
+class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
 
   late int newsId;
   late String text;
@@ -106,7 +106,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
   Widget build(BuildContext context) {
 
     ref.listen<AsyncValue>(
-      addSchoolNewsControllerProvider,
+      crudSchoolNewsControllerProvider,
       (_, state) {
         if(state.isLoading) {
           showDialog(
@@ -115,7 +115,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
             builder: (context) => const Center(child: CircularProgressIndicator(),)
           );
         } else if (state.asData == null){
-          Navigator.pop(context);
+          
         } else {
           Navigator.pop(context);
         }
@@ -132,6 +132,35 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
           color: blue
         ),
         toolbarHeight: 60.h,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              ref
+              .read(crudSchoolNewsControllerProvider.notifier)
+              .deleteSchoolNews(
+                newsId, 
+                images, 
+                pollId, 
+                [
+                  widget.answer1Id, 
+                  widget.answer2Id, 
+                  widget.answer3Id, 
+                  widget.answer4Id
+                ]
+              ).whenComplete(() {
+                Navigator.pop(context);
+              });
+            },
+            child: SizedBox(
+              height: 50.h,
+              width: 60.w,
+              child: Icon(
+                Icons.delete,
+                color: blue,
+              ),
+            ),
+          )
+        ],
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -342,14 +371,37 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                                         )
                                       ),
                                       onTap: () {
-                                        setState(() {
-                                          showNewPoll = false;
-                                          title = "";
-                                          answer1 = "";
-                                          answer2 = "";
-                                          answer3 = "";
-                                          answer4 = "";
-                                        });
+                                        if(pollId != 0){
+                                          ref
+                                            .read(crudSchoolNewsControllerProvider.notifier)
+                                            .deleteIPoll(
+                                              pollId,
+                                              [
+                                                widget.answer1Id, 
+                                                widget.answer2Id, 
+                                                widget.answer3Id, 
+                                                widget.answer4Id
+                                              ]
+                                            ).whenComplete(() {
+                                              setState(() {
+                                                showNewPoll = false;
+                                                title = "";
+                                                answer1 = "";
+                                                answer2 = "";
+                                                answer3 = "";
+                                                answer4 = "";
+                                              });
+                                            });
+                                        } else {
+                                          setState(() {
+                                            showNewPoll = false;
+                                            title = "";
+                                            answer1 = "";
+                                            answer2 = "";
+                                            answer3 = "";
+                                            answer4 = "";
+                                          });
+                                        }
                                       },
                                     )
                                   ],
@@ -621,7 +673,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                             SlidableAction(
                               onPressed: (context) {
                                 ref
-                                  .read(addSchoolNewsControllerProvider.notifier)
+                                  .read(crudSchoolNewsControllerProvider.notifier)
                                   .deleteImage(newsId, images, images[i])
                                   .whenComplete(() {
                                     setState(() {
@@ -723,7 +775,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                     onPressed: () {
                       if(widget.edit) {
                         ref
-                          .read(addSchoolNewsControllerProvider.notifier)
+                          .read(crudSchoolNewsControllerProvider.notifier)
                           .editSchoolNews(
                             newsId,
                             text,
@@ -747,7 +799,7 @@ class _AddSchoolNewsPageState extends ConsumerState<AddSchoolNewsPage> {
                           });
                       } else {
                         ref
-                          .read(addSchoolNewsControllerProvider.notifier)
+                          .read(crudSchoolNewsControllerProvider.notifier)
                           .addSchoolNews(
                             text,
                             imagesPath, 
