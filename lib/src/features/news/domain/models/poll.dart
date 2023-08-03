@@ -5,7 +5,9 @@ class Poll {
     required this.allVotes,
     required this.pollStart,
     required this.pollEnd,
-    required this.newsId
+    required this.newsId,
+    required this.hasVoted,
+    required this.choosedAnswer,
   });
 
   final int id;
@@ -14,21 +16,6 @@ class Poll {
   final String pollStart;
   final String pollEnd;
   final int newsId;
-
-  static Poll fromJson(Map<String, dynamic> json) => Poll(
-    id: json['id'],
-    title: json['title'],
-    allVotes: json['all_votes'],
-    pollStart: json['poll_start'],
-    pollEnd: json['poll_end'],
-    newsId: json['news_id']
-  );
- 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-    'title': title,
-    'all_votes': allVotes,
-    'pollStart': pollStart,
-    'pollEnd': pollEnd,
-    'news_id': newsId
-  };
+  final bool hasVoted;
+  final int choosedAnswer;
 }

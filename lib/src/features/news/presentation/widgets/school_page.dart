@@ -15,7 +15,12 @@ import '../../domain/models/poll.dart';
 import '../../domain/models/school_news.dart';
 
 class SchoolPage extends ConsumerStatefulWidget {
-  const SchoolPage({Key? key}) : super(key: key);
+  final bool isAdmin;
+
+  const SchoolPage({
+    Key? key,
+    required this.isAdmin
+  }) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SchoolPageState();
@@ -23,6 +28,7 @@ class SchoolPage extends ConsumerStatefulWidget {
 
 class _SchoolPageState extends ConsumerState<SchoolPage> {
 
+  int userId = 0;
   List<SchoolNews> news = [];
   
   List<int> newsId = [];
@@ -31,11 +37,20 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
   List<int> pollsId = [];
   List<Answer> answers = [];
 
-  bool edit = true;
+  List<bool> likePressed = [];
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+        .read(schoolControllerProvider.notifier)
+        .getUserId()
+        .then((value) {
+          setState(() {
+            userId = value!;
+          });
+        });
+        
       getNews();
     });
     super.initState();
@@ -51,6 +66,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
           newsId.clear();
           for(int i=0;i<news.length;i++){
             newsId.add(news[i].id);
+            likePressed.add(news[i].userLiked);
           }
           ref
             .read(schoolControllerProvider.notifier)
@@ -60,9 +76,9 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                 polls = value!;
                 pollsId.clear();
                 if(polls.isNotEmpty){
-                  for(int i=1;i<=news.length;i++){
-                    if(polls.containsKey(i)){
-                      pollsId.add(polls[i]!.id);
+                  for(int i=0;i<news.length;i++){
+                    if(polls.containsKey(news[i].id)){
+                      pollsId.add(polls[news[i].id]!.id);
                     }
                   }
                   ref
@@ -143,6 +159,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                         List<String> media = news[index].media;
                         String authorName = news[index].authorName;
                         String authorAvatar = news[index].authorAvatar;
+                        int likes = news[index].likes;
                         DateTime created = DateTime.parse(news[index].createdDateTime);
                         String title = "";
                         List<Answer> answersForNews = [];
@@ -160,6 +177,8 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                               }
                             }
                           }
+                          hasVoted = polls[newsId]!.hasVoted;
+                          choosedAnswer = polls[newsId]!.choosedAnswer;
                         }
 
                         return Container(
@@ -184,6 +203,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   authorAvatar == ""
                                     ? CircleAvatar(
@@ -200,7 +220,44 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                         backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
                                         backgroundImage: NetworkImage(authorAvatar),
                                       ),
-                                    
+                                  GestureDetector(
+                                    onTap: () {
+                                      ref
+                                        .read(schoolControllerProvider.notifier)
+                                        .updateLikes(newsId, likes, likePressed[index], userId)
+                                        .whenComplete(() {
+                                          setState(() {
+                                            likePressed[index] = !likePressed[index];
+                                            getNews();
+                                          });
+                                        });
+                                    },
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: Column(
+                                        children: [
+                                          Icon(
+                                            likePressed[index]
+                                              ? Icons.favorite
+                                              : Icons.favorite_outline,
+                                            color: likePressed[index]
+                                              ? const Color.fromRGBO(255, 0, 0, 1)
+                                              : Colors.grey,
+                                            size: 25.h,
+                                          ),
+                                          Text(
+                                            likes.toString(),
+                                            style: TextStyle(
+                                              color: likePressed[index]
+                                                ? const Color.fromRGBO(255, 0, 0, 1)
+                                                : Colors.grey,
+                                              fontSize: 12.h
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  )
                                 ],
                               ),
 
@@ -214,8 +271,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        SizedBox(
-                                          width: 260.w,
+                                        Expanded(
                                           child: Row(
                                             children: [
                                               Flexible(
@@ -246,7 +302,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                             ],
                                           ),
                                         ),
-                                        if(edit)
+                                        if(widget.isAdmin)
                                           GestureDetector(
                                             onTap: () {
                                               Navigator.push(
@@ -329,22 +385,34 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                         },
                                       ),
 
+                                    if(polls.containsKey(newsId))
+                                      SizedBox(height: 15.h),
+
                                     //poll
                                     if(polls.containsKey(newsId))
                                       FlutterPolls(
-                                        onVoted: (PollOption pollOption, int newTotalVotes) async {  
-                                          print('Voted: ${pollOption.id}');
-                                          throw();
+                                        onVoted: (PollOption pollOption, _) async {
+                                          ref
+                                            .read(schoolControllerProvider.notifier)
+                                            .updateVotes(polls[newsId]!.id, pollOption.id!, userId)
+                                            .whenComplete(() {
+                                              setState(() {
+                                                getNews();
+                                              });
+                                            });
+                                          await Future.delayed(const Duration(seconds: 3));
+                                          return true;
                                         }, 
                                         pollId: polls[newsId]!.id.toString(),
                                         pollTitle: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                              polls[newsId]!.title,
-                                              style: TextStyle(
-                                                fontSize: 14.h
-                                              ),
+                                            polls[newsId]!.title,
+                                            style: TextStyle(
+                                              fontSize: 14.h,
+                                              fontWeight: FontWeight.bold
                                             ),
+                                          ),
                                         ),
                                         pollEnded: DateTime.now() == pollEnd,
                                         hasVoted: hasVoted,
@@ -368,11 +436,11 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                               votes: answersForNews[i].votes
                                             )
                                         ],
-                                        voteInProgressColor: blue,
+                                        voteInProgressColor: Colors.white,
                                         votedBackgroundColor: Colors.white,
-                                        votedProgressColor: blue,
-                                        votedPercentageTextStyle: const TextStyle(
-                                          fontSize: 14,
+                                        leadingVotedProgessColor: transparentLightGrey,
+                                        votedPercentageTextStyle: TextStyle(
+                                          fontSize: 14.h,
                                           color: Colors.black
                                         ),
                                         metaWidget: Row(

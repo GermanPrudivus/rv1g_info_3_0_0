@@ -52,15 +52,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
+
+  bool admin = false;
   int index = 0;
-  final screens = [
-    const NewsPage(),
-    const NewsPage(),
-    const NewsPage(),
-    const NewsPage(),
-    const NewsPage(),
-  ];
+  List<Widget> screens = [];
+
+  @override
+  void initState() {
+    isUserAdmin()
+      .then((value) {
+        setState(() {
+          admin = value;
+          screens = [
+            NewsPage(isAdmin: admin),
+            NewsPage(isAdmin: admin),
+            NewsPage(isAdmin: admin),
+            NewsPage(isAdmin: admin),
+            NewsPage(isAdmin: admin),
+          ];
+        });
+      });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,5 +136,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  Future<bool> isUserAdmin() async{
+    final supabase = Supabase.instance.client;
+    return await supabase.auth.currentUser!.userMetadata!['admin'] ?? false;
   }
 }

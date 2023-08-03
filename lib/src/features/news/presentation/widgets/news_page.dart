@@ -6,7 +6,12 @@ import 'package:rv1g_info/src/features/news/presentation/widgets/eklase_page.dar
 import 'package:rv1g_info/src/features/news/presentation/widgets/school_page.dart';
 
 class NewsPage extends ConsumerStatefulWidget {
-  const NewsPage({super.key});
+  final bool isAdmin;
+
+  const NewsPage({
+    super.key,
+    required this.isAdmin
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _NewsPageState();
@@ -32,15 +37,15 @@ class _NewsPageState extends ConsumerState<NewsPage> with TickerProviderStateMix
           tabQuant: 2, 
           tabNames: const ["Skola","E-klase"],
           tabController: _tabController,
-          add: true,
+          add: widget.isAdmin,
         ),
       ),
       backgroundColor: Colors.white,
       body: TabBarView(
         controller: _tabController,
-        children: const [
-          SchoolPage(),
-          EklasePage(),
+        children: [
+          SchoolPage(isAdmin: widget.isAdmin),
+          const EklasePage(),
         ],
       )
     );

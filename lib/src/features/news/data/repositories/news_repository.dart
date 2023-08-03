@@ -67,6 +67,7 @@ class NewsRepository {
           'text': jsonParagraphs,
           'media': jsonImages,
           'likes': 0,
+          'user_liked': [],
           'pin': pin,
           'created_datetime': DateTime.now().toIso8601String()
         })
@@ -145,7 +146,8 @@ class NewsRepository {
           'all_votes': 0,
           'poll_start': DateTime.now().toIso8601String(),
           'poll_end': pollEnd.toIso8601String(),
-          'news_id': newsId
+          'news_id': newsId,
+          'voted_users': []
         })
       )
       .select();
@@ -350,13 +352,20 @@ class NewsRepository {
         .select()
         .eq('id', resNews[i]['author_id']);
 
+      bool liked= false;
+
+      if(resNews[i]['user_liked'].contains("{'user_id':$getUserId()}")){
+        liked = true;
+      }
+
       news.add(SchoolNews(
         id: resNews[i]['id'], 
         authorName: "${resAuthor[0]['name']} ${resAuthor[0]['surname']}", 
         authorAvatar: resAuthor[0]['profile_pic_url'], 
         text: List.from(resNews[i]['text']), 
         media: List.from(resNews[i]['media']), 
-        likes: resNews[i]['likes'], 
+        likes: resNews[i]['likes'],
+        userLiked: liked,
         pin: resNews[i]['pin'], 
         createdDateTime: resNews[i]['created_datetime']
       ));
@@ -374,10 +383,35 @@ class NewsRepository {
       final res = await supabase
         .from('poll')
         .select()
-        .eq('news_id', newsId[i]);
+        .eq('news_id', newsId[i])
+        .order('id', ascending: true);
 
       if(res.isNotEmpty){
-        polls[newsId[i]] = Poll.fromJson(res[0]);
+        List votedUsers = res[i]['voted_users'];
+        bool hasVoted = false;
+        int choosedAnswer = 0;
+        int userId = await getUserId();
+
+        if(votedUsers.isNotEmpty){
+          for(int i=0;i<votedUsers.length;i++){
+            if(json.decode(votedUsers[i])['user_id'] == userId){
+              hasVoted = true;
+              choosedAnswer = json.decode(votedUsers[i])['answer_id'];
+              break;
+            }
+          }
+        }
+
+        polls[newsId[i]] = Poll(
+          id: res[i]['id'],
+          title: res[i]['title'],
+          allVotes: res[i]['all_votes'],
+          pollStart: res[i]['poll_start'],
+          pollEnd: res[i]['poll_end'],
+          newsId: res[i]['news_id'],
+          hasVoted: hasVoted,
+          choosedAnswer: choosedAnswer
+        );
       }
     }
 
@@ -393,7 +427,8 @@ class NewsRepository {
       final res = await supabase
         .from('answer')
         .select()
-        .eq('poll_id', pollsId[j]);
+        .eq('poll_id', pollsId[j])
+        .order('id', ascending: true);
     
       if(res != []){
         for(int i=0;i<res.length;i++){
@@ -403,6 +438,105 @@ class NewsRepository {
     }
     
     return answers;
+  }
+
+  Future<int> getUserId() async{
+    final supabase = Supabase.instance.client;
+
+    String email = supabase.auth.currentUser!.email!;
+
+    final res = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', email);
+
+    return res[0]['id'];
+  }
+
+  Future<void> updateVotes(int pollId, int answerId, int userdId) async{
+    final supabase = Supabase.instance.client;
+
+    final res1 = await supabase
+      .from('poll')
+      .select()
+      .eq('id', pollId);
+
+    List votedUsers = res1[0]['voted_users'];
+
+    votedUsers.add(
+      json.encode({
+        "user_id": userdId,
+        "answer_id": answerId,
+      })
+    );
+
+    await supabase
+      .from('poll')
+      .update({
+        'all_votes': res1[0]['all_votes']+1,
+        'voted_users': votedUsers
+      })
+      .eq('id', pollId);
+
+    final res2 = await supabase
+      .from('answer')
+      .select('votes')
+      .eq('id', answerId);
+
+    await supabase
+      .from('answer')
+      .update({'votes': res2[0]['votes']+1})
+      .eq('id', answerId);
+  }
+
+  Future<void> increaseLikes(int newsId, int likes, int userId) async{
+    final supabase = Supabase.instance.client;
+
+    final res = await supabase
+      .from('news')
+      .select()
+      .eq('id', newsId);
+
+    List userLiked = res[0]['user_liked'];
+
+    userLiked.add(
+      json.encode({
+        "user_id": userId,
+      })
+    );
+    
+    await supabase
+      .from('news')
+      .update({
+        'likes':likes+1, 
+        'user_liked':userLiked
+      })
+      .eq('id', newsId);
+  }
+
+  Future<void> decreaseLikes(int newsId, int likes, int userId) async{
+    final supabase = Supabase.instance.client;
+
+    final res = await supabase
+      .from('news')
+      .select()
+      .eq('id', newsId);
+
+    List userLiked = res[0]['user_liked'];
+
+    userLiked.remove(
+      json.encode({
+        "user_id": userId,
+      })
+    );
+
+    await supabase
+      .from('news')
+      .update({
+        'likes':likes-1,
+        'user_liked':userLiked
+      })
+      .eq('id', newsId);
   }
 
 }
