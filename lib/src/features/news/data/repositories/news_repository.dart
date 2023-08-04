@@ -347,6 +347,7 @@ class NewsRepository {
     List<SchoolNews> news = [];
 
     for(int i=0;i<resNews.length;i++){
+      //author
       final resAuthor = await supabase
         .from('users')
         .select()
@@ -354,42 +355,23 @@ class NewsRepository {
 
       bool liked= false;
 
+      //likes
       if(resNews[i]['user_liked'].contains("{'user_id':$getUserId()}")){
         liked = true;
       }
 
-      news.add(SchoolNews(
-        id: resNews[i]['id'], 
-        authorName: "${resAuthor[0]['name']} ${resAuthor[0]['surname']}", 
-        authorAvatar: resAuthor[0]['profile_pic_url'], 
-        text: List.from(resNews[i]['text']), 
-        media: List.from(resNews[i]['media']), 
-        likes: resNews[i]['likes'],
-        userLiked: liked,
-        pin: resNews[i]['pin'], 
-        createdDateTime: resNews[i]['created_datetime']
-      ));
-    }
-
-    return news;
-  }
-
-  Future<Map<int, Poll>> getPolls(List<int> newsId) async{
-    final supabase = Supabase.instance.client;
-
-    Map<int, Poll> polls = {};
-    
-    for(int i=0;i<newsId.length;i++){
-      final res = await supabase
+      //poll
+      final resPoll = await supabase
         .from('poll')
         .select()
-        .eq('news_id', newsId[i])
-        .order('id', ascending: true);
+        .eq('news_id', resNews[i]['id']);
 
-      if(res.isNotEmpty){
-        List votedUsers = res[i]['voted_users'];
-        bool hasVoted = false;
-        int choosedAnswer = 0;
+      bool hasVoted = false;
+      int choosedAnswer = 0;
+      List<Answer> answers = [];
+
+      if(resPoll.isNotEmpty){
+        List votedUsers = resPoll[0]['voted_users'];
         int userId = await getUserId();
 
         if(votedUsers.isNotEmpty){
@@ -402,42 +384,57 @@ class NewsRepository {
           }
         }
 
-        polls[newsId[i]] = Poll(
-          id: res[i]['id'],
-          title: res[i]['title'],
-          allVotes: res[i]['all_votes'],
-          pollStart: res[i]['poll_start'],
-          pollEnd: res[i]['poll_end'],
-          newsId: res[i]['news_id'],
-          hasVoted: hasVoted,
-          choosedAnswer: choosedAnswer
-        );
-      }
-    }
-
-    return polls;
-  }
-
-  Future<List<Answer>> getAnswers(List<int> pollsId) async{
-    final supabase = Supabase.instance.client;
-
-    List<Answer> answers = [];
-
-    for(int j=0;j<pollsId.length;j++){
-      final res = await supabase
-        .from('answer')
-        .select()
-        .eq('poll_id', pollsId[j])
-        .order('id', ascending: true);
+        //answers
+        final resAnswers = await supabase
+          .from('answer')
+          .select()
+          .eq('poll_id', resPoll[0]['id'])
+          .order('id', ascending: true);
     
-      if(res != []){
-        for(int i=0;i<res.length;i++){
-          answers.add(Answer.fromJson(res[i]));
+        if(resAnswers != []){
+          for(int i=0;i<resAnswers.length;i++){
+            answers.add(Answer.fromJson(resAnswers[i]));
+          }
         }
       }
+
+      news.add(SchoolNews(
+        id: resNews[i]['id'], 
+        authorName: "${resAuthor[0]['name']} ${resAuthor[0]['surname']}", 
+        authorAvatar: resAuthor[0]['profile_pic_url'], 
+        text: List.from(resNews[i]['text']), 
+        media: List.from(resNews[i]['media']), 
+        likes: resNews[i]['likes'],
+        userLiked: liked,
+        pin: resNews[i]['pin'],
+        poll: resPoll.isEmpty
+         ? Poll(
+            id: 0,
+            title: "",
+            allVotes: 0,
+            pollStart: DateTime.now().toIso8601String(),
+            pollEnd: DateTime.now().toIso8601String(),
+            answers: answers,
+            newsId: 0,
+            hasVoted: hasVoted,
+            choosedAnswer: choosedAnswer
+          )
+         : Poll(
+            id: resPoll[0]['id'],
+            title: resPoll[0]['title'],
+            allVotes: resPoll[0]['all_votes'],
+            pollStart: resPoll[0]['poll_start'],
+            pollEnd: resPoll[0]['poll_end'],
+            answers: answers,
+            newsId: resNews[i]['id'],
+            hasVoted: hasVoted,
+            choosedAnswer: choosedAnswer
+          ),
+        createdDateTime: resNews[i]['created_datetime']
+      ));
     }
-    
-    return answers;
+
+    return news;
   }
 
   Future<int> getUserId() async{

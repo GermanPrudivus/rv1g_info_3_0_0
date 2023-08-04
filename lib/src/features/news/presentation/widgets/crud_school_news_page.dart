@@ -12,23 +12,14 @@ import 'package:rv1g_info/src/features/news/presentation/controllers/crud_school
 import 'package:rv1g_info/src/utils/exception.dart';
 
 import '../../../../constants/theme_colors.dart';
+import '../../domain/models/poll.dart';
 
 class CRUDSchoolNewsPage extends ConsumerStatefulWidget {
   final bool edit;
   final int newsId;
   final String text;
   final bool pin;
-  final int pollId;
-  final String title;
-  final int answer1Id;
-  final int answer2Id;
-  final int answer3Id;
-  final int answer4Id;
-  final String answer1;
-  final String answer2;
-  final String answer3;
-  final String answer4;
-  final DateTime pollEnd;
+  final Poll poll;
   final List<String> images;
 
   const CRUDSchoolNewsPage({
@@ -37,17 +28,7 @@ class CRUDSchoolNewsPage extends ConsumerStatefulWidget {
     required this.newsId,
     required this.text,
     required this.pin,
-    required this.pollId,
-    required this.title,
-    required this.answer1Id,
-    required this.answer2Id,
-    required this.answer3Id,
-    required this.answer4Id,
-    required this.answer1,
-    required this.answer2,
-    required this.answer3,
-    required this.answer4,
-    required this.pollEnd,
+    required this.poll,
     required this.images
   });
 
@@ -65,10 +46,14 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
 
   late int pollId;
   late String title;
-  late String answer1;
-  late String answer2;
-  late String answer3;
-  late String answer4;
+  int answer1Id = 0;
+  String answer1 = "";
+  int answer2Id = 0;
+  String answer2 = "";
+  int answer3Id = 0;
+  String answer3 = "";
+  int answer4Id = 0;
+  String answer4 = "";
   late DateTime pollEnd;
 
   List imagesPath = [];
@@ -78,13 +63,23 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
     newsId = widget.newsId;
     text = widget.text;
     pin = widget.pin;
-    pollId = widget.pollId;
-    title = widget.title;
-    answer1 = widget.answer1;
-    answer2 = widget.answer2;
-    answer3 = widget.answer3;
-    answer4 = widget.answer4;
-    pollEnd = widget.pollEnd;
+    pollId = widget.poll.id;
+    title = widget.poll.title;
+    if(widget.poll.id != 0){
+      answer1Id = widget.poll.answers[0].id;
+      answer1 = widget.poll.answers[0].answer;
+      answer2Id = widget.poll.answers[1].id;
+      answer2 = widget.poll.answers[1].answer;
+      if(widget.poll.answers.length >= 3){
+        answer3Id = widget.poll.answers[2].id;
+        answer3 = widget.poll.answers[2].answer;
+      }
+      if(widget.poll.answers.length == 4){
+        answer4Id = widget.poll.answers[3].id;
+        answer4 = widget.poll.answers[3].answer;
+      }
+    }
+    pollEnd = DateTime.parse(widget.poll.pollEnd);
     images = widget.images;
     super.initState();
   }
@@ -142,10 +137,10 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                 images, 
                 pollId, 
                 [
-                  widget.answer1Id, 
-                  widget.answer2Id, 
-                  widget.answer3Id, 
-                  widget.answer4Id
+                  answer1Id,
+                  answer2Id,
+                  answer3Id,
+                  answer4Id,
                 ]
               ).whenComplete(() {
                 Navigator.pop(context);
@@ -291,7 +286,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                   ),
                 ),
 
-                if(widget.title != "" || showNewPoll)
+                if(widget.poll.title != "" || showNewPoll)
                   Padding(
                     padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
                     child: Container(
@@ -374,13 +369,13 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                         if(pollId != 0){
                                           ref
                                             .read(crudSchoolNewsControllerProvider.notifier)
-                                            .deleteIPoll(
+                                            .deletePoll(
                                               pollId,
                                               [
-                                                widget.answer1Id, 
-                                                widget.answer2Id, 
-                                                widget.answer3Id, 
-                                                widget.answer4Id
+                                                answer1Id,
+                                                answer2Id,
+                                                answer3Id,
+                                                answer4Id,
                                               ]
                                             ).whenComplete(() {
                                               setState(() {
@@ -785,10 +780,10 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                             showNewPoll,
                             pollId,
                             title,
-                            widget.answer1Id,
-                            widget.answer2Id,
-                            widget.answer3Id,
-                            widget.answer4Id,
+                            answer1Id,
+                            answer2Id,
+                            answer3Id,
+                            answer4Id,
                             answer1, 
                             answer2, 
                             answer3, 

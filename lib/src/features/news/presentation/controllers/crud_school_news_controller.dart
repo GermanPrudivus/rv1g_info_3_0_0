@@ -49,7 +49,7 @@ class CrudSchoolNewsController extends StateNotifier<AsyncValue<void>> {
     });
   }
 
-  Future<void> deleteIPoll(int id, List<int> answers) async {
+  Future<void> deletePoll(int id, List<int> answers) async {
     state = const AsyncLoading<void>();
     state = await AsyncValue.guard<void>(() {
       return newsService.deletePoll(id, answers);

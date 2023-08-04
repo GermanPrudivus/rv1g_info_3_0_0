@@ -30,14 +30,6 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
 
   int userId = 0;
   List<SchoolNews> news = [];
-  
-  List<int> newsId = [];
-  Map<int, Poll> polls = {};
-
-  List<int> pollsId = [];
-  List<Answer> answers = [];
-
-  List<bool> likePressed = [];
 
   @override
   void initState() {
@@ -50,7 +42,6 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
             userId = value!;
           });
         });
-        
       getNews();
     });
     super.initState();
@@ -63,35 +54,6 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
       .then((value) {
         setState(() {
           news = value!;
-          newsId.clear();
-          for(int i=0;i<news.length;i++){
-            newsId.add(news[i].id);
-            likePressed.add(news[i].userLiked);
-          }
-          ref
-            .read(schoolControllerProvider.notifier)
-            .getPolls(newsId)
-            .then((value) {
-              setState(() {
-                polls = value!;
-                pollsId.clear();
-                if(polls.isNotEmpty){
-                  for(int i=0;i<news.length;i++){
-                    if(polls.containsKey(news[i].id)){
-                      pollsId.add(polls[news[i].id]!.id);
-                    }
-                  }
-                  ref
-                    .read(schoolControllerProvider.notifier)
-                    .getAnswers(pollsId)
-                    .then((value) {
-                      setState(() {
-                        answers = value!;
-                      });
-                    });
-                }
-              });
-            });
         });
       });
   }
@@ -129,7 +91,6 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
 
     return formatedText;
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +100,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
       body: SafeArea(
         child: Column(
           children:[
-            news.isEmpty || polls.isEmpty || answers.isEmpty
+            news.isEmpty
               ? Expanded(
                   child: Center(
                     child: CircularProgressIndicator(color: blue),
@@ -159,27 +120,14 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                         List<String> media = news[index].media;
                         String authorName = news[index].authorName;
                         String authorAvatar = news[index].authorAvatar;
-                        int likes = news[index].likes;
                         DateTime created = DateTime.parse(news[index].createdDateTime);
-                        String title = "";
-                        List<Answer> answersForNews = [];
-                        bool hasVoted = false;
-                        int choosedAnswer = 0;
-                        DateTime pollEnd = DateTime.now();
 
-                        if(polls.isNotEmpty && polls.containsKey(newsId)){
-                          title = polls[newsId]!.title;
-                          pollEnd = DateTime.parse(polls[newsId]!.pollEnd);
-                          if(answers.isNotEmpty){
-                            for(int i=0;i<answers.length;i++){
-                              if(answers[i].pollId == polls[newsId]!.id){
-                                answersForNews.add(answers[i]);
-                              }
-                            }
-                          }
-                          hasVoted = polls[newsId]!.hasVoted;
-                          choosedAnswer = polls[newsId]!.choosedAnswer;
-                        }
+                        //poll
+                        Poll poll = news[index].poll;
+                        List<Answer> answersForNews = poll.answers;
+                        bool hasVoted = poll.hasVoted;
+                        int choosedAnswer = poll.choosedAnswer;
+                        DateTime pollEnd = DateTime.parse(poll.pollEnd);
 
                         return Container(
                           padding: EdgeInsets.only(top: 10.h, left: 7.5.w, right: 15.w, bottom: 10.h),
@@ -190,7 +138,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                   ? blue
                                   : Colors.grey,
                                 width: news[index].pin
-                                  ? 1.5.h
+                                  ? 2.5.h
                                   : 0.5.h,
                               )
                             )
@@ -220,44 +168,6 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                         backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
                                         backgroundImage: NetworkImage(authorAvatar),
                                       ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      ref
-                                        .read(schoolControllerProvider.notifier)
-                                        .updateLikes(newsId, likes, likePressed[index], userId)
-                                        .whenComplete(() {
-                                          setState(() {
-                                            likePressed[index] = !likePressed[index];
-                                            getNews();
-                                          });
-                                        });
-                                    },
-                                    child: Container(
-                                      color: Colors.white,
-                                      child: Column(
-                                        children: [
-                                          Icon(
-                                            likePressed[index]
-                                              ? Icons.favorite
-                                              : Icons.favorite_outline,
-                                            color: likePressed[index]
-                                              ? const Color.fromRGBO(255, 0, 0, 1)
-                                              : Colors.grey,
-                                            size: 25.h,
-                                          ),
-                                          Text(
-                                            likes.toString(),
-                                            style: TextStyle(
-                                              color: likePressed[index]
-                                                ? const Color.fromRGBO(255, 0, 0, 1)
-                                                : Colors.grey,
-                                              fontSize: 12.h
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  )
                                 ],
                               ),
 
@@ -314,37 +224,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                                       newsId: newsId,
                                                       text: formatedText(text),
                                                       pin: news[index].pin,
-                                                      pollId: answersForNews.isNotEmpty
-                                                                ? polls[newsId]!.id
-                                                                : 0,
-                                                      title: answersForNews.isNotEmpty
-                                                              ? title
-                                                              : "",
-                                                      answer1Id: answersForNews.isNotEmpty
-                                                                  ? answersForNews[0].id
-                                                                  : 0,
-                                                      answer2Id: answersForNews.isNotEmpty
-                                                                  ? answersForNews[1].id
-                                                                  : 0,
-                                                      answer3Id: answersForNews.length < 3
-                                                                  ? 0
-                                                                  : answersForNews[2].id,
-                                                      answer4Id: answersForNews.length < 4
-                                                                  ? 0
-                                                                  : answersForNews[3].id,
-                                                      answer1: answersForNews.isNotEmpty
-                                                                ? answersForNews[0].answer
-                                                                : "",
-                                                      answer2: answersForNews.isNotEmpty
-                                                                ? answersForNews[1].answer
-                                                                : "",
-                                                      answer3: answersForNews.length < 3
-                                                                ? ""
-                                                                : answersForNews[2].answer,
-                                                      answer4: answersForNews.length < 4
-                                                                ? ""
-                                                                : answersForNews[3].answer,
-                                                      pollEnd: pollEnd,
+                                                      poll: poll,
                                                       images: media,
                                                     );
                                                   }
@@ -385,29 +265,28 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                         },
                                       ),
 
-                                    if(polls.containsKey(newsId))
+                                    if(poll.id != 0)
                                       SizedBox(height: 15.h),
 
                                     //poll
-                                    if(polls.containsKey(newsId))
+                                    if(poll.id != 0)
                                       FlutterPolls(
                                         onVoted: (PollOption pollOption, _) async {
                                           ref
                                             .read(schoolControllerProvider.notifier)
-                                            .updateVotes(polls[newsId]!.id, pollOption.id!, userId)
+                                            .updateVotes(poll.id, pollOption.id!, userId)
                                             .whenComplete(() {
                                               setState(() {
                                                 getNews();
                                               });
                                             });
-                                          await Future.delayed(const Duration(seconds: 3));
                                           return true;
                                         }, 
-                                        pollId: polls[newsId]!.id.toString(),
+                                        pollId: poll.id.toString(),
                                         pollTitle: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            polls[newsId]!.title,
+                                            poll.title,
                                             style: TextStyle(
                                               fontSize: 14.h,
                                               fontWeight: FontWeight.bold
@@ -437,11 +316,17 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                             )
                                         ],
                                         voteInProgressColor: Colors.white,
+                                        votedProgressColor:  transparentLightGrey,
                                         votedBackgroundColor: Colors.white,
                                         leadingVotedProgessColor: transparentLightGrey,
                                         votedPercentageTextStyle: TextStyle(
                                           fontSize: 14.h,
                                           color: Colors.black
+                                        ),
+                                        votesText: "nobalsoja",
+                                        votesTextStyle: TextStyle(
+                                          fontSize: 13.h,
+                                          fontWeight: FontWeight.bold
                                         ),
                                         metaWidget: Row(
                                           children: [
@@ -450,7 +335,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                               child: Container(
                                                 color: Colors.black,
                                                 height: 3.h,
-                                                 width: 3.h,
+                                                width: 3.h,
                                               ),
                                             ),
                                             SizedBox(width: 7.5.w),
@@ -459,6 +344,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                               style: TextStyle(
                                                 fontSize: 13.h,
                                                 color: Colors.black,
+                                                fontWeight: FontWeight.bold
                                               ),
                                             ),
                                           ]

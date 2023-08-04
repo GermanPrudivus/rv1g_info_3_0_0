@@ -1,8 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/repositories/news_repository.dart';
-import '../../domain/models/answer.dart';
-import '../../domain/models/poll.dart';
 import '../../domain/models/school_news.dart';
 
 class NewsService {
@@ -97,14 +95,6 @@ class NewsService {
   //SCHOOL PAGE
   Future<List<SchoolNews>> getSchoolNews() async {
     return await newsRepository.getSchoolNews();
-  }
-
-  Future<Map<int, Poll>> getPolls(List<int> newsId) async {
-    return await newsRepository.getPolls(newsId);
-  }
-
-  Future<List<Answer>> getAnswers(List<int> pollsId) async {
-    return await newsRepository.getAnswers(pollsId);
   }
 
   Future<int> getUserId() async {

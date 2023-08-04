@@ -1,3 +1,5 @@
+import 'package:rv1g_info/src/features/news/domain/models/poll.dart';
+
 class SchoolNews {
   const SchoolNews({
     required this.id,
@@ -8,6 +10,7 @@ class SchoolNews {
     required this.likes,
     required this.userLiked,
     required this.pin,
+    required this.poll,
     required this.createdDateTime
   });
 
@@ -19,5 +22,6 @@ class SchoolNews {
   final int likes;
   final bool userLiked;
   final bool pin;
+  final Poll poll;
   final String createdDateTime;
 }

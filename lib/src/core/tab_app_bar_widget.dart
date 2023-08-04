@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/constants/theme_colors.dart';
+import 'package:rv1g_info/src/features/news/domain/models/poll.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/crud_school_news_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -76,7 +77,7 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
       title: Text(
         widget.title,
         style: TextStyle(
-          fontSize: 22.h,
+          fontSize: 20.h,
           color: blue,
           fontWeight: FontWeight.bold
         ),
@@ -95,17 +96,17 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
                         newsId: 0,
                         text: "",
                         pin: false, 
-                        pollId: 0,
-                        title: "",
-                        answer1Id: 0,
-                        answer2Id: 0,
-                        answer3Id: 0,
-                        answer4Id: 0,
-                        answer1: "",
-                        answer2: "",
-                        answer3: "",
-                        answer4: "",
-                        pollEnd: DateTime.now(),
+                        poll: Poll(
+                          id: 0, 
+                          title: "", 
+                          allVotes: 0, 
+                          pollStart: DateTime.now().toIso8601String(), 
+                          pollEnd: DateTime.now().toIso8601String(), 
+                          newsId: 0, 
+                          answers: [], 
+                          hasVoted: false, 
+                          choosedAnswer: 0
+                        ),
                         images: const []
                       )
                     : const AboutDialog()
