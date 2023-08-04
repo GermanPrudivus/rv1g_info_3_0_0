@@ -104,14 +104,6 @@ class NewsService {
   Future<void> updateVotes(int pollId, int answerId, int userId) async {
     return await newsRepository.updateVotes(pollId, answerId, userId);
   }
-
-  Future<void> updateLikes(int newsId, int likes, bool likePressed, int userId) async{
-    if(likePressed){
-      await newsRepository.decreaseLikes(newsId, likes, userId);
-    } else {
-      await newsRepository.increaseLikes(newsId, likes, userId);
-    }
-  }
 }
 
 final newsServiceProvider = Provider<NewsService>((ref) {

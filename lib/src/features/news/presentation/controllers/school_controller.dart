@@ -33,13 +33,6 @@ class SchoolController extends StateNotifier<AsyncValue<void>> {
       return newsService.updateVotes(pollId, answerId, userId);
     });
   }
-
-  Future<void> updateLikes(int newsId, int likes, bool likePressed, int userId) async {
-    state = const AsyncLoading<void>();
-    state = await AsyncValue.guard<void>(() {
-      return newsService.updateLikes(newsId, likes, likePressed, userId);
-    });
-  }
 }
 
 final schoolControllerProvider =

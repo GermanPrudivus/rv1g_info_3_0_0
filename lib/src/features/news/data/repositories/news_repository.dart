@@ -485,57 +485,6 @@ class NewsRepository {
       .update({'votes': res2[0]['votes']+1})
       .eq('id', answerId);
   }
-
-  Future<void> increaseLikes(int newsId, int likes, int userId) async{
-    final supabase = Supabase.instance.client;
-
-    final res = await supabase
-      .from('news')
-      .select()
-      .eq('id', newsId);
-
-    List userLiked = res[0]['user_liked'];
-
-    userLiked.add(
-      json.encode({
-        "user_id": userId,
-      })
-    );
-    
-    await supabase
-      .from('news')
-      .update({
-        'likes':likes+1, 
-        'user_liked':userLiked
-      })
-      .eq('id', newsId);
-  }
-
-  Future<void> decreaseLikes(int newsId, int likes, int userId) async{
-    final supabase = Supabase.instance.client;
-
-    final res = await supabase
-      .from('news')
-      .select()
-      .eq('id', newsId);
-
-    List userLiked = res[0]['user_liked'];
-
-    userLiked.remove(
-      json.encode({
-        "user_id": userId,
-      })
-    );
-
-    await supabase
-      .from('news')
-      .update({
-        'likes':likes-1,
-        'user_liked':userLiked
-      })
-      .eq('id', newsId);
-  }
-
 }
 
 final newsRepositoryProvider = riverpod.Provider<NewsRepository>((ref) {
