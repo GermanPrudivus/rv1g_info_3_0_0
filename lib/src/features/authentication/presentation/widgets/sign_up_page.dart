@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:rv1g_info/src/constants/auth_const.dart';
+import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/email_verification_page.dart';
 import 'package:rv1g_info/src/utils/auth_exception.dart';
 import 'package:the_validator/the_validator.dart';

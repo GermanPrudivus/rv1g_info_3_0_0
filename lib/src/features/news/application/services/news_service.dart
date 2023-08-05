@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/repositories/news_repository.dart';
+import '../../domain/models/eklase_news.dart';
 import '../../domain/models/school_news.dart';
 
 class NewsService {
@@ -74,7 +75,7 @@ class NewsService {
 
     if(images.isNotEmpty){
       for(int i=0;i<images.length;i++){
-        newsRepository.deleteImage(images[i]);
+        newsRepository.deleteImage(images[i], 'news');
       }
     }
 
@@ -83,9 +84,9 @@ class NewsService {
     }
   }
 
-  Future<void> deleteImage(int id, List images, String imageUrl) async {
-    await newsRepository.updateImages(id, images, imageUrl);
-    await newsRepository.deleteImage(imageUrl);
+  Future<void> deleteImage(int id, List images, String imageUrl, String bucket, String table) async {
+    await newsRepository.updateImages(id, images, imageUrl, table);
+    await newsRepository.deleteImage(imageUrl, bucket);
   }
 
   Future<void> deletePoll(int id, List<int> answers) async {
@@ -97,12 +98,36 @@ class NewsService {
     return await newsRepository.getSchoolNews();
   }
 
-  Future<int> getUserId() async {
-    return await newsRepository.getUserId();
-  }
-
   Future<void> updateVotes(int pollId, int answerId, int userId) async {
     return await newsRepository.updateVotes(pollId, answerId, userId);
+  }
+
+  //CRUD Eklase News Page
+  Future<void> addEklaseNews(String title, String author, 
+    String shortText, String text, List imagesPath, bool pin) async{
+
+    return await newsRepository.addEklaseNews(title, author, shortText, text, imagesPath, pin);
+  }
+
+  Future<void> editEklaseNews(int newsId, String title, String author, 
+    String shortText, String text, List imagesPath, List imagesUrls, bool pin) async{
+
+    return await newsRepository.editEklaseNews(
+      newsId, title, author, shortText, text, imagesPath, imagesUrls, pin
+    );
+  }
+
+  Future<void> deleteEklaseNews(int id) async{
+    return await newsRepository.deleteEklaseNews(id);
+  }
+
+  //EKLASE PAGE
+  Future<List<EklaseNews>> getEklaseNews() async {
+    return await newsRepository.getEklaseNews();
+  }
+
+  Future<int> getUserId() async {
+    return await newsRepository.getUserId();
   }
 }
 

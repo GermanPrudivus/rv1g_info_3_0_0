@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../constants/auth_const.dart';
+import '../../../../constants/const.dart';
 import '../../../../constants/theme_colors.dart';
 
 class EmailVerificationPage extends StatelessWidget {

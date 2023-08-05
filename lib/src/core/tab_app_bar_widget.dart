@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/constants/theme_colors.dart';
-import 'package:rv1g_info/src/features/news/domain/models/poll.dart';
-import 'package:rv1g_info/src/features/news/presentation/widgets/crud_school_news_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TabAppBarWidget extends StatefulWidget {
@@ -10,6 +8,7 @@ class TabAppBarWidget extends StatefulWidget {
   final int tabQuant;
   final List<String> tabNames;
   final bool add;
+  final List<Widget> addWidgets;
   late TabController tabController;
 
   TabAppBarWidget({
@@ -19,6 +18,7 @@ class TabAppBarWidget extends StatefulWidget {
     required this.tabNames,
     required this.tabController,
     required this.add,
+    required this.addWidgets
   });
 
   @override
@@ -91,25 +91,8 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
                 context, 
                 MaterialPageRoute(
                   builder: (context) => widget.tabController.index == 0
-                    ? CRUDSchoolNewsPage(
-                        edit: false,
-                        newsId: 0,
-                        text: "",
-                        pin: false, 
-                        poll: Poll(
-                          id: 0, 
-                          title: "", 
-                          allVotes: 0, 
-                          pollStart: DateTime.now().toIso8601String(), 
-                          pollEnd: DateTime.now().toIso8601String(), 
-                          newsId: 0, 
-                          answers: [], 
-                          hasVoted: false, 
-                          choosedAnswer: 0
-                        ),
-                        images: const []
-                      )
-                    : const AboutDialog()
+                    ? widget.addWidgets[0]
+                    : widget.addWidgets[1]
                 )
               );
             },

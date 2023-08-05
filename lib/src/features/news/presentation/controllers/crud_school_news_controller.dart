@@ -45,7 +45,7 @@ class CrudSchoolNewsController extends StateNotifier<AsyncValue<void>> {
   Future<void> deleteImage(int id, List images, String imageUrl) async {
     state = const AsyncLoading<void>();
     state = await AsyncValue.guard<void>(() {
-      return newsService.deleteImage(id, images, imageUrl);
+      return newsService.deleteImage(id, images, imageUrl, 'news', 'news');
     });
   }
 

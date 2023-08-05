@@ -1,6 +1,4 @@
 
-String loginSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/assets/undraw_login_re_4vu2.svg";
-
 const String supabaseUrl = String.fromEnvironment(
   'SUPABASE_URL',
   defaultValue: 'https://mznfnrsqtgzhhltmpwwh.supabase.co',
@@ -10,6 +8,9 @@ const String supabaseAnnonKey = String.fromEnvironment(
   'SUPABASE_ANNON_KEY',
   defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16bmZucnNxdGd6aGhsdG1wd3doIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzY4MzE1NzMsImV4cCI6MTk5MjQwNzU3M30.6-A5IXsAaTfpp1vEjdthjeHg8Dj41wgzyUgTtKKV19Y',
 );
+
+//auth
+String loginSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/assets/undraw_login_re_4vu2.svg";
 
 const Map<String, int> dropdownValues = {
       "Choose your class": -1,
@@ -51,3 +52,6 @@ const Map<String, int> dropdownValues = {
 String emailSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/assets/undraw_message_sent_re_q2kl.svg";
 
 String forgotPasswordSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/assets/undraw_forgot_password_re_hxwm.svg";
+
+//eklase_news_page
+String eklaseNewsImage = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/eklase_news/logo_sm3.png";

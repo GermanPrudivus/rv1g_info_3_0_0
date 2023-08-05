@@ -6,7 +6,7 @@ import 'package:rv1g_info/src/features/authentication/presentation/controllers/f
 import 'package:rv1g_info/src/utils/auth_exception.dart';
 import 'package:the_validator/the_validator.dart';
 
-import '../../../../constants/auth_const.dart';
+import '../../../../constants/const.dart';
 import '../../../../constants/theme_colors.dart';
 
 class ForgotPasswordPage extends ConsumerStatefulWidget {

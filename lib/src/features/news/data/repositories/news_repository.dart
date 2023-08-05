@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:rv1g_info/src/features/news/domain/models/eklase_news.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 
@@ -286,24 +287,24 @@ class NewsRepository {
     }
   }
 
-  Future<void> updateImages(int id, List images, String imageUrl) async{
+  Future<void> updateImages(int id, List images, String imageUrl, String table) async{
     final supabase = Supabase.instance.client;
 
     List imagesEdited = images;
     imagesEdited.remove(imageUrl);
 
     await supabase
-      .from('news')
+      .from(table)
       .update({'media':imagesEdited})
       .eq('id', id);
   }
 
-  Future<void> deleteImage(String imageUrl) async {
+  Future<void> deleteImage(String imageUrl, String bucket) async {
     final supabase = Supabase.instance.client;
 
     await supabase
       .storage
-      .from("news")
+      .from(bucket)
       .remove([json.decode(imageUrl)['image_url'].split("/").last]);
   }
 
@@ -437,19 +438,6 @@ class NewsRepository {
     return news;
   }
 
-  Future<int> getUserId() async{
-    final supabase = Supabase.instance.client;
-
-    String email = supabase.auth.currentUser!.email!;
-
-    final res = await supabase
-      .from('users')
-      .select('id')
-      .eq('email', email);
-
-    return res[0]['id'];
-  }
-
   Future<void> updateVotes(int pollId, int answerId, int userdId) async{
     final supabase = Supabase.instance.client;
 
@@ -484,6 +472,175 @@ class NewsRepository {
       .from('answer')
       .update({'votes': res2[0]['votes']+1})
       .eq('id', answerId);
+  }
+
+  //CRUD Eklase News Page
+  Future<void> addEklaseNews(String title, String author, 
+    String shortText, String text, List imagesPath, bool pin) async{
+    
+    final supabase = Supabase.instance.client;
+
+    List jsonParagraphs = [];
+
+    if(text != ""){
+      List paragraphs = text.split('\n');
+
+      jsonParagraphs = paragraphs.map((paragraph) {
+        return json.encode({
+          "text": paragraph,
+        });
+      }).toList();
+    }
+
+    List<String> images = [];
+
+    if(imagesPath.isNotEmpty) {
+      for(int i=0;i<imagesPath.length;i++){
+        final bytes = await File(imagesPath[i]).readAsBytes();
+        final fileExt = File(imagesPath[i]).path.split('.').last;
+        final fileName = '${DateTime.now().toIso8601String()}.$fileExt';
+        final filePath = fileName;
+        await supabase.storage.from('eklase_news').uploadBinary(
+            filePath,
+            bytes,
+          );
+        final res = supabase.storage
+          .from('eklase_news')
+          .getPublicUrl(filePath);
+
+        images.add(res);
+      }
+    }
+
+    List jsonImages = images.map((image) {
+      return json.encode({
+        "image_url": image,
+      });
+    }).toList();
+
+    await supabase
+      .from('eklase_news')
+      .insert(
+        toJson({
+          'title': title,
+          'author': author,
+          'short_text': shortText,
+          'text': jsonParagraphs,
+          'media': jsonImages,
+          'pin': pin,
+          'created_datetime': DateTime.now().toIso8601String()
+        })
+      );
+  }
+
+  Future<void> editEklaseNews(int newsId, String title, String author, 
+    String shortText, String text, List imagesPath, List imagesUrls, bool pin) async{
+    
+    final supabase = Supabase.instance.client;
+
+    List jsonParagraphs = [];
+
+    if(text != ""){
+      List paragraphs = text.split('\n');
+
+      jsonParagraphs = paragraphs.map((paragraph) {
+        return json.encode({
+          "text": paragraph,
+        });
+      }).toList();
+    }
+
+    List<String> images = [];
+
+    if(imagesPath.isNotEmpty) {
+      for(int i=0;i<imagesPath.length;i++){
+        final bytes = await File(imagesPath[i]).readAsBytes();
+        final fileExt = File(imagesPath[i]).path.split('.').last;
+        final fileName = '${DateTime.now().toIso8601String()}.$fileExt';
+        final filePath = fileName;
+        await supabase.storage.from('eklase_news').uploadBinary(
+            filePath,
+            bytes,
+          );
+        final res = supabase.storage
+          .from('eklase_news')
+          .getPublicUrl(filePath);
+
+        images.add(res);
+      }
+    }
+
+    List jsonImages = images.map((image) {
+      return json.encode({
+        "image_url": image,
+      });
+    }).toList();
+
+    jsonImages = imagesUrls + jsonImages;
+
+    await supabase
+      .from('eklase_news')
+      .update(
+        toJson({
+          'title': title,
+          'author': author,
+          'short_text': shortText,
+          'text': jsonParagraphs,
+          'media': jsonImages,
+          'pin': pin,
+        })
+      )
+      .eq('id', newsId);
+  }
+
+  Future<void> deleteEklaseNews(int id) async {
+    final supabase = Supabase.instance.client;
+
+    await supabase
+      .from('eklase_news')
+      .delete()
+      .eq('id', id);
+  }
+
+  //EKLASE PAGE
+  Future<List<EklaseNews>> getEklaseNews() async{
+    final supabase = Supabase.instance.client;
+
+    final res = await supabase
+      .from('eklase_news')
+      .select()
+      .order('pin', ascending: false)
+      .order('created_datetime', ascending: false);
+
+    List<EklaseNews> news = [];
+
+    for(int i=0;i<res.length;i++){
+      news.add(EklaseNews(
+        id: res[i]['id'],
+        title: res[i]['title'],
+        author: res[i]['author'],
+        shortText: res[i]['short_text'],
+        text: List.from(res[i]['text']),
+        media: List.from(res[i]['media']),
+        pin: res[i]['pin'],
+        createdDateTime: res[i]['created_datetime']
+      ));
+    }
+
+    return news;
+  }
+
+  Future<int> getUserId() async{
+    final supabase = Supabase.instance.client;
+
+    String email = supabase.auth.currentUser!.email!;
+
+    final res = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', email);
+
+    return res[0]['id'];
   }
 }
 

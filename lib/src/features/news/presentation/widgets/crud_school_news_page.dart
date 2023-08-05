@@ -128,33 +128,34 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
         ),
         toolbarHeight: 60.h,
         actions: [
-          GestureDetector(
-            onTap: () {
-              ref
-              .read(crudSchoolNewsControllerProvider.notifier)
-              .deleteSchoolNews(
-                newsId, 
-                images, 
-                pollId, 
-                [
-                  answer1Id,
-                  answer2Id,
-                  answer3Id,
-                  answer4Id,
-                ]
-              ).whenComplete(() {
-                Navigator.pop(context);
-              });
-            },
-            child: SizedBox(
-              height: 50.h,
-              width: 60.w,
-              child: Icon(
-                Icons.delete,
-                color: blue,
+          if(widget.edit)
+            GestureDetector(
+              onTap: () {
+                ref
+                  .read(crudSchoolNewsControllerProvider.notifier)
+                  .deleteSchoolNews(
+                    newsId, 
+                    images, 
+                    pollId, 
+                    [
+                      answer1Id,
+                      answer2Id,
+                      answer3Id,
+                      answer4Id,
+                    ]
+                  ).whenComplete(() {
+                    Navigator.pop(context);
+                  });
+              },
+              child: SizedBox(
+                height: 50.h,
+                width: 60.w,
+                child: Icon(
+                  Icons.delete,
+                  color: blue,
+                ),
               ),
-            ),
-          )
+            )
         ],
       ),
       backgroundColor: Colors.white,

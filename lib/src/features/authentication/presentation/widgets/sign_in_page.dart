@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rv1g_info/main.dart';
-import 'package:rv1g_info/src/constants/auth_const.dart';
+import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/forgot_password_page.dart';
 import 'package:rv1g_info/src/utils/auth_exception.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_up_page.dart';

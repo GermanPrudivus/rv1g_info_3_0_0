@@ -5,6 +5,10 @@ import 'package:rv1g_info/src/core/tab_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/eklase_page.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/school_page.dart';
 
+import '../../domain/models/poll.dart';
+import 'crud_eklase_news_page.dart';
+import 'crud_school_news_page.dart';
+
 class NewsPage extends ConsumerStatefulWidget {
   final bool isAdmin;
 
@@ -38,6 +42,36 @@ class _NewsPageState extends ConsumerState<NewsPage> with TickerProviderStateMix
           tabNames: const ["Skola","E-klase"],
           tabController: _tabController,
           add: widget.isAdmin,
+          addWidgets: [
+            CRUDSchoolNewsPage(
+              edit: false,
+              newsId: 0,
+              text: "",
+              pin: false, 
+              poll: Poll(
+                id: 0, 
+                title: "", 
+                allVotes: 0, 
+                pollStart: DateTime.now().toIso8601String(), 
+                pollEnd: DateTime.now().toIso8601String(), 
+                newsId: 0, 
+                answers: [], 
+                hasVoted: false, 
+                choosedAnswer: 0
+              ),
+              images: const []
+            ),
+            const CRUDEklaseNewsPage(
+              edit: false,
+              newsId: 0, 
+              title: "", 
+              author: "", 
+              shortText: "", 
+              text: "", 
+              images: [], 
+              pin: false
+            )
+          ],
         ),
       ),
       backgroundColor: Colors.white,
@@ -45,7 +79,7 @@ class _NewsPageState extends ConsumerState<NewsPage> with TickerProviderStateMix
         controller: _tabController,
         children: [
           SchoolPage(isAdmin: widget.isAdmin),
-          const EklasePage(),
+          EklasePage(isAdmin: widget.isAdmin),
         ],
       )
     );
