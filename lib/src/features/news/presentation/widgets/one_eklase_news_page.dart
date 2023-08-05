@@ -2,24 +2,21 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:rv1g_info/src/features/news/domain/models/eklase_news.dart';
+import 'package:rv1g_info/src/features/news/presentation/widgets/crud_eklase_news_page.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants/theme_colors.dart';
 
 class OneEklaseNewsPage extends StatefulWidget {
-  final String title;
-  final String createdDateTime;
-  final String text;
-  final String author;
-  final List<String> images;
+  final bool isAdmin;
+  final EklaseNews news;
 
   const OneEklaseNewsPage({
-    required this.title,
-    required this.createdDateTime,
-    required this.text,
-    required this.author,
-    required this.images,
+    required this.isAdmin,
+    required this.news,
     super.key
   });
 
@@ -28,6 +25,14 @@ class OneEklaseNewsPage extends StatefulWidget {
 }
 
 class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
+
+  late EklaseNews news;
+  
+  @override
+  void initState() {
+    news = widget.news;
+    super.initState();
+  }
 
   Widget buildImageZoom(BuildContext context, String url) {
     return AlertDialog(
@@ -49,6 +54,25 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
     );
   }
 
+  String formatedText(List<String> text) {
+    String formatedText = "";
+    for(int i=0;i<text.length-1;i++){
+      if(json.decode(text[i])['text']==""){
+        formatedText = "$formatedText\n\n";
+      } else if(json.decode(text[i])['text']!="" && json.decode(text[i+1])['text']!=""){
+        formatedText = '${formatedText + json.decode(text[i])['text']}\n';
+      } else {
+        formatedText = formatedText + json.decode(text[i])['text'];
+      }
+    }
+
+    if(text.isNotEmpty) {
+      formatedText = formatedText+json.decode(text[text.length-1])['text'];
+    }
+
+    return formatedText;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +83,38 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
           size: 24.h,
           color: blue
         ),
+        actions: [
+          if(widget.isAdmin)
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return CRUDEklaseNewsPage(
+                        edit: true, 
+                        newsId: news.id, 
+                        title: news.title, 
+                        author: news.author, 
+                        shortText: news.shortText, 
+                        text: formatedText(news.text), 
+                        images: news.media, 
+                        pin: news.pin
+                      );
+                    }
+                  )
+                );
+              },
+              child: SizedBox(
+                height: 50.h,
+                width: 60.w,
+                child: Icon(
+                  Icons.edit,
+                  color: blue,
+                ),
+              ),
+            )
+        ],
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -73,7 +129,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                   children: [
                     Flexible(
                       child: Text(
-                        widget.title,
+                        news.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 24.h
@@ -87,7 +143,10 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      widget.createdDateTime,
+                      DateFormat('dd.MM.yyyy.', 'en_US')
+                        .format(
+                          DateTime.parse(news.createdDateTime)
+                        ),
                       style: TextStyle(
                         fontSize: 14.h,
                       ),
@@ -106,7 +165,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       StyledText(
-                        text: widget.text,
+                        text: formatedText(news.text),
                         style: TextStyle(
                           fontSize: 15.h,
                         ),
@@ -132,7 +191,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                     Padding(
                       padding: EdgeInsets.only(top: 10.h),
                       child: Text(
-                        widget.author,
+                        news.author,
                         style: TextStyle(
                           fontSize: 14.5.h,
                           fontWeight: FontWeight.bold,
@@ -140,7 +199,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                         ),
                       ),
                     ),
-                    for(int i=0;i<widget.images.length;i++)
+                    for(int i=0;i<news.media.length;i++)
                       Padding(
                         padding: EdgeInsets.only(top: 10.h),
                         child: Container(
@@ -152,7 +211,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                             onTap: () {
                               showDialog(
                                 context: context,
-                                builder: (context) => buildImageZoom(context, json.decode(widget.images[i])['image_url']),
+                                builder: (context) => buildImageZoom(context, json.decode(news.media[i])['image_url']),
                                 barrierDismissible: true,
                               );
                             },
@@ -160,7 +219,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10.w),
                                 child: Image.network(
-                                  json.decode(widget.images[i])['image_url'],
+                                  json.decode(news.media[i])['image_url'],
                                   fit: BoxFit.cover,
                                 ),
                               )

@@ -112,6 +112,9 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                   .deleteEklaseNews(widget.newsId)
                   .whenComplete(() {
                     Navigator.pop(context);
+                    if(widget.edit){
+                      Navigator.pop(context);
+                    }
                   });
               },
               child: SizedBox(
@@ -535,6 +538,9 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                             pin
                           ).whenComplete(() {
                             Navigator.pop(context);
+                            if(widget.edit){
+                              Navigator.pop(context);
+                            }
                           });
                       } else {
                         ref
@@ -548,6 +554,9 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                             pin
                           ).whenComplete(() {
                             Navigator.pop(context);
+                            if(widget.edit){
+                              Navigator.pop(context);
+                            }
                           });
                       }
                     },
