@@ -7,12 +7,14 @@ class AppBarWidget extends StatefulWidget {
   final String title;
   final bool add;
   final Widget navigateTo;
+  final bool showDialog;
 
   const AppBarWidget({
     super.key, 
     required this.title,
     required this.add,
-    required this.navigateTo
+    required this.navigateTo,
+    required this.showDialog
   });
 
   @override
@@ -50,7 +52,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           alignment: Alignment.centerRight,
           child: profilePicUrl == ""
             ? CircleAvatar(
-                radius: 20.h,
+                radius: 18.h,
                 backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
                 child: Icon(
                   Icons.person,
@@ -59,7 +61,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 )
               )
             : CircleAvatar(
-                radius: 20.h,
+                radius: 18.h,
                 backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
                 backgroundImage: NetworkImage(profilePicUrl),
               ),
@@ -70,7 +72,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       title: Text(
         widget.title,
         style: TextStyle(
-          fontSize: 22.h,
+          fontSize: 20.h,
           color: blue,
           fontWeight: FontWeight.bold
         ),
@@ -79,13 +81,21 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       actions: [
         if(widget.add)
           GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context, 
-                MaterialPageRoute(
-                  builder: (context) => widget.navigateTo
-                )
-              );
+            onTap: () async{
+              if(widget.showDialog){
+                return showDialog(
+                  context: context, 
+                  builder: (context) => widget.navigateTo,
+                  barrierDismissible: false,
+                );
+              } else {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => widget.navigateTo
+                  )
+                );
+              }
             },
             child: Container(
               color: Colors.transparent,
@@ -110,10 +120,10 @@ Future<String> getProfilePicUrl() async{
   final email = supabase.auth.currentUser?.email;
   final res = await supabase
     .from('users')
-    .select('profilePicUrl')
+    .select('profile_pic_url')
     .eq('email', email);
 
-  final profilePicUrl = res[0]['profilePicUrl'];
+  final profilePicUrl = res[0]['profile_pic_url'];
 
   return await profilePicUrl;
 }

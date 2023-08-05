@@ -7,6 +7,8 @@ import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_
 import 'package:rv1g_info/src/features/news/presentation/widgets/news_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'src/features/changes/presentation/widgets/changes_page.dart';
+
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -65,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
           admin = value;
           screens = [
             NewsPage(isAdmin: admin),
-            NewsPage(isAdmin: admin),
+            ChangesPage(isAdmin: admin),
             NewsPage(isAdmin: admin),
             NewsPage(isAdmin: admin),
             NewsPage(isAdmin: admin),
