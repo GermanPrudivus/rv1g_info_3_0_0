@@ -428,3 +428,8 @@ Map<String, List<String>> nameDays = {
     "12-30": ["Dāvids", "Dāvis", "Dāniels", "Daniela", "Daniels"],
     "12-31": ["Silvestrs", "Silvis", "Kalvis"]
 };
+
+//schedule page
+String noSchedule = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/schedule/stundusar_nav.png";
+
+List<int> numbers = [7, 8, 9, 10, 11, 12];

@@ -121,7 +121,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                     StyledText(
                                       text: news[index].shortText,
                                       style: TextStyle(
-                                        fontSize: 14.h,
+                                        fontSize: 13.h,
                                         color: Colors.black54,
                                       ),
                                       textAlign: TextAlign.start,
@@ -142,7 +142,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                             Text(
                                               news[index].author,
                                               style: TextStyle(
-                                                fontSize: 13.h,
+                                                fontSize: 12.h,
                                               ),
                                             ),
                                             Text(
@@ -151,7 +151,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                                   DateTime.parse(news[index].createdDateTime)
                                                 ),
                                               style: TextStyle(
-                                                fontSize: 13.h,
+                                                fontSize: 12.h,
                                               ),
                                             )
                                           ]

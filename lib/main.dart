@@ -58,6 +58,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   bool admin = false;
+  bool verified = false;
   int index = 0;
   List<Widget> screens = [];
 
@@ -70,10 +71,16 @@ class _MyHomePageState extends State<MyHomePage> {
           screens = [
             NewsPage(isAdmin: admin),
             ChangesPage(isAdmin: admin),
-            SchedulePage(isAdmin: admin, isVerified: true),
+            SchedulePage(isAdmin: admin, isVerified: verified),
             NewsPage(isAdmin: admin),
             NewsPage(isAdmin: admin),
           ];
+        });
+      });
+    isUserVerified()
+      .then((value) {
+        setState(() {
+          verified = value;
         });
       });
     super.initState();
@@ -145,5 +152,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<bool> isUserAdmin() async{
     final supabase = Supabase.instance.client;
     return await supabase.auth.currentUser!.userMetadata!['admin'] ?? false;
+  }
+
+  Future<bool> isUserVerified() async{
+    final supabase = Supabase.instance.client;
+    final email = supabase.auth.currentUser!.email;
+    final res = await supabase.from('users').select().eq('email', email);
+
+    return res[0]['verified'];
   }
 }
