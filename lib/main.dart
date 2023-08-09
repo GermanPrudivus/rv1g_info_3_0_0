@@ -5,7 +5,6 @@ import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/constants/theme_colors.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_in_page.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/news_page.dart';
-import 'package:rv1g_info/src/features/news/presentation/widgets/school_page.dart';
 import 'package:rv1g_info/src/features/schedule/presentation/widgets/schedule_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

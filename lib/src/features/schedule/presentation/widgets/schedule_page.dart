@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/features/schedule/presentation/controllers/schedule_controller.dart';
+import 'package:rv1g_info/src/features/schedule/presentation/widgets/add_schedule_page.dart';
 
 import '../../../../constants/theme_colors.dart';
 import '../../../../core/app_bar_widget.dart';
+import '../../domain/models/schedule.dart';
 
 class SchedulePage extends ConsumerStatefulWidget {
   final bool isAdmin;
@@ -32,13 +34,12 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
   String key = "";
   String tag = "scheduleK";
 
-  Map<String, String> images = {};
+  Map<String, Schedule> images = {};
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getSchedule();
-      image = images["scheduleK"] ?? noSchedule;
     });
     super.initState();
   }
@@ -72,6 +73,16 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
           forms = value!;
         });
       });
+      
+    ref
+      .read(scheduleControllerProvider.notifier)
+      .getSchedule()
+      .then((value) {
+        setState(() {
+          images = value!;
+          image = value[tag]?.mediaUrl ?? noSchedule;
+        });
+      });
   }
 
   @override
@@ -82,7 +93,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
         child: AppBarWidget(
           title: "Stundu saraksts", 
           add: widget.isAdmin, 
-          navigateTo: const AboutDialog(),
+          navigateTo: AddScheduleWidget(tag: tag, imageUrl: image),
           showDialog: true,
         ),
       ),
@@ -129,7 +140,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                               } else {
                                 seeImage = false;
                                 tag = "scheduleK";
-                                image = images["scheduleK"] ?? noSchedule;
+                                image = images["scheduleK"]?.mediaUrl ?? noSchedule;
                               }
                             });
                           },
@@ -156,7 +167,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                                 setState(() {
                                   seeImage = true;
                                   tag = 'schedule$key${forms[key]![i]}';
-                                  image = images['schedule$key${forms[key]![i]}'] ?? noSchedule;
+                                  image = images['schedule$key${forms[key]![i]}']?.mediaUrl ?? noSchedule;
                                 });
                               }),
                               child: Container(

@@ -1,12 +1,36 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/services/schedule_service.dart';
+import '../../domain/models/schedule.dart';
 
 class ScheduleController extends StateNotifier<AsyncValue<void>> {
   ScheduleController({required this.scheduleService})
       : super(const AsyncData<void>(null));
 
   ScheduleService scheduleService;
+
+  Future<void> addSchedule(String tag, String imagePath) async {
+    state = const AsyncLoading<void>();
+    state = await AsyncValue.guard<void>(() {
+      return scheduleService.addSchedule(tag, imagePath);
+    });
+  }
+
+  Future<void> deleteSchedule(String tag, String imageUrl) async {
+    state = const AsyncLoading<void>();
+    state = await AsyncValue.guard<void>(() {
+      return scheduleService.deleteSchedule(tag, imageUrl);
+    });
+  }
+
+  Future<Map<String, Schedule>?> getSchedule() async {
+    state = const AsyncLoading<void>();
+    final AsyncValue<Map<String, Schedule>> asyncValue = await AsyncValue.guard<Map<String, Schedule>>(() {
+      return scheduleService.getSchedule();
+    });
+    state = asyncValue;
+    return asyncValue.value;
+  }
 
   Future<Map<String, List<String>>?> getForms() async {
     state = const AsyncLoading<void>();

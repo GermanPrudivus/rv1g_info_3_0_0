@@ -111,7 +111,7 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
         child: AppBarWidget(
           title: "Izmaiņas", 
           add: widget.isAdmin, 
-          navigateTo: AddImageWidget(
+          navigateTo: AddChangesWidget(
             tag: "changes$selectedStr",
             imageUrl: image,
           ),

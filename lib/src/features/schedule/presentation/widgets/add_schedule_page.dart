@@ -6,26 +6,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rv1g_info/src/constants/const.dart';
+import 'package:rv1g_info/src/features/schedule/presentation/controllers/schedule_controller.dart';
 import 'package:rv1g_info/src/utils/exception.dart';
 
 import '../../../../constants/theme_colors.dart';
-import '../controllers/changes_controller.dart';
 
-class AddChangesWidget extends ConsumerStatefulWidget {
+class AddScheduleWidget extends ConsumerStatefulWidget {
   final String tag;
   final String imageUrl;
 
-  const AddChangesWidget({
+  const AddScheduleWidget({
     required this.tag,
     required this.imageUrl,
     super.key
   });
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AddChangesWidgetState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _AddScheduleWidgetState();
 }
 
-class _AddChangesWidgetState extends ConsumerState<AddChangesWidget> {
+class _AddScheduleWidgetState extends ConsumerState<AddScheduleWidget> {
 
   String imagePath = "";
 
@@ -46,7 +46,7 @@ class _AddChangesWidgetState extends ConsumerState<AddChangesWidget> {
   Widget build(BuildContext context) {
 
     ref.listen<AsyncValue>(
-      changesControllerProvider,
+      scheduleControllerProvider,
       (_, state) {
         if(state.isLoading) {
           showDialog(
@@ -175,17 +175,17 @@ class _AddChangesWidgetState extends ConsumerState<AddChangesWidget> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      if(widget.imageUrl != noChanges && imagePath == ""){
+                      if(widget.imageUrl != noSchedule && imagePath == ""){
                         ref
-                          .read(changesControllerProvider.notifier)
-                          .deleteChanges(widget.tag, widget.imageUrl)
+                          .read(scheduleControllerProvider.notifier)
+                          .deleteSchedule(widget.tag, widget.imageUrl)
                           .whenComplete(() {
                             Navigator.pop(context);
                           });
                       } else if(imagePath != "") {
                         ref
-                          .read(changesControllerProvider.notifier)
-                          .addChanges(widget.tag, imagePath)
+                          .read(scheduleControllerProvider.notifier)
+                          .addSchedule(widget.tag, imagePath)
                           .whenComplete(() {
                             Navigator.pop(context);
                           });
