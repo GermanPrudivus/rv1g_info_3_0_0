@@ -5,27 +5,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/utils/exception.dart';
 
 import '../../../../constants/theme_colors.dart';
 import '../controllers/changes_controller.dart';
 
-class AddChangesWidget extends ConsumerStatefulWidget {
+class CRUDChangesWidget extends ConsumerStatefulWidget {
   final String tag;
   final String imageUrl;
 
-  const AddChangesWidget({
+  const CRUDChangesWidget({
     required this.tag,
     required this.imageUrl,
     super.key
   });
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AddChangesWidgetState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _CRUDChangesWidgetState();
 }
 
-class _AddChangesWidgetState extends ConsumerState<AddChangesWidget> {
+class _CRUDChangesWidgetState extends ConsumerState<CRUDChangesWidget> {
 
   String imagePath = "";
 
@@ -175,23 +174,12 @@ class _AddChangesWidgetState extends ConsumerState<AddChangesWidget> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      if(widget.imageUrl != noChanges && imagePath == ""){
-                        ref
-                          .read(changesControllerProvider.notifier)
-                          .deleteChanges(widget.tag, widget.imageUrl)
-                          .whenComplete(() {
-                            Navigator.pop(context);
-                          });
-                      } else if(imagePath != "") {
-                        ref
-                          .read(changesControllerProvider.notifier)
-                          .addChanges(widget.tag, imagePath)
-                          .whenComplete(() {
-                            Navigator.pop(context);
-                          });
-                      } else {
-                        Navigator.pop(context);
-                      }
+                      ref
+                        .read(changesControllerProvider.notifier)
+                        .updateChanges(widget.tag, imagePath, widget.imageUrl)
+                        .whenComplete(() {
+                          Navigator.pop(context);
+                        });
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(125.w, 40.h),
@@ -212,7 +200,6 @@ class _AddChangesWidgetState extends ConsumerState<AddChangesWidget> {
                   ),
                 ],
               )
-
             ],
           ),
         )

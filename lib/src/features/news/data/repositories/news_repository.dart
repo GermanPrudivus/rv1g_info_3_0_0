@@ -136,7 +136,9 @@ class NewsRepository {
   }
 
   Future<void> addPoll(
-    String title, String answer1, String answer2, String answer3, String answer4, DateTime pollEnd, int newsId) async{
+    String title, String answer1, String answer2, 
+    String answer3, String answer4, DateTime pollEnd, int newsId) async{
+
     final supabase = Supabase.instance.client;
 
     final res = await supabase

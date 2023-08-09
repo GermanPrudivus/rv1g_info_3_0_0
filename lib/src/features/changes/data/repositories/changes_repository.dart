@@ -7,7 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/models/changes.dart';
 
 class ChangesRepository {
-  Future<void> addChanges(String tag, String imagePath) async {
+  Future<void> updateChanges(String tag, String imagePath, String imageUrl) async {
     final supabase = Supabase.instance.client;
 
     final bytes = await File(imagePath).readAsBytes();
@@ -22,16 +22,11 @@ class ChangesRepository {
       .from('changes')
       .getPublicUrl(filePath);
 
-    final resMedia = await supabase
-      .from('media')
-      .select()
-      .eq('tag', tag);
-
-    if(resMedia.isNotEmpty){
+    if(imageUrl != noChanges){
       await supabase
         .storage
         .from('changes')
-        .remove([resMedia[0]['media_url'].split("/").last]);
+        .remove([imageUrl.split("/").last]);
 
       await supabase
         .from('media')

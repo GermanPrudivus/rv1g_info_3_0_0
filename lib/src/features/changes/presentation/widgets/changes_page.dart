@@ -8,7 +8,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../../../constants/theme_colors.dart';
 import '../../domain/models/changes.dart';
 import '../controllers/changes_controller.dart';
-import 'add_changes_widget.dart';
+import 'crud_changes_widget.dart';
 
 class ChangesPage extends ConsumerStatefulWidget {
   final bool isAdmin;
@@ -111,7 +111,7 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
         child: AppBarWidget(
           title: "Izmaiņas", 
           add: widget.isAdmin, 
-          navigateTo: AddChangesWidget(
+          navigateTo: CRUDChangesWidget(
             tag: "changes$selectedStr",
             imageUrl: image,
           ),

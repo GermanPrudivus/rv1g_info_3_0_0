@@ -5,27 +5,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/features/schedule/presentation/controllers/schedule_controller.dart';
 import 'package:rv1g_info/src/utils/exception.dart';
 
 import '../../../../constants/theme_colors.dart';
 
-class AddScheduleWidget extends ConsumerStatefulWidget {
+class CRUDScheduleWidget extends ConsumerStatefulWidget {
   final String tag;
   final String imageUrl;
 
-  const AddScheduleWidget({
+  const CRUDScheduleWidget({
     required this.tag,
     required this.imageUrl,
     super.key
   });
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AddScheduleWidgetState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _CRUDScheduleWidgetState();
 }
 
-class _AddScheduleWidgetState extends ConsumerState<AddScheduleWidget> {
+class _CRUDScheduleWidgetState extends ConsumerState<CRUDScheduleWidget> {
 
   String imagePath = "";
 
@@ -175,23 +174,12 @@ class _AddScheduleWidgetState extends ConsumerState<AddScheduleWidget> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      if(widget.imageUrl != noSchedule && imagePath == ""){
-                        ref
-                          .read(scheduleControllerProvider.notifier)
-                          .deleteSchedule(widget.tag, widget.imageUrl)
-                          .whenComplete(() {
-                            Navigator.pop(context);
-                          });
-                      } else if(imagePath != "") {
-                        ref
-                          .read(scheduleControllerProvider.notifier)
-                          .addSchedule(widget.tag, imagePath)
-                          .whenComplete(() {
-                            Navigator.pop(context);
-                          });
-                      } else {
-                        Navigator.pop(context);
-                      }
+                      ref
+                        .read(scheduleControllerProvider.notifier)
+                        .updateSchedule(widget.tag, imagePath, widget.imageUrl)
+                        .whenComplete(() {
+                          Navigator.pop(context);
+                        });
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(125.w, 40.h),
@@ -212,7 +200,6 @@ class _AddScheduleWidgetState extends ConsumerState<AddScheduleWidget> {
                   ),
                 ],
               )
-
             ],
           ),
         )

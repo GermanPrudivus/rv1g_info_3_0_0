@@ -7,7 +7,7 @@ import '../../../../constants/const.dart';
 import '../../domain/models/schedule.dart';
 
 class ScheduleRepository {
-  Future<void> addSchedule(String tag, String imagePath) async{
+  Future<void> updateSchedule(String tag, String imagePath, String imageUrl) async{
     final supabase = Supabase.instance.client;
 
     final bytes = await File(imagePath).readAsBytes();
@@ -22,16 +22,11 @@ class ScheduleRepository {
       .from('schedule')
       .getPublicUrl(filePath);
 
-    final resMedia = await supabase
-      .from('media')
-      .select()
-      .eq('tag', tag);
-
-    if(resMedia.isNotEmpty){
+    if(imageUrl != noSchedule){
       await supabase
         .storage
         .from('schedule')
-        .remove([resMedia[0]['media_url'].split("/").last]);
+        .remove([imageUrl.split("/").last]);
 
       await supabase
         .from('media')

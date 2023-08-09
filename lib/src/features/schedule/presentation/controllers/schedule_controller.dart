@@ -9,17 +9,10 @@ class ScheduleController extends StateNotifier<AsyncValue<void>> {
 
   ScheduleService scheduleService;
 
-  Future<void> addSchedule(String tag, String imagePath) async {
+  Future<void> updateSchedule(String tag, String imagePath, String imageUrl) async {
     state = const AsyncLoading<void>();
     state = await AsyncValue.guard<void>(() {
-      return scheduleService.addSchedule(tag, imagePath);
-    });
-  }
-
-  Future<void> deleteSchedule(String tag, String imageUrl) async {
-    state = const AsyncLoading<void>();
-    state = await AsyncValue.guard<void>(() {
-      return scheduleService.deleteSchedule(tag, imageUrl);
+      return scheduleService.updateSchedule(tag, imagePath, imageUrl);
     });
   }
 

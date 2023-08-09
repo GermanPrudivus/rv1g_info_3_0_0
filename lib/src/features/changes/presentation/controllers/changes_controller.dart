@@ -9,17 +9,10 @@ class ChangesController extends StateNotifier<AsyncValue<void>> {
 
   ChangesService changesService;
 
-  Future<void> addChanges(String tag, String imagePath) async {
+  Future<void> updateChanges(String tag, String imagePath, String imageUrl) async {
     state = const AsyncLoading<void>();
     state = await AsyncValue.guard<void>(() {
-      return changesService.addChanges(tag, imagePath);
-    });
-  }
-
-  Future<void> deleteChanges(String tag, String imageUrl) async {
-    state = const AsyncLoading<void>();
-    state = await AsyncValue.guard<void>(() {
-      return changesService.deleteChanges(tag, imageUrl);
+      return changesService.updateChanges(tag, imagePath, imageUrl);
     });
   }
 

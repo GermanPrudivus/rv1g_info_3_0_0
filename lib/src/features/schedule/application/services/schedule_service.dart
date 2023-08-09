@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rv1g_info/src/constants/const.dart';
 
 import '../../data/repositories/schedule_repository.dart';
 import '../../domain/models/schedule.dart';
@@ -10,12 +11,12 @@ class ScheduleService {
 
   final ScheduleRepository scheduleRepository;
 
-  Future<void> addSchedule(String tag, String imagePath) async{
-    return await scheduleRepository.addSchedule(tag, imagePath);
-  }
-
-  Future<void> deleteSchedule(String tag, String imageUrl) async {
-    return await scheduleRepository.deleteSchedule(tag, imageUrl);
+  Future<void> updateSchedule(String tag, String imagePath, String imageUrl) async{
+    if(imageUrl != noSchedule && imagePath == ""){
+      return await scheduleRepository.deleteSchedule(tag, imageUrl);
+    } else if(imagePath != ""){
+      return await scheduleRepository.updateSchedule(tag, imagePath, imageUrl);
+    }
   }
 
   Future<Map<String, Schedule>> getSchedule() async{
