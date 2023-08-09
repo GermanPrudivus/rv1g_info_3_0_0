@@ -8,29 +8,26 @@ class CrudSchoolNewsController extends StateNotifier<AsyncValue<void>> {
   NewsService newsService;
 
   Future<void> addSchoolNews(
-    String text, List imagesPath, bool pin, bool showNewPoll, String title, 
-    String answer1, String answer2, String answer3, String answer4, DateTime pollEnd) async {
+    String text, List imagesPath, bool pin, bool showNewPoll, 
+    String title, List<String> answers, DateTime pollEnd) async {
 
     state = const AsyncLoading<void>();
     state = await AsyncValue.guard<void>(() {
       return newsService.addSchoolNews(
-        text, imagesPath, pin, showNewPoll, title, answer1, 
-        answer2, answer3, answer4, pollEnd
+        text, imagesPath, pin, showNewPoll, title, answers, pollEnd
       );
     });
   }
 
   Future<void> editSchoolNews(
     int newsId, String text, List imagesUrls, List imagesPath, bool pin, bool showNewPoll,
-    int pollId, String title, int answer1Id, int answer2Id, int answer3Id, int answer4Id, 
-    String answer1, String answer2, String answer3, String answer4, DateTime pollEnd) async {
+    int pollId, String title, List<int> answersId, List<String> answers, DateTime pollEnd) async {
       
     state = const AsyncLoading<void>();
     state = await AsyncValue.guard<void>(() {
       return newsService.editSchoolNews(
         newsId, text, imagesUrls, imagesPath, pin, showNewPoll,
-        pollId, title, answer1Id, answer2Id, answer3Id, answer4Id, 
-        answer1, answer2, answer3, answer4, pollEnd
+        pollId, title, answersId, answers, pollEnd
       );
     });
   }

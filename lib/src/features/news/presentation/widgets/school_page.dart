@@ -339,7 +339,9 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                             ),
                                             SizedBox(width: 7.5.w),
                                             Text(
-                                              "${differenceInDates(pollEnd, DateTime.now())} palika nobalsot",
+                                              differenceInDates(pollEnd, DateTime.now())[0] != "-"
+                                                ? "${differenceInDates(pollEnd, DateTime.now())} palika nobalsot"
+                                                : "balsošana beidzās",
                                               style: TextStyle(
                                                 fontSize: 13.h,
                                                 color: Colors.black,

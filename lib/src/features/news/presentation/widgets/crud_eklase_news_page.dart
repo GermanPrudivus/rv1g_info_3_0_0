@@ -83,7 +83,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (context) => const Center(child: CircularProgressIndicator(),)
+            builder: (context) => Center(child: CircularProgressIndicator(color: blue))
           );
         } else if (state.asData == null){
           

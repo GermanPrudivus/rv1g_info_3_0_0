@@ -8,7 +8,7 @@ class TabAppBarWidget extends StatefulWidget {
   final String title;
   final int tabQuant;
   final List<String> tabNames;
-  final bool add;
+  final List<bool> parametrs;//1.isAdmin, 2.showDialog, 3.isScrollable
   final List<Widget> addWidgets;
   late TabController tabController;
 
@@ -17,9 +17,9 @@ class TabAppBarWidget extends StatefulWidget {
     required this.title, 
     required this.tabQuant,
     required this.tabNames,
+    required this.parametrs,
+    required this.addWidgets,
     required this.tabController,
-    required this.add,
-    required this.addWidgets
   });
 
   @override
@@ -85,17 +85,23 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
       ),
 
       actions: [
-        if(widget.add)
+        if(widget.parametrs[0])
           GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context, 
-                MaterialPageRoute(
-                  builder: (context) => widget.tabController.index == 0
-                    ? widget.addWidgets[0]
-                    : widget.addWidgets[1]
-                )
-              );
+            onTap: () async{
+              if(widget.parametrs[1]){
+                return showDialog(
+                  context: context, 
+                  builder: (context) => widget.addWidgets[widget.tabController.index],
+                  barrierDismissible: false,
+                );
+              } else {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => widget.addWidgets[widget.tabController.index]
+                  )
+                );
+              }
             },
             child: Container(
               color: Colors.white,
@@ -113,13 +119,16 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
       ],
 
       bottom: TabBar(
+        isScrollable: widget.parametrs[2],
         indicatorColor: blue,
         indicatorWeight: 2.5.h,
         controller: widget.tabController,
         labelColor: Colors.black,
         unselectedLabelColor: Colors.black45,
         labelStyle: TextStyle(
-          fontSize: 16.h,
+          fontSize: widget.parametrs[2]
+            ? 14.h
+            : 16.h,
         ),
         tabs: <Widget>[
           for(int i=0;i<widget.tabQuant;i++)

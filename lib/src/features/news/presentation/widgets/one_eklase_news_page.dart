@@ -8,6 +8,7 @@ import 'package:rv1g_info/src/features/news/presentation/widgets/crud_eklase_new
 import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../components/image_zoom_widget.dart';
 import '../../../../constants/theme_colors.dart';
 
 class OneEklaseNewsPage extends StatefulWidget {
@@ -32,26 +33,6 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
   void initState() {
     news = widget.news;
     super.initState();
-  }
-
-  Widget buildImageZoom(BuildContext context, String url) {
-    return AlertDialog(
-      backgroundColor: Colors.transparent,
-      contentPadding: EdgeInsets.zero,
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            InteractiveViewer(
-                child: Image.network(
-                  url,
-                  fit: BoxFit.fill,
-                )
-            )
-          ],
-        ),
-      )
-    );
   }
 
   String formatedText(List<String> text) {

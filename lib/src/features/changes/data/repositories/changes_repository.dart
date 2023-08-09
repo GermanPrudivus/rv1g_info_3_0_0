@@ -14,18 +14,18 @@ class ChangesRepository {
     final fileExt = File(imagePath).path.split('.').last;
     final fileName = '$tag.${DateTime.now().toIso8601String()}.$fileExt';
     final filePath = fileName;
-    await supabase.storage.from('changes').uploadBinary(
+    await supabase.storage.from('media').uploadBinary(
         filePath,
         bytes,
       );
     final res = supabase.storage
-      .from('changes')
+      .from('media')
       .getPublicUrl(filePath);
 
     if(imageUrl != noChanges){
       await supabase
         .storage
-        .from('changes')
+        .from('media')
         .remove([imageUrl.split("/").last]);
 
       await supabase
@@ -54,7 +54,7 @@ class ChangesRepository {
 
     await supabase
       .storage
-      .from('changes')
+      .from('media')
       .remove([imageUrl.split("/").last]);
   }
 

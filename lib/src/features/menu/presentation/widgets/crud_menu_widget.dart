@@ -5,28 +5,38 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:rv1g_info/src/features/schedule/presentation/controllers/schedule_controller.dart';
 import 'package:rv1g_info/src/utils/exception.dart';
 
 import '../../../../constants/theme_colors.dart';
+import '../controllers/menu_controller.dart';
 
-class CRUDScheduleWidget extends ConsumerStatefulWidget {
-  final String tag;
-  final String imageUrl;
+class CRUDMenuWidget extends ConsumerStatefulWidget {
+  final List<String> tag;
+  final List<String> imageUrl;
 
-  const CRUDScheduleWidget({
+  const CRUDMenuWidget({
     required this.tag,
     required this.imageUrl,
     super.key
   });
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _CRUDScheduleWidgetState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _CRUDMenuWidgetState();
 }
 
-class _CRUDScheduleWidgetState extends ConsumerState<CRUDScheduleWidget> {
+class _CRUDMenuWidgetState extends ConsumerState<CRUDMenuWidget> {
+  String dropdownValue = '7.-9.klase';
 
   String imagePath = "";
+  String imageUrl = "";
+  String tag = "";
+
+  @override
+  void initState() {
+    imageUrl = widget.imageUrl[0];
+    tag = widget.tag[0];
+    super.initState();
+  }
 
   Future pickImageFromGallery() async {
     final XFile? image = await ImagePicker().pickImage(
@@ -45,7 +55,7 @@ class _CRUDScheduleWidgetState extends ConsumerState<CRUDScheduleWidget> {
   Widget build(BuildContext context) {
 
     ref.listen<AsyncValue>(
-      scheduleControllerProvider,
+      menuControllerProvider,
       (_, state) {
         if(state.isLoading) {
           showDialog(
@@ -88,7 +98,52 @@ class _CRUDScheduleWidgetState extends ConsumerState<CRUDScheduleWidget> {
                 ],
               ),
 
-              SizedBox(height: 10.h),
+              if(widget.tag.length == 1)
+                SizedBox(height: 10.h),
+
+              if(widget.tag.length == 2)
+                Padding(
+                  padding: EdgeInsets.only(right: 5.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      DropdownButton<String>(
+                        focusColor: Colors.black54,
+                        borderRadius: BorderRadius.circular(20.w),
+                        dropdownColor: navigationBarColor,
+                        value: dropdownValue,
+                        elevation: 20.h.toInt(),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13.h
+                        ),
+                        underline: Container(
+                          height: 2.h,
+                          color: blue,
+                        ),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue!;
+                            if(dropdownValue == '7.-9.klase'){
+                              imageUrl = widget.imageUrl[0];
+                              tag = widget.tag[0];
+                            } else {
+                              imageUrl = widget.imageUrl[1];
+                              tag = widget.tag[1];
+                            }
+                          });
+                        },
+                        items: <String>['7.-9.klase', '10.-12.klase']
+                            .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                      )
+                    ],
+                  )
+                ),
 
               imagePath == ""
                 ? Container(
@@ -175,8 +230,8 @@ class _CRUDScheduleWidgetState extends ConsumerState<CRUDScheduleWidget> {
                   ElevatedButton(
                     onPressed: () {
                       ref
-                        .read(scheduleControllerProvider.notifier)
-                        .updateSchedule(widget.tag, imagePath, widget.imageUrl)
+                        .read(menuControllerProvider.notifier)
+                        .updateMenu(tag, imagePath, imageUrl)
                         .whenComplete(() {
                           Navigator.pop(context);
                         });

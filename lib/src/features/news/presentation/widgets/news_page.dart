@@ -41,7 +41,7 @@ class _NewsPageState extends ConsumerState<NewsPage> with TickerProviderStateMix
           tabQuant: 2, 
           tabNames: const ["Skola","E-klase"],
           tabController: _tabController,
-          add: widget.isAdmin,
+          parametrs: [widget.isAdmin, false, false],//1.isAdmin, 2.showDialog, 3.isScrollable
           addWidgets: [
             CRUDSchoolNewsPage(
               edit: false,

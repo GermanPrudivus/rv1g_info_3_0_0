@@ -57,7 +57,7 @@ String forgotPasswordSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/
 String eklaseNewsImage = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/eklase_news/logo_sm3.png";
 
 //changes_page
-String noChanges = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/changes/izmainas_nav1.png";
+String noChanges = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/media/izmainas_nav1.png";
 
 //varda dienas
 Map<String, List<String>> nameDays = {
@@ -430,6 +430,9 @@ Map<String, List<String>> nameDays = {
 };
 
 //schedule page
-String noSchedule = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/schedule/stundusar_nav.png";
+String noSchedule = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/media/stundusar_nav.png";
 
 List<int> numbers = [7, 8, 9, 10, 11, 12];
+
+//menu page
+String noMenu = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/media/pusdienu_nav.png";

@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../constants/const.dart';
-import '../../domain/models/schedule.dart';
+import '../../domain/models/menu.dart';
 
-class ScheduleRepository {
-  Future<void> updateSchedule(String tag, String imagePath, String imageUrl) async{
+class MenuRepository {
+  Future<void> updateMenu(String tag, String imagePath, String imageUrl) async{
     final supabase = Supabase.instance.client;
 
     final bytes = await File(imagePath).readAsBytes();
@@ -22,7 +22,7 @@ class ScheduleRepository {
       .from('media')
       .getPublicUrl(filePath);
 
-    if(imageUrl != noSchedule){
+    if(imageUrl != noMenu){
       await supabase
         .storage
         .from('media')
@@ -44,7 +44,7 @@ class ScheduleRepository {
     }
   }
 
-  Future<void> deleteSchedule(String tag, String imageUrl) async {
+  Future<void> deleteMenu(String tag, String imageUrl) async {
     final supabase = Supabase.instance.client;
 
     await supabase
@@ -58,19 +58,19 @@ class ScheduleRepository {
       .remove([imageUrl.split("/").last]);
   }
 
-  Future<Map<String, Schedule>> getSchedule() async {
+  Future<Map<String, Menu>> getMenu() async {
     final supabase = Supabase.instance.client;
 
     final res = await supabase
       .from('media')
       .select()
-      .filter('tag', 'ilike', '%schedule%')
+      .filter('tag', 'ilike', '%menu%')
       .order('tag', ascending: false);
 
-    Map<String, Schedule> schedules ={};
+    Map<String, Menu> schedules ={};
 
     for(int i=0;i<res.length;i++){
-      schedules[res[i]['tag']] = Schedule(
+      schedules[res[i]['tag']] = Menu(
         id: res[i]['id'], 
         mediaUrl: res[i]['media_url'], 
         tag: res[i]['tag']
@@ -79,35 +79,8 @@ class ScheduleRepository {
 
     return schedules;
   }
-
-
-  Future<Map<String, List<String>>> getForms() async {
-    final supabase = Supabase.instance.client;
-
-    Map<String, List<String>> forms = {};
-
-    List<int> number = numbers;
-    
-    for(int i=0;i<number.length;i++){
-      final res = await supabase
-        .from('form')
-        .select()
-        .eq('number', number[i])
-        .order('id', ascending: true);
-
-      List<String> letters = [];
-
-      for(int i=0;i<res.length;i++){
-        letters.add(res[i]['letter']);
-      }
-
-      forms[number[i].toString()] = letters;
-    }
-
-    return forms;
-  }
 }
 
-final scheduleRepositoryProvider = riverpod.Provider<ScheduleRepository>((ref) {
-  return ScheduleRepository();
+final menuRepositoryProvider = riverpod.Provider<MenuRepository>((ref) {
+  return MenuRepository();
 });

@@ -13,59 +13,60 @@ class NewsService {
 
   //CRUD SCHOOL NEWS PAGE
   Future<void> addSchoolNews(
-    String text, List imagesPath, bool pin, bool showNewPoll, String title, 
-    String answer1, String answer2, String answer3, String answer4, DateTime pollEnd) async {
+    String text, List imagesPath, bool pin, bool showNewPoll, 
+    String title, List<String> answers, DateTime pollEnd) async {
 
     return newsRepository
       .addSchoolNews(text, imagesPath, pin)
       .then((value) {
         if(showNewPoll){
           newsRepository
-            .addPoll(
-              title, 
-              answer1, 
-              answer2, 
-              answer3, 
-              answer4, 
-              pollEnd, 
-              value
-            );
+            .addPoll(title, pollEnd, value).then((value) async{
+              for(int i=0;i<answers.length;i++){
+                if(answers[i] != ""){
+                  await newsRepository.addAnswer(value, answers[i]);
+                }
+              }
+            });
         }
       });
   }
 
   Future<void> editSchoolNews(
     int newsId, String text, List imagesUrls, List imagesPath, bool pin, bool showNewPoll,
-    int pollId, String title, int answer1Id, int answer2Id, int answer3Id, int answer4Id, 
-    String answer1, String answer2, String answer3, String answer4, DateTime pollEnd) async {
+    int pollId, String title, List<int> answersId, List<String> answers, DateTime pollEnd) async {
     
     return newsRepository
       .editSchoolNews(newsId, text, imagesUrls, imagesPath, pin)
       .whenComplete(() {
         if(pollId != 0){
-          newsRepository.editPoll(
+          newsRepository.updatePoll(
             pollId, 
             title, 
-            answer1Id, 
-            answer2Id, 
-            answer3Id, 
-            answer4Id, 
-            answer1, 
-            answer2, 
-            answer3, 
-            answer4, 
             pollEnd
-          );
+          ).whenComplete(() async {
+            for(int i=0;i<answers.length;i++){
+              if(answers[i] == "" && answersId[i]  != 0){
+                await newsRepository.deleteAnswer(answersId[i]);
+              } else if (answers[i] != "" && answersId[i] == 0){
+                await newsRepository.addAnswer(pollId, answers[i]);
+              } else if (answersId[i] != 0){
+                await newsRepository.updateAnswer(answersId[i], answers[i]);
+              }
+            }
+          });
         } else if(showNewPoll){
           newsRepository.addPoll(
-            title, 
-            answer1, 
-            answer2, 
-            answer3, 
-            answer4, 
+            title,
             pollEnd, 
             newsId
-          );               
+          ).then((value) async {
+            for(int i=0;i<answers.length;i++){
+              if(answers[i] != ""){
+                await newsRepository.addAnswer(value, answers[i]);
+              }
+            }
+          });               
         }
       });
   }
@@ -80,7 +81,12 @@ class NewsService {
     }
 
     if(pollId != 0){
-      newsRepository.deletePoll(pollId, answers);
+      newsRepository.deletePoll(pollId)
+        .whenComplete(() {
+          for(int i=0;i<answers.length;i++){
+            newsRepository.deleteAnswer(answers[i]);
+          }
+        });
     }
   }
 
@@ -90,7 +96,12 @@ class NewsService {
   }
 
   Future<void> deletePoll(int id, List<int> answers) async {
-    return await newsRepository.deletePoll(id, answers);
+    return await newsRepository.deletePoll(id)
+      .whenComplete(() {
+        for(int i=0;i<answers.length;i++){
+          newsRepository.deleteAnswer(answers[i]);
+        }
+      });
   }
 
   //SCHOOL PAGE

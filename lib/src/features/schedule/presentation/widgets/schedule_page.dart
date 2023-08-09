@@ -5,6 +5,7 @@ import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/features/schedule/presentation/controllers/schedule_controller.dart';
 import 'package:rv1g_info/src/features/schedule/presentation/widgets/crud_schedule_page.dart';
 
+import '../../../../components/image_zoom_widget.dart';
 import '../../../../constants/theme_colors.dart';
 import '../../../../components/app_bar_widget.dart';
 import '../../domain/models/schedule.dart';
@@ -42,26 +43,6 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
       getSchedule();
     });
     super.initState();
-  }
-
-  Widget buildImageZoom(BuildContext context, String url) {
-    return AlertDialog(
-      backgroundColor: Colors.transparent,
-      contentPadding: EdgeInsets.zero,
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            InteractiveViewer(
-              child: Image.network(
-                url,
-                fit: BoxFit.fill,
-              )
-            )
-          ],
-        ),
-      )
-    );
   }
 
   Future<void> getSchedule() async {

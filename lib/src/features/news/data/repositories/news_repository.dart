@@ -135,10 +135,7 @@ class NewsRepository {
       .eq('id', id);
   }
 
-  Future<void> addPoll(
-    String title, String answer1, String answer2, 
-    String answer3, String answer4, DateTime pollEnd, int newsId) async{
-
+  Future<int> addPoll(String title, DateTime pollEnd, int newsId) async{
     final supabase = Supabase.instance.client;
 
     final res = await supabase
@@ -155,57 +152,24 @@ class NewsRepository {
       )
       .select();
 
-    int pollId = res[0]['id'];
-
-    await supabase
-      .from('answer')
-      .insert(
-        toJson({
-          'answer': answer1,
-          'votes': 0,
-          'poll_id': pollId
-        })
-      );
-
-    await supabase
-      .from('answer')
-      .insert(
-        toJson({
-          'answer': answer2,
-          'votes': 0,
-          'poll_id': pollId
-        })
-      );
-
-    if(answer3 != ""){
-      await supabase
-        .from('answer')
-        .insert(
-          toJson({
-            'answer': answer3,
-            'votes': 0,
-            'poll_id': pollId
-          })
-        );
-    }
-
-    if(answer4 != ""){
-      await supabase
-        .from('answer')
-        .insert(
-          toJson({
-            'answer': answer4,
-            'votes': 0,
-            'poll_id': pollId
-          })
-        );
-    }
+    return res[0]['id'];
   }
 
-  Future<void> editPoll(
-    int id, String title, int answer1Id, int answer2Id, int answer3Id, int answer4Id, 
-    String answer1, String answer2, String answer3, String answer4, DateTime pollEnd) async{
+  Future<void> addAnswer(int pollId, String answer) async {
+    final supabase = Supabase.instance.client;
 
+    await supabase
+      .from('answer')
+      .insert(
+        toJson({
+          'answer': answer,
+          'votes': 0,
+          'poll_id': pollId
+        })
+      );
+  }
+
+  Future<void> updatePoll(int id, String title, DateTime pollEnd) async{
     final supabase = Supabase.instance.client;
 
     await supabase
@@ -217,76 +181,19 @@ class NewsRepository {
         })
       )
       .eq('id', id);
+  }
+
+  Future<void> updateAnswer(int id, String answer) async {
+    final supabase = Supabase.instance.client;
 
     await supabase
       .from('answer')
       .update(
         toJson({
-          'answer': answer1,
+          'answer': answer,
         })
       )
-      .eq('id', answer1Id);
-
-    await supabase
-      .from('answer')
-      .update(
-        toJson({
-          'answer': answer2,
-        })
-      )
-      .eq('id', answer2Id);
-
-    if(answer3 == "" && answer3Id != 0){
-      await supabase
-        .from('answer')
-        .delete()
-        .eq('id', answer3Id);
-    } else if (answer3 != "" && answer3Id == 0){
-      await supabase
-        .from('answer')
-        .insert(
-          toJson({
-            'answer': answer3,
-            'votes': 0,
-            'poll_id':id
-          })
-        );
-    } else if (answer3Id != 0){
-      await supabase
-        .from('answer')
-        .update(
-          toJson({
-            'answer': answer3,
-          })
-        )
-        .eq('id', answer3Id);
-    }
-
-    if(answer4 == "" && answer4Id != 0){
-      await supabase
-        .from('answer')
-        .delete()
-        .eq('id', answer4Id);
-    } else if (answer4 != "" && answer4Id == 0){
-      await supabase
-        .from('answer')
-        .insert(
-          toJson({
-            'answer': answer4,
-            'votes': 0,
-            'poll_id':id
-          })
-        );
-    } else if (answer4Id != 0){
-      await supabase
-        .from('answer')
-        .update(
-          toJson({
-            'answer': answer4,
-          })
-        )
-        .eq('id', answer4Id);
-    }
+      .eq('id', id);
   }
 
   Future<void> updateImages(int id, List images, String imageUrl, String table) async{
@@ -319,22 +226,22 @@ class NewsRepository {
       .eq('id', id);
   }
 
-  Future<void> deletePoll(int id, List<int> answers) async {
+  Future<void> deletePoll(int id) async {
     final supabase = Supabase.instance.client;
 
     await supabase
       .from('poll')
       .delete()
       .eq('id', id);
+  }
 
-    for(int i=0;i<4;i++){
-      if(answers[i] != 0){
-        await supabase
-          .from('answer')
-          .delete()
-          .eq('id', answers[i]);
-      }
-    }
+  Future<void> deleteAnswer(int id) async {
+    final supabase = Supabase.instance.client;
+    
+    await supabase
+      .from('answer')
+      .delete()
+      .eq('id', id);
   }
 
   //SCHOOL PAGE
@@ -356,13 +263,6 @@ class NewsRepository {
         .select()
         .eq('id', resNews[i]['author_id']);
 
-      bool liked= false;
-
-      //likes
-      if(resNews[i]['user_liked'].contains("{'user_id':$getUserId()}")){
-        liked = true;
-      }
-
       //poll
       final resPoll = await supabase
         .from('poll')
@@ -372,6 +272,17 @@ class NewsRepository {
       bool hasVoted = false;
       int choosedAnswer = 0;
       List<Answer> answers = [];
+      Poll poll = Poll(
+          id: 0,
+          title: "",
+          allVotes: 0,
+          pollStart: DateTime.now().toIso8601String(),
+          pollEnd: DateTime.now().toIso8601String(),
+          answers: answers,
+          newsId: 0,
+          hasVoted: hasVoted,
+          choosedAnswer: choosedAnswer
+        );
 
       if(resPoll.isNotEmpty){
         List votedUsers = resPoll[0]['voted_users'];
@@ -399,30 +310,8 @@ class NewsRepository {
             answers.add(Answer.fromJson(resAnswers[i]));
           }
         }
-      }
 
-      news.add(SchoolNews(
-        id: resNews[i]['id'], 
-        authorName: "${resAuthor[0]['name']} ${resAuthor[0]['surname']}", 
-        authorAvatar: resAuthor[0]['profile_pic_url'], 
-        text: List.from(resNews[i]['text']), 
-        media: List.from(resNews[i]['media']), 
-        likes: resNews[i]['likes'],
-        userLiked: liked,
-        pin: resNews[i]['pin'],
-        poll: resPoll.isEmpty
-         ? Poll(
-            id: 0,
-            title: "",
-            allVotes: 0,
-            pollStart: DateTime.now().toIso8601String(),
-            pollEnd: DateTime.now().toIso8601String(),
-            answers: answers,
-            newsId: 0,
-            hasVoted: hasVoted,
-            choosedAnswer: choosedAnswer
-          )
-         : Poll(
+        poll = Poll(
             id: resPoll[0]['id'],
             title: resPoll[0]['title'],
             allVotes: resPoll[0]['all_votes'],
@@ -432,7 +321,19 @@ class NewsRepository {
             newsId: resNews[i]['id'],
             hasVoted: hasVoted,
             choosedAnswer: choosedAnswer
-          ),
+          );
+      }
+
+      news.add(SchoolNews(
+        id: resNews[i]['id'], 
+        authorName: "${resAuthor[0]['name']} ${resAuthor[0]['surname']}", 
+        authorAvatar: resAuthor[0]['profile_pic_url'], 
+        text: List.from(resNews[i]['text']), 
+        media: List.from(resNews[i]['media']), 
+        likes: resNews[i]['likes'],
+        userLiked: false,
+        pin: resNews[i]['pin'],
+        poll: poll,
         createdDateTime: resNews[i]['created_datetime']
       ));
     }

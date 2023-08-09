@@ -5,6 +5,7 @@ import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/components/app_bar_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../../components/image_zoom_widget.dart';
 import '../../../../constants/theme_colors.dart';
 import '../../domain/models/changes.dart';
 import '../controllers/changes_controller.dart';
@@ -39,26 +40,6 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
       getChanges();
     });
     super.initState();
-  }
-
-  Widget buildImageZoom(BuildContext context, String url) {
-    return AlertDialog(
-      backgroundColor: Colors.transparent,
-      contentPadding: EdgeInsets.zero,
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            InteractiveViewer(
-              child: Image.network(
-                url,
-                fit: BoxFit.fill,
-              )
-            )
-          ],
-        ),
-      )
-    );
   }
 
   Future<void> getChanges() async{

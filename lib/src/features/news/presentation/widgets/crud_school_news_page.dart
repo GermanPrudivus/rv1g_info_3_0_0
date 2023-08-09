@@ -107,7 +107,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (context) => const Center(child: CircularProgressIndicator(),)
+            builder: (context) => Center(child: CircularProgressIndicator(color: blue))
           );
         } else if (state.asData == null){
           
@@ -287,7 +287,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                   ),
                 ),
 
-                if(widget.poll.title != "" || showNewPoll)
+                if(title != "" || showNewPoll)
                   Padding(
                     padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
                     child: Container(
@@ -781,14 +781,18 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                             showNewPoll,
                             pollId,
                             title,
-                            answer1Id,
-                            answer2Id,
-                            answer3Id,
-                            answer4Id,
-                            answer1, 
-                            answer2, 
-                            answer3, 
-                            answer4, 
+                            [
+                              answer1Id,
+                              answer2Id,
+                              answer3Id,
+                              answer4Id
+                            ],
+                            [
+                              answer1,
+                              answer2,
+                              answer3,
+                              answer4
+                            ],
                             pollEnd,
                           ).whenComplete(() {
                             Navigator.pop(context);
@@ -802,10 +806,12 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                             pin,
                             showNewPoll,
                             title, 
-                            answer1, 
-                            answer2, 
-                            answer3, 
-                            answer4, 
+                            [
+                              answer1,
+                              answer2,
+                              answer3,
+                              answer4
+                            ],
                             pollEnd
                           ).whenComplete(() {
                             Navigator.pop(context);
