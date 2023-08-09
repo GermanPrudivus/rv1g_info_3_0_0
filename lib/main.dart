@@ -63,10 +63,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    isUserAdmin()
+    isUserAdminAndVerified()
       .then((value) {
         setState(() {
-          admin = value;
+          admin = value[0];
+          verified = value[1];
           screens = [
             NewsPage(isAdmin: admin),
             ChangesPage(isAdmin: admin),
@@ -74,12 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
             NewsPage(isAdmin: admin),
             NewsPage(isAdmin: admin),
           ];
-        });
-      });
-    isUserVerified()
-      .then((value) {
-        setState(() {
-          verified = value;
         });
       });
     super.initState();
@@ -148,16 +143,15 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<bool> isUserAdmin() async{
+  Future<List<bool>> isUserAdminAndVerified() async{
     final supabase = Supabase.instance.client;
-    return await supabase.auth.currentUser!.userMetadata!['admin'] ?? false;
-  }
 
-  Future<bool> isUserVerified() async{
-    final supabase = Supabase.instance.client;
     final email = supabase.auth.currentUser!.email;
     final res = await supabase.from('users').select().eq('email', email);
 
-    return res[0]['verified'];
+    return [
+      await supabase.auth.currentUser!.userMetadata!['admin'] ?? false,
+      res[0]['verified']
+    ];
   }
 }
