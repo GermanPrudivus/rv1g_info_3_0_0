@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/constants/const.dart';
-import 'package:rv1g_info/src/core/app_bar_widget.dart';
+import 'package:rv1g_info/src/components/app_bar_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../constants/theme_colors.dart';

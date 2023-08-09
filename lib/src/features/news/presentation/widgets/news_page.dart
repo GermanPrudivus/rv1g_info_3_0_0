@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rv1g_info/src/core/tab_app_bar_widget.dart';
+import 'package:rv1g_info/src/components/tab_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/eklase_page.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/school_page.dart';
 

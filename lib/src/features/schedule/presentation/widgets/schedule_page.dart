@@ -6,7 +6,7 @@ import 'package:rv1g_info/src/features/schedule/presentation/controllers/schedul
 import 'package:rv1g_info/src/features/schedule/presentation/widgets/crud_schedule_page.dart';
 
 import '../../../../constants/theme_colors.dart';
-import '../../../../core/app_bar_widget.dart';
+import '../../../../components/app_bar_widget.dart';
 import '../../domain/models/schedule.dart';
 
 class SchedulePage extends ConsumerStatefulWidget {
