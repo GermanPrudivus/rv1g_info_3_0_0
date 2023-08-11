@@ -11,6 +11,7 @@ import 'package:rv1g_info/src/features/news/presentation/widgets/news_page.dart'
 import 'src/features/changes/presentation/widgets/changes_page.dart';
 import 'package:rv1g_info/src/features/schedule/presentation/widgets/schedule_page.dart';
 import 'package:rv1g_info/src/features/menu/presentation/widgets/menu_page.dart';
+import 'package:rv1g_info/src/features/shop/presentation/widgets/shop_page.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ChangesPage(isAdmin: admin),
             SchedulePage(isAdmin: admin, isVerified: verified),
             MenuPage(isAdmin: admin, isVerified: verified),
-            NewsPage(isAdmin: admin),
+            ShopPage(isAdmin: admin),
           ];
         });
       });
