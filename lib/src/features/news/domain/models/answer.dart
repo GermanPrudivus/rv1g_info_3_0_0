@@ -1,5 +1,5 @@
-class Answer {
-  const Answer({
+class Answer{
+  Answer({
     required this.id,
     required this.answer,
     required this.votes,
@@ -17,10 +17,4 @@ class Answer {
     votes: json['votes'],
     pollId: json['poll_id'],
   );
- 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-    'answer': answer,
-    'votes': votes,
-    'poll_id': pollId,
-  };
 }

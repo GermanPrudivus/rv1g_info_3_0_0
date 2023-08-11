@@ -1,7 +1,7 @@
-import 'package:rv1g_info/src/features/news/domain/models/poll.dart';
+import 'poll.dart';
 
 class SchoolNews {
-  const SchoolNews({
+  SchoolNews({
     required this.id,
     required this.authorName,
     required this.authorAvatar,

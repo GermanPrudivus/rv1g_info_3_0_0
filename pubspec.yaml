@@ -34,8 +34,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
-
 flutter:
 
   # The following line ensures that the Material Icons font is

@@ -10,11 +10,10 @@ import '../../domain/models/poll.dart';
 import '../../domain/models/school_news.dart';
 
 class NewsRepository {
+  final supabase = Supabase.instance.client;
 
   //CRUD SCHOOL NEWS PAGE
   Future<int> addSchoolNews(String text, List imagesPath, bool pin) async{
-    final supabase = Supabase.instance.client;
-
     final email = supabase.auth.currentUser!.email;
 
     final authorId = await supabase
@@ -79,8 +78,6 @@ class NewsRepository {
   }
 
   Future<void> editSchoolNews(int id, String text, List imagesUrls, List imagesPath, bool pin) async{
-    final supabase = Supabase.instance.client;
-
     final email = supabase.auth.currentUser!.email;
 
     List jsonParagraphs = [];
@@ -136,8 +133,6 @@ class NewsRepository {
   }
 
   Future<int> addPoll(String title, DateTime pollEnd, int newsId) async{
-    final supabase = Supabase.instance.client;
-
     final res = await supabase
       .from('poll')
       .insert(
@@ -156,8 +151,6 @@ class NewsRepository {
   }
 
   Future<void> addAnswer(int pollId, String answer) async {
-    final supabase = Supabase.instance.client;
-
     await supabase
       .from('answer')
       .insert(
@@ -170,8 +163,6 @@ class NewsRepository {
   }
 
   Future<void> updatePoll(int id, String title, DateTime pollEnd) async{
-    final supabase = Supabase.instance.client;
-
     await supabase
       .from('poll')
       .update(
@@ -184,8 +175,6 @@ class NewsRepository {
   }
 
   Future<void> updateAnswer(int id, String answer) async {
-    final supabase = Supabase.instance.client;
-
     await supabase
       .from('answer')
       .update(
@@ -197,8 +186,6 @@ class NewsRepository {
   }
 
   Future<void> updateImages(int id, List images, String imageUrl, String table) async{
-    final supabase = Supabase.instance.client;
-
     List imagesEdited = images;
     imagesEdited.remove(imageUrl);
 
@@ -209,8 +196,6 @@ class NewsRepository {
   }
 
   Future<void> deleteImage(String imageUrl, String bucket) async {
-    final supabase = Supabase.instance.client;
-
     await supabase
       .storage
       .from(bucket)
@@ -218,8 +203,6 @@ class NewsRepository {
   }
 
   Future<void> deleteSchoolNews(int id) async {
-    final supabase = Supabase.instance.client;
-
     await supabase
       .from('news')
       .delete()
@@ -227,8 +210,6 @@ class NewsRepository {
   }
 
   Future<void> deletePoll(int id) async {
-    final supabase = Supabase.instance.client;
-
     await supabase
       .from('poll')
       .delete()
@@ -236,8 +217,6 @@ class NewsRepository {
   }
 
   Future<void> deleteAnswer(int id) async {
-    final supabase = Supabase.instance.client;
-    
     await supabase
       .from('answer')
       .delete()
@@ -246,15 +225,13 @@ class NewsRepository {
 
   //SCHOOL PAGE
   Future<List<SchoolNews>> getSchoolNews() async{
-    final supabase = Supabase.instance.client;
+    List<SchoolNews> news = [];
 
     final resNews = await supabase
       .from('news')
       .select()
       .order('pin', ascending: false)
       .order('created_datetime', ascending: false);
-
-    List<SchoolNews> news = [];
 
     for(int i=0;i<resNews.length;i++){
       //author
@@ -324,7 +301,7 @@ class NewsRepository {
           );
       }
 
-      news.add(SchoolNews(
+      SchoolNews oneNews = SchoolNews(
         id: resNews[i]['id'], 
         authorName: "${resAuthor[0]['name']} ${resAuthor[0]['surname']}", 
         authorAvatar: resAuthor[0]['profile_pic_url'], 
@@ -335,15 +312,15 @@ class NewsRepository {
         pin: resNews[i]['pin'],
         poll: poll,
         createdDateTime: resNews[i]['created_datetime']
-      ));
+      );
+
+      news.add(oneNews);
     }
 
     return news;
   }
 
   Future<void> updateVotes(int pollId, int answerId, int userdId) async{
-    final supabase = Supabase.instance.client;
-
     final res1 = await supabase
       .from('poll')
       .select()
@@ -380,8 +357,6 @@ class NewsRepository {
   //CRUD Eklase News Page
   Future<void> addEklaseNews(String title, String author, 
     String shortText, String text, List imagesPath, bool pin) async{
-    
-    final supabase = Supabase.instance.client;
 
     List jsonParagraphs = [];
 
@@ -438,8 +413,6 @@ class NewsRepository {
 
   Future<void> editEklaseNews(int newsId, String title, String author, 
     String shortText, String text, List imagesPath, List imagesUrls, bool pin) async{
-    
-    final supabase = Supabase.instance.client;
 
     List jsonParagraphs = [];
 
@@ -497,8 +470,6 @@ class NewsRepository {
   }
 
   Future<void> deleteEklaseNews(int id) async {
-    final supabase = Supabase.instance.client;
-
     await supabase
       .from('eklase_news')
       .delete()
@@ -507,8 +478,6 @@ class NewsRepository {
 
   //EKLASE PAGE
   Future<List<EklaseNews>> getEklaseNews() async{
-    final supabase = Supabase.instance.client;
-
     final res = await supabase
       .from('eklase_news')
       .select()
@@ -534,8 +503,6 @@ class NewsRepository {
   }
 
   Future<int> getUserId() async{
-    final supabase = Supabase.instance.client;
-
     String email = supabase.auth.currentUser!.email!;
 
     final res = await supabase

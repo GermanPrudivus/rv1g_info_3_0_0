@@ -64,11 +64,10 @@ class _CRUDMenuWidgetState extends ConsumerState<CRUDMenuWidget> {
             builder: (context) => Center(child: CircularProgressIndicator(color: blue))
           );
         } else if (state.asData == null){
-          
+          state.showSnackbarOnError(context);
         } else {
           Navigator.pop(context);
         }
-        state.showSnackbarOnError(context);
       },
     );
 

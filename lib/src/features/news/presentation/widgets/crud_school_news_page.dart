@@ -110,11 +110,10 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
             builder: (context) => Center(child: CircularProgressIndicator(color: blue))
           );
         } else if (state.asData == null){
-          
+          state.showSnackbarOnError(context);
         } else {
           Navigator.pop(context);
         }
-        state.showSnackbarOnError(context);
       },
     );
 

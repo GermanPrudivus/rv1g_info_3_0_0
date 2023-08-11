@@ -13,9 +13,11 @@ class ChangesService {
 
   Future<void> updateChanges(String tag, String imagePath, String imageUrl) async{
     if(imageUrl != noChanges && imagePath == ""){
-      return await changesRepository.deleteChanges(tag, imageUrl);
-    } else if(imagePath != ""){
-      return await changesRepository.updateChanges(tag, imagePath, imageUrl);
+      await changesRepository.deleteChanges(tag, imageUrl);
+    } else if(imageUrl == noChanges && imagePath != ""){
+      await changesRepository.addChanges(tag, imagePath);
+    } else if(imageUrl != noChanges && imagePath != ""){
+      await changesRepository.updateChanges(tag, imagePath, imageUrl);
     }
   }
 

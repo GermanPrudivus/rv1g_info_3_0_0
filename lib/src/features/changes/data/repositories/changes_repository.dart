@@ -7,9 +7,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/models/changes.dart';
 
 class ChangesRepository {
-  Future<void> updateChanges(String tag, String imagePath, String imageUrl) async {
-    final supabase = Supabase.instance.client;
+  final supabase = Supabase.instance.client;
 
+  Future<void> addChanges(String tag, String imagePath) async{
     final bytes = await File(imagePath).readAsBytes();
     final fileExt = File(imagePath).path.split('.').last;
     final fileName = '$tag.${DateTime.now().toIso8601String()}.$fileExt';
@@ -22,31 +22,41 @@ class ChangesRepository {
       .from('media')
       .getPublicUrl(filePath);
 
-    if(imageUrl != noChanges){
-      await supabase
-        .storage
-        .from('media')
-        .remove([imageUrl.split("/").last]);
+    await supabase
+      .from('media')
+      .insert(
+        toJson({
+          'media_url': res,
+          'tag': tag
+        })
+      );
+  }
 
-      await supabase
-        .from('media')
-        .update({'media_url': res})
-        .eq('tag', tag);
-    } else {
-      await supabase
-        .from('media')
-        .insert(
-          toJson({
-            'media_url': res,
-            'tag': tag
-          })
-        );
-    }
+  Future<void> updateChanges(String tag, String imagePath, String imageUrl) async{
+    final bytes = await File(imagePath).readAsBytes();
+    final fileExt = File(imagePath).path.split('.').last;
+    final fileName = '$tag.${DateTime.now().toIso8601String()}.$fileExt';
+    final filePath = fileName;
+    await supabase.storage.from('media').uploadBinary(
+        filePath,
+        bytes,
+      );
+    final res = supabase.storage
+      .from('media')
+      .getPublicUrl(filePath);
+
+    await supabase
+      .storage
+      .from('media')
+      .remove([imageUrl.split("/").last]);
+
+    await supabase
+      .from('media')
+      .update({'media_url': res})
+      .eq('tag', tag);
   }
 
   Future<void> deleteChanges(String tag, String imageUrl) async {
-    final supabase = Supabase.instance.client;
-
     await supabase
       .from('media')
       .delete()
@@ -59,8 +69,6 @@ class ChangesRepository {
   }
 
   Future<Map<String, Changes>> getChanges() async {
-    final supabase = Supabase.instance.client;
-
     final resMedia = await supabase
       .from('media')
       .select()

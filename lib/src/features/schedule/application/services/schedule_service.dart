@@ -13,9 +13,11 @@ class ScheduleService {
 
   Future<void> updateSchedule(String tag, String imagePath, String imageUrl) async{
     if(imageUrl != noSchedule && imagePath == ""){
-      return await scheduleRepository.deleteSchedule(tag, imageUrl);
-    } else if(imagePath != ""){
-      return await scheduleRepository.updateSchedule(tag, imagePath, imageUrl);
+      await scheduleRepository.deleteSchedule(tag, imageUrl);
+    } else if(imageUrl == noSchedule && imagePath != ""){
+      await scheduleRepository.addSchedule(tag, imagePath);
+    } else if(imageUrl != noSchedule && imagePath != ""){
+      await scheduleRepository.updateSchedule(tag, imagePath, imageUrl);
     }
   }
 

@@ -13,9 +13,11 @@ class MenuService {
 
   Future<void> updateMenu(String tag, String imagePath, String imageUrl) async{
     if(imageUrl != noMenu && imagePath == ""){
-      return await menuRepository.deleteMenu(tag, imageUrl);
-    } else if(imagePath != ""){
-      return await menuRepository.updateMenu(tag, imagePath, imageUrl);
+      await menuRepository.deleteMenu(tag, imageUrl);
+    } else if(imageUrl == noMenu && imagePath != ""){
+      await menuRepository.addMenu(tag, imagePath);
+    } else if(imageUrl != noMenu && imagePath != ""){
+      await menuRepository.updateMenu(tag, imagePath, imageUrl);
     }
   }
 
