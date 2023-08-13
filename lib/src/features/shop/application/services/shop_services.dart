@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rv1g_info/src/features/shop/presentation/widgets/shop_page.dart';
 
 import '../../data/repositories/shop_repository.dart';
 import '../../domain/models/item.dart';
