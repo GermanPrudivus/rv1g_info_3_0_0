@@ -310,6 +310,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                       margin: EdgeInsets.only(right: 5.w),
                                       width: 255.w,
                                       child: TextFormField(
+                                        readOnly: widget.poll.allVotes != 0,
                                         initialValue: title,
                                         textInputAction: TextInputAction.next,
                                         style: TextStyle(
@@ -405,6 +406,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                 Column(
                                   children: [
                                     TextFormField(
+                                      readOnly: widget.poll.allVotes != 0,
                                       initialValue: answer1,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -447,6 +449,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                     ),
                                     SizedBox(height: 10.h),
                                     TextFormField(
+                                      readOnly: widget.poll.allVotes != 0,
                                       initialValue: answer2,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
@@ -491,6 +494,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                   ],
                                 ),
                                 TextFormField(
+                                  readOnly: widget.poll.allVotes != 0,
                                   initialValue: answer3,
                                   textInputAction: TextInputAction.next,
                                   style: TextStyle(
@@ -527,6 +531,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                 ),
                                 SizedBox(height: 10.h),
                                 TextFormField(
+                                  readOnly: widget.poll.allVotes != 0,
                                   initialValue: answer4,
                                   textInputAction: TextInputAction.next,
                                   style: TextStyle(

@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:rv1g_info/src/features/news/domain/models/eklase_news.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 
 import '../../domain/models/answer.dart';
+import '../../domain/models/eklase_news.dart';
 import '../../domain/models/poll.dart';
 import '../../domain/models/school_news.dart';
 

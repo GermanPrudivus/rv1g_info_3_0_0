@@ -537,9 +537,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                             pin
                           ).whenComplete(() {
                             Navigator.pop(context);
-                            if(widget.edit){
-                              Navigator.pop(context);
-                            }
+                            Navigator.pop(context);
                           });
                       } else {
                         ref
@@ -553,9 +551,6 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                             pin
                           ).whenComplete(() {
                             Navigator.pop(context);
-                            if(widget.edit){
-                              Navigator.pop(context);
-                            }
                           });
                       }
                     },
