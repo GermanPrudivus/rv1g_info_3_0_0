@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/constants/theme_colors.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 // ignore: must_be_immutable
 class TabAppBarWidget extends StatefulWidget {
   final String title;
+  final String profilePicUrl;
   final int tabQuant;
   final List<String> tabNames;
   final List<bool> parametrs;//1.isAdmin, 2.showDialog, 3.isScrollable
   final List<Widget> addWidgets;
   late TabController tabController;
+  final Function(BuildContext) openDrawerCallback;
 
   TabAppBarWidget({
     super.key, 
-    required this.title, 
+    required this.title,
+    required this.profilePicUrl,
     required this.tabQuant,
     required this.tabNames,
     required this.parametrs,
     required this.addWidgets,
     required this.tabController,
+    required this.openDrawerCallback
   });
 
   @override
@@ -28,17 +31,8 @@ class TabAppBarWidget extends StatefulWidget {
 
 class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderStateMixin {
 
-  String profilePicUrl = "";
-
   @override
   void initState() {
-    getProfilePicUrl()
-      .then((value) {
-        setState(() {
-          profilePicUrl = value;
-        });
-      }
-    );
     super.initState();
   }
 
@@ -51,12 +45,12 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
       toolbarHeight: 60.h,
 
       leading: GestureDetector(
-        onTap: () {},
+        onTap: () => widget.openDrawerCallback(context),
         child: Container(
           height: 60.h,
           color: Colors.white,
           alignment: Alignment.centerRight,
-          child: profilePicUrl == ""
+          child: widget.profilePicUrl == ""
             ? CircleAvatar(
                 radius: 18.h,
                 backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
@@ -69,7 +63,7 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
             : CircleAvatar(
                 radius: 18.h,
                 backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-                backgroundImage: NetworkImage(profilePicUrl),
+                backgroundImage: NetworkImage(widget.profilePicUrl),
               ),
         ),
       ),
@@ -140,18 +134,4 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
       ),
     );
   }
-}
-
-Future<String> getProfilePicUrl() async{
-  final supabase = Supabase.instance.client;
-
-  final email = supabase.auth.currentUser?.email;
-  final res = await supabase
-    .from('users')
-    .select('profile_pic_url')
-    .eq('email', email);
-
-  final profilePicUrl = res[0]['profile_pic_url'];
-
-  return await profilePicUrl;
 }

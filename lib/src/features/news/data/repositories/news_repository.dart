@@ -512,6 +512,21 @@ class NewsRepository {
 
     return res[0]['id'];
   }
+
+  Future<List<String>> getUser() async {
+    final supabase = Supabase.instance.client;
+
+    final email = supabase.auth.currentUser?.email;
+    final res = await supabase
+      .from('users')
+      .select()
+      .eq('email', email);
+
+    final profilePicUrl = res[0]['profile_pic_url'];
+    final name = '${res[0]['name']} ${res[0]['surname']}';
+
+    return await [profilePicUrl, name];
+  }
 }
 
 final newsRepositoryProvider = riverpod.Provider<NewsRepository>((ref) {

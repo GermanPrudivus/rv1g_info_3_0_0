@@ -140,6 +140,10 @@ class NewsService {
   Future<int> getUserId() async {
     return await newsRepository.getUserId();
   }
+
+  Future<List<String>> getUser() async {
+    return await newsRepository.getUser();
+  }
 }
 
 final newsServiceProvider = Provider<NewsService>((ref) {

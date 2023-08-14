@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rv1g_info/src/components/drawer_widget.dart';
 import 'package:rv1g_info/src/components/image_zoom_widget.dart';
 import 'package:rv1g_info/src/components/tab_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/menu/presentation/controllers/menu_controller.dart';
@@ -25,8 +26,9 @@ class MenuPage extends ConsumerStatefulWidget {
 }
 
 class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMixin {
-
   late TabController _tabController;
+  String profilePicUrl = "";
+  String fullName = "";
 
   Map<String, Menu> images = {};
   String menu = noMenu;
@@ -34,6 +36,15 @@ class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMix
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+        .read(menuControllerProvider.notifier)
+        .getUser()
+        .then((value) {
+          setState(() {
+            profilePicUrl = value![0];
+            fullName = value[1];
+          });
+        });
       getMenu();
     });
     _tabController = TabController(length: 3, vsync: this);
@@ -58,16 +69,22 @@ class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMix
       });
   }
 
+  void openDrawerCallback(BuildContext context) {
+    Scaffold.of(context).openDrawer();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(90.h),
         child: TabAppBarWidget(
-          title: "Pusdienas", 
+          title: "Pusdienas",
+          profilePicUrl: profilePicUrl,
           tabQuant: 3, 
-          tabNames: const ["Pusdienu grafiks", "Ēdienkarte", "Ēdienkarte(bez glutēna)"], 
+          tabNames: const ["Pusdienu grafiks", "Ēdienkarte", "Ēdienkarte(bez glutēna)"],
           tabController: _tabController, 
+          openDrawerCallback: openDrawerCallback,
           parametrs: [widget.isAdmin, true, true],//1.isAdmin, 2.showDialog, 3.isScrollable
           addWidgets: [
             CRUDMenuWidget(
@@ -96,6 +113,10 @@ class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMix
             ),
           ],
         ),
+      ),
+      drawer: DrawerWidget(
+        profilePicUrl: profilePicUrl,
+        fullName: fullName,
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
