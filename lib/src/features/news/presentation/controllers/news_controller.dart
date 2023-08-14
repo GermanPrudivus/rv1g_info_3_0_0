@@ -1,8 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rv1g_info/src/features/news/application/services/news_service.dart';
 
-import '../../domain/models/school_news.dart';
-
 class NewsController extends StateNotifier<AsyncValue<void>> {
   NewsController({required this.newsService})
       : super(const AsyncData<void>(null));
