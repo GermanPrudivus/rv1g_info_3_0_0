@@ -117,6 +117,7 @@ class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMix
       drawer: DrawerWidget(
         profilePicUrl: profilePicUrl,
         fullName: fullName,
+        isAdmin: widget.isAdmin,
       ),
       backgroundColor: Colors.white,
       body: SafeArea(

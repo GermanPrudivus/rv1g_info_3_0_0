@@ -4,10 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class DrawerWidget extends StatefulWidget {
   final String profilePicUrl;
   final String fullName;
+  final bool isAdmin;
 
   const DrawerWidget({
     required this.profilePicUrl,
     required this.fullName,
+    required this.isAdmin,
     super.key
   });
 
@@ -65,7 +67,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         width: 40.h,
                         color: Colors.transparent,
                         child: Icon(
-                          Icons.qr_code,
+                          Icons.qr_code_2,
                           size: 30.h,
                         ),
                       ),
@@ -79,7 +81,130 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     fontSize: 16.h,
                     fontWeight: FontWeight.bold
                   ),
-                )
+                ),
+                SizedBox(height: 20.h),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Row(
+                    children: [
+                      Icon(
+                        Icons.event_outlined,
+                        color: Colors.black,
+                        size: 30.h,
+                      ),
+                      SizedBox(width: 10.w),
+                      Text(
+                        "Pasākumi",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.h,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {},
+                ),
+                SizedBox(height: 5.h),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Row(
+                    children: [
+                      Icon(
+                        Icons.group_outlined,
+                        color: Colors.black,
+                        size: 30.h,
+                      ),
+                      SizedBox(width: 10.w),
+                      Text(
+                        "Brīvpratīgie",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.h,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {},
+                ),
+                SizedBox(height: 5.h),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Row(
+                    children: [
+                      Icon(
+                        Icons.receipt_outlined,
+                        color: Colors.black,
+                        size: 30.h,
+                      ),
+                      SizedBox(width: 10.w),
+                      Text(
+                        "Biļetes",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.h,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {},
+                ),
+                SizedBox(height: 5.h),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Row(
+                    children: [
+                      Icon(
+                        Icons.qr_code_scanner,
+                        color: widget.isAdmin
+                          ? Colors.black
+                          : Colors.grey,
+                        size: 30.h,
+                      ),
+                      SizedBox(width: 10.w),
+                      Text(
+                        "Skeneri",
+                        style: TextStyle(
+                          color: widget.isAdmin
+                            ? Colors.black
+                            : Colors.grey,
+                          fontSize: 18.h,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    if(widget.isAdmin){
+                      
+                    }
+                  },
+                ),
+                SizedBox(height: 5.h),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Row(
+                    children: [
+                      Icon(
+                        Icons.settings_outlined,
+                        color: Colors.black,
+                        size: 30.h,
+                      ),
+                      SizedBox(width: 10.w),
+                      Text(
+                        "Iestatījumi",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.h,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {},
+                ),
               ],
             )
           ],
