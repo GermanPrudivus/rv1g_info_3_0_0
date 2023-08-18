@@ -264,7 +264,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                         },
                                       ),
 
-                                    if(poll.id != 0)
+                                    if(poll.id != 0 && text.isNotEmpty)
                                       SizedBox(height: 15.h),
 
                                     //poll
@@ -292,7 +292,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                             ),
                                           ),
                                         ),
-                                        pollEnded: DateTime.now() == pollEnd,
+                                        pollEnded: differenceInDates(pollEnd, DateTime.now())[0] == "-",
                                         hasVoted: hasVoted,
                                         userVotedOptionId: choosedAnswer,
                                         pollOptions: [

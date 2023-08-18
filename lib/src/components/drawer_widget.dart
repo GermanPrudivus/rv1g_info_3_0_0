@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rv1g_info/src/features/events/presentation/widgets/events_page.dart';
 
 class DrawerWidget extends StatefulWidget {
   final String profilePicUrl;
@@ -28,6 +29,28 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     profilePicUrl = widget.profilePicUrl;
     fullName = widget.fullName;
     super.initState();
+  }
+
+  void navigateTo(Widget page) {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return page;
+        },
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0);
+          const end = Offset.zero;
+          const curve = Curves.easeIn;
+                                          
+          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                          
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+      )
+    );
   }
 
   @override
@@ -103,7 +126,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ),
                     ],
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    return navigateTo(
+                      EventsPage(isAdmin: widget.isAdmin)
+                    );
+                  },
                 ),
                 SizedBox(height: 5.h),
                 ListTile(
@@ -153,6 +180,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 SizedBox(height: 5.h),
                 ListTile(
+                  enabled: widget.isAdmin,
                   contentPadding: EdgeInsets.zero,
                   title: Row(
                     children: [

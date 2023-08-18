@@ -71,7 +71,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                           children: [
                             Container(
                               margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
-                              padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
+                              padding: EdgeInsets.only(top: 10.h, bottom: 10.h, right: 5.w, left: 5.w),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.w),
                                 color: Colors.white,

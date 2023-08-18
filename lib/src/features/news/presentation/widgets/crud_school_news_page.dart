@@ -294,7 +294,9 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.h),
                         color: Colors.white,
-                        border: Border.all(),
+                        border: Border.all(
+                          color: Colors.black38
+                        ),
                       ),
                       child: SingleChildScrollView(
                         primary: false,
@@ -310,7 +312,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                       margin: EdgeInsets.only(right: 5.w),
                                       width: 255.w,
                                       child: TextFormField(
-                                        readOnly: widget.poll.allVotes != 0,
+                                        readOnly: widget.poll.allVotes != 0 && !showNewPoll,
                                         initialValue: title,
                                         textInputAction: TextInputAction.next,
                                         style: TextStyle(
@@ -343,12 +345,6 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                           setState(() {
                                             title = value;
                                           });
-                                        },
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Please enter question';
-                                          } 
-                                          return null;
                                         },
                                       ),
                                     ),
@@ -593,23 +589,11 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                   height: 200.h,
                                   child: CupertinoDatePicker(
                                     use24hFormat: true,
-                                    initialDateTime: DateTime(
-                                      pollEnd.year,
-                                      pollEnd.month,
-                                      pollEnd.day,
-                                      pollEnd.hour,
-                                      pollEnd.minute
-                                    ),
+                                    initialDateTime: pollEnd,
                                     mode: CupertinoDatePickerMode.dateAndTime,
                                     onDateTimeChanged: (value) {
                                       setState(() {
-                                        pollEnd = DateTime(
-                                          value.year, 
-                                          value.month, 
-                                          value.day,
-                                          value.hour,
-                                          value.minute
-                                        );
+                                        pollEnd = value;
                                       });
                                     },
                                   ),
