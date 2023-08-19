@@ -20,44 +20,15 @@ class EventService {
     );
   }
 
-  /*Future<void> editSchoolNews(
-    int newsId, String text, List imagesUrls, List imagesPath, bool pin, bool showNewPoll,
-    int pollId, String title, List<int> answersId, List<String> answers, DateTime pollEnd) async {
+  Future<void> editEvent(
+    int eventId, String title, String shortText, String description, 
+    String startDate, String endDate, List imagesPath, List imagesUrls) async {
     
-    return newsRepository
-      .editSchoolNews(newsId, text, imagesUrls, imagesPath, pin)
-      .whenComplete(() {
-        if(pollId != 0){
-          newsRepository.updatePoll(
-            pollId, 
-            title, 
-            pollEnd
-          ).whenComplete(() async {
-            for(int i=0;i<answers.length;i++){
-              if(answers[i] == "" && answersId[i]  != 0){
-                await newsRepository.deleteAnswer(answersId[i]);
-              } else if (answers[i] != "" && answersId[i] == 0){
-                await newsRepository.addAnswer(pollId, answers[i]);
-              } else if (answersId[i] != 0){
-                await newsRepository.updateAnswer(answersId[i], answers[i]);
-              }
-            }
-          });
-        } else if(showNewPoll){
-          newsRepository.addPoll(
-            title,
-            pollEnd, 
-            newsId
-          ).then((value) async {
-            for(int i=0;i<answers.length;i++){
-              if(answers[i] != ""){
-                await newsRepository.addAnswer(value, answers[i]);
-              }
-            }
-          });               
-        }
-      });
-  }*/
+    return eventRepository.editEvent(
+      eventId, title, shortText, description, 
+      startDate, endDate, imagesPath, imagesUrls
+    );
+  }
 
   Future<void> deleteEvent(int id, List images) async{
     await eventRepository.deleteEvent(id);

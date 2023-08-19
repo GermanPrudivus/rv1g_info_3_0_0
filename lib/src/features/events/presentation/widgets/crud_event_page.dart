@@ -116,6 +116,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                   .deleteEvent(widget.eventId, widget.images)
                   .whenComplete(() {
                     Navigator.pop(context);
+                    Navigator.pop(context);
                   });
               },
               child: SizedBox(
@@ -557,21 +558,21 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       if(widget.edit) {
-                        /*ref
-                          .read(crudEklaseNewsControllerProvider.notifier)
-                          .editEklaseNews(
-                            widget.newsId,
+                        ref
+                          .read(crudEventControllerProvider.notifier)
+                          .editEvent(
+                            widget.eventId,
                             title, 
-                            author, 
                             shortText, 
-                            text, 
+                            description,
+                            startDate.toIso8601String(),
+                            endDate.toIso8601String(),
                             imagesPath,
                             images,
-                            pin
                           ).whenComplete(() {
                             Navigator.pop(context);
                             Navigator.pop(context);
-                          });*/
+                          });
                       } else {
                         ref
                           .read(crudEventControllerProvider.notifier)

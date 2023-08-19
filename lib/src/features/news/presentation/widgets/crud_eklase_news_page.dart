@@ -111,9 +111,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                   .deleteEklaseNews(widget.newsId)
                   .whenComplete(() {
                     Navigator.pop(context);
-                    if(widget.edit){
-                      Navigator.pop(context);
-                    }
+                    Navigator.pop(context);
                   });
               },
               child: SizedBox(

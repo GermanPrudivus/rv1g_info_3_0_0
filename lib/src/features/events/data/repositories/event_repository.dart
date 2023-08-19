@@ -69,13 +69,14 @@ class EventRepository {
       );
   }
 
-  /*Future<void> editSchoolNews(int id, String text, List imagesUrls, List imagesPath, bool pin) async{
-    final email = supabase.auth.currentUser!.email;
+  Future<void> editEvent(
+    int id, String title, String shortText, String description, 
+    String startDate, String endDate, List imagesPath, List imagesUrls) async{
 
     List jsonParagraphs = [];
 
-    if(text != ""){
-      List paragraphs = text.split('\n');
+    if(description != ""){
+      List paragraphs = description.split('\n');
 
       jsonParagraphs = paragraphs.map((paragraph) {
         return json.encode({
@@ -90,14 +91,14 @@ class EventRepository {
       for(int i=0;i<imagesPath.length;i++){
         final bytes = await File(imagesPath[i]).readAsBytes();
         final fileExt = File(imagesPath[i]).path.split('.').last;
-        final fileName = '$email.${DateTime.now().toIso8601String()}.$fileExt';
+        final fileName = '${DateTime.now().toIso8601String()}.$fileExt';
         final filePath = fileName;
-        await supabase.storage.from('news').uploadBinary(
+        await supabase.storage.from('event').uploadBinary(
             filePath,
             bytes,
           );
         final res = supabase.storage
-          .from('news')
+          .from('event')
           .getPublicUrl(filePath);
 
         images.add(res);
@@ -113,16 +114,19 @@ class EventRepository {
     jsonImages = imagesUrls + jsonImages;
 
     await supabase
-      .from('news')
+      .from('event')
       .update(
         toJson({
-          'text': jsonParagraphs,
+          'title': title,
+          'short_text': shortText,
+          'description': jsonParagraphs,
+          'start_date': startDate,
+          'end_date': endDate,
           'media': jsonImages,
-          'pin': pin,
         })
       )
       .eq('id', id);
-  }*/
+  }
 
   Future<void> updateImages(int id, List images, String imageUrl) async{
     List imagesEdited = images;

@@ -19,16 +19,16 @@ class CrudEventController extends StateNotifier<AsyncValue<void>> {
     });
   }
 
-  /*Future<void> editEvent(int newsId, String title, String author, 
-    String shortText, String text, List imagesPath, List imagesUrls, bool pin) async {
+  Future<void> editEvent(int eventId, String title, String shortText, String description, 
+    String startDate, String endDate, List imagesPath, List imagesUrls) async {
 
     state = const AsyncLoading<void>();
     state = await AsyncValue.guard<void>(() {
-      return newsService.editEklaseNews(
-        newsId, title, author, shortText, text, imagesPath, imagesUrls, pin
+      return eventService.editEvent(
+        eventId, title, shortText, description, startDate, endDate, imagesPath, imagesUrls
       );
     });
-  }*/
+  }
 
   Future<void> deleteEvent(int id, List images) async {
     state = const AsyncLoading<void>();
