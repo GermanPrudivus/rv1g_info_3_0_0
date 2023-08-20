@@ -12,38 +12,35 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:rv1g_info/src/utils/exception.dart';
 
 import '../../../../constants/theme_colors.dart';
-import '../controllers/crud_event_controller.dart';
+import '../controllers/crud_volunteering_controller.dart';
 
-class CRUDEventPage extends ConsumerStatefulWidget {
+class CRUDVolunteeringPage extends ConsumerStatefulWidget {
   final bool edit;
-  final int eventId;
+  final int jobId;
   final String title;
-  final String shortText;
-  final DateTime startDate;
-  final DateTime endDate;
   final String description;
   final List<String> images;
+  final DateTime startDate;
+  final DateTime endDate;
 
-  const CRUDEventPage({
+  const CRUDVolunteeringPage({
     required this.edit,
-    required this.eventId,
+    required this.jobId,
     required this.title,
-    required this.shortText,
-    required this.startDate,
-    required this.endDate,
     required this.description,
     required this.images,
+    required this.startDate,
+    required this.endDate,
     super.key
   });
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _CRUDEventPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _CRUDVolunteeringPageState();
 }
 
-class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
+class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
 
   late String title;
-  late String shortText;
   late String description;
   late DateTime startDate;
   late DateTime endDate;
@@ -51,17 +48,15 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
   bool next = true;
 
   late List<String> images;
-
   List imagesPath = [];
 
   @override
   void initState() {
     title = widget.title;
-    shortText = widget.shortText;
     description = widget.description;
+    images = widget.images;
     startDate = widget.startDate;
     endDate = widget.endDate;
-    images = widget.images;
     super.initState();
   }
 
@@ -82,7 +77,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
   Widget build(BuildContext context) {
 
     ref.listen<AsyncValue>(
-      crudEventControllerProvider,
+      crudVolunteeringControllerProvider,
       (_, state) {
         if(state.isLoading) {
           showDialog(
@@ -112,8 +107,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
             GestureDetector(
               onTap: () {
                 ref
-                  .read(crudEventControllerProvider.notifier)
-                  .deleteEvent(widget.eventId, widget.images)
+                  .read(crudVolunteeringControllerProvider.notifier)
+                  .deleteEvent(widget.jobId, widget.images)
                   .whenComplete(() {
                     Navigator.pop(context);
                     Navigator.pop(context);
@@ -142,8 +137,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                   children: [
                     Text(
                       widget.edit
-                      ? "Rediģēt pasākumu:"
-                      : "Pievienot pasākumu:",
+                      ? "Rediģēt brīvprātīgo darbu:"
+                      : "Pievienot brīvprātīgo darbu:",
                       style: TextStyle(
                         fontSize: 22.h,
                       ),
@@ -187,7 +182,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                             ),
                           ),
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: 'Ieraksti pasākuma nosaukumu',
+                          hintText: 'Ieraksti amata nosaukumu',
                           hintStyle: TextStyle(
                             fontSize: 13.h
                           )
@@ -203,66 +198,12 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                   )
                 ),
 
-                Padding(
-                  padding: EdgeInsets.only(top: 15.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 5.w, bottom: 5.h),
-                        child: Text(
-                          "Īss apraksts",
-                          style: TextStyle(
-                            fontSize: 14.h,
-                          ),
-                        ),
-                      ),
-                      TextFormField(
-                        initialValue: shortText,
-                        textInputAction: TextInputAction.next,
-                        style: TextStyle(
-                          fontSize: 14.h
-                        ),
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              width: 2.h,
-                              color: Colors.black
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              width: 2.h,
-                              color: blue
-                            ),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: 'Ieraksti pasākuma īso aprakstu, kuru redzēs sākumā',
-                          hintStyle: TextStyle(
-                            fontSize: 14.h
-                          )
-                        ),
-                        minLines: 6,
-                        maxLines: 10,
-                        onChanged: (value) {
-                          setState(() {
-                            shortText = value;
-                          });
-                        },
-                        cursorColor: blue,
-                      ),
-                    ],
-                  )
-                ),
-
                 SizedBox(height: 10.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Pasākuma ilgums:",
+                      "Darba ilgums:",
                       style: TextStyle(
                         fontSize: 14.h
                       ),
@@ -411,7 +352,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                             ),
                           ),
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: 'Ieraksti pasākuma aprakstu',
+                          hintText: 'Ieraksti darba aprakstu',
                           hintStyle: TextStyle(
                             fontSize: 14.h
                           )
@@ -457,8 +398,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                             SlidableAction(
                               onPressed: (context) {
                                 ref
-                                  .read(crudEventControllerProvider.notifier)
-                                  .deleteImage(widget.eventId, images, images[i])
+                                  .read(crudVolunteeringControllerProvider.notifier)
+                                  .deleteImage(widget.jobId, images, images[i])
                                   .whenComplete(() {
                                     setState(() {
                                       images = images;
@@ -559,11 +500,10 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                     onPressed: () {
                       if(widget.edit) {
                         ref
-                          .read(crudEventControllerProvider.notifier)
-                          .editEvent(
-                            widget.eventId,
-                            title, 
-                            shortText, 
+                          .read(crudVolunteeringControllerProvider.notifier)
+                          .editJob(
+                            widget.jobId,
+                            title,
                             description,
                             startDate.toIso8601String(),
                             endDate.toIso8601String(),
@@ -575,10 +515,9 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                           });
                       } else {
                         ref
-                          .read(crudEventControllerProvider.notifier)
-                          .addEvent(
+                          .read(crudVolunteeringControllerProvider.notifier)
+                          .addJob(
                             title, 
-                            shortText, 
                             description,
                             startDate.toIso8601String(),
                             endDate.toIso8601String(),
@@ -598,8 +537,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                     ),
                     child: Text(
                       widget.edit 
-                        ? "Rediģēt pasākumu"
-                        : "Pievienot pasākumu",
+                        ? "Rediģēt darbu"
+                        : "Pievienot darbu",
                       style: TextStyle(
                         fontSize: 16.h,
                         fontWeight: FontWeight.bold,

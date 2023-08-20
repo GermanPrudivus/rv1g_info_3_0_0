@@ -4,6 +4,8 @@ import 'package:rv1g_info/src/components/user_qr_code_widget.dart';
 import 'package:rv1g_info/src/features/events/presentation/widgets/events_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../features/volunteering/presentation/widgets/volunteering_jobs_page.dart';
+
 class DrawerWidget extends StatefulWidget {
   final String profilePicUrl;
   final String fullName;
@@ -167,7 +169,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ),
                     ],
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    return navigateTo(
+                      VolunteeringJobsPage(isAdmin: widget.isAdmin)
+                    );
+                  },
                 ),
                 SizedBox(height: 5.h),
                 ListTile(
