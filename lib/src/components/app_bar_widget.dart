@@ -8,13 +8,15 @@ class AppBarWidget extends StatefulWidget {
   final bool add;
   final Widget navigateTo;
   final bool showDialog;
+  final Function(BuildContext) openDrawerCallback;
 
   const AppBarWidget({
     super.key, 
     required this.title,
     required this.add,
     required this.navigateTo,
-    required this.showDialog
+    required this.showDialog,
+    required this.openDrawerCallback
   });
 
   @override
@@ -46,7 +48,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       toolbarHeight: 60.h,
 
       leading: GestureDetector(
-        onTap: () {},
+        onTap: () => widget.openDrawerCallback(context),
         child: Container(
           height: 60.h,
           alignment: Alignment.centerRight,

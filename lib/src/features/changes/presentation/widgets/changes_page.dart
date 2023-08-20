@@ -5,6 +5,7 @@ import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/components/app_bar_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../../components/drawer_widget.dart';
 import '../../../../components/image_zoom_widget.dart';
 import '../../../../constants/theme_colors.dart';
 import '../../domain/models/changes.dart';
@@ -24,6 +25,8 @@ class ChangesPage extends ConsumerStatefulWidget {
 }
 
 class _ChangesPageState extends ConsumerState<ChangesPage> {
+  String profilePicUrl = "";
+  String fullName = "";
 
   CalendarFormat format = CalendarFormat.week;
   DateTime selectedDay = DateTime.now();
@@ -37,7 +40,17 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+        .read(changesControllerProvider.notifier)
+        .getUser()
+        .then((value) {
+          setState(() {
+            profilePicUrl = value![0];
+            fullName = value[1];
+          });
+        });
       getChanges();
+      setChanges();
     });
     super.initState();
   }
@@ -81,11 +94,12 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
+  void openDrawerCallback(BuildContext context) {
+    Scaffold.of(context).openDrawer();
+  }
 
-    setChanges();
-    
+  @override
+  Widget build(BuildContext context) { 
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.h),
@@ -97,7 +111,13 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
             imageUrl: image,
           ),
           showDialog: true,
+          openDrawerCallback: openDrawerCallback,
         ),
+      ),
+      drawer: DrawerWidget(
+        profilePicUrl: profilePicUrl,
+        fullName: fullName,
+        isAdmin: widget.isAdmin,
       ),
       backgroundColor: Colors.white,
       body: SafeArea(

@@ -32,11 +32,6 @@ class TabAppBarWidget extends StatefulWidget {
 class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderStateMixin {
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,

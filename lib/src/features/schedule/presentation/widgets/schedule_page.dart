@@ -5,6 +5,7 @@ import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/features/schedule/presentation/controllers/schedule_controller.dart';
 import 'package:rv1g_info/src/features/schedule/presentation/widgets/crud_schedule_page.dart';
 
+import '../../../../components/drawer_widget.dart';
 import '../../../../components/image_zoom_widget.dart';
 import '../../../../constants/theme_colors.dart';
 import '../../../../components/app_bar_widget.dart';
@@ -25,6 +26,9 @@ class SchedulePage extends ConsumerStatefulWidget {
 }
 
 class _SchedulePageState extends ConsumerState<SchedulePage> {
+  String profilePicUrl = "";
+  String fullName = "";
+  
   String dropdownValue = 'Konsultāciju grafiks';
 
   String image = noSchedule;
@@ -40,6 +44,15 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+        .read(scheduleControllerProvider.notifier)
+        .getUser()
+        .then((value) {
+          setState(() {
+            profilePicUrl = value![0];
+            fullName = value[1];
+          });
+        });
       getSchedule();
     });
     super.initState();
@@ -66,6 +79,10 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
       });
   }
 
+  void openDrawerCallback(BuildContext context) {
+    Scaffold.of(context).openDrawer();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +93,13 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
           add: widget.isAdmin, 
           navigateTo: CRUDScheduleWidget(tag: tag, imageUrl: image),
           showDialog: true,
+          openDrawerCallback: openDrawerCallback,
         ),
+      ),
+      drawer: DrawerWidget(
+        profilePicUrl: profilePicUrl,
+        fullName: fullName,
+        isAdmin: widget.isAdmin,
       ),
       backgroundColor: Colors.white,
       body: SafeArea(

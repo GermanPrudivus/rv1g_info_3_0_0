@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rv1g_info/src/components/user_qr_code_widget.dart';
 import 'package:rv1g_info/src/features/events/presentation/widgets/events_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DrawerWidget extends StatefulWidget {
   final String profilePicUrl;
@@ -24,10 +26,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   String profilePicUrl = "";
   String fullName = "";
 
+  String userData = '';
+
   @override
   void initState() {
     profilePicUrl = widget.profilePicUrl;
     fullName = widget.fullName;
+    getUser()
+      .then((value) {
+        userData = value.toString();
+      });
     super.initState();
   }
 
@@ -84,7 +92,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           backgroundImage: NetworkImage(profilePicUrl),
                         ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        showDialog(
+                          context: context, 
+                          builder: (context) => UserQRCodeWidget(userData: userData),
+                          barrierDismissible: true,
+                        );
+                      },
                       child: Container(
                         height: 40.h,
                         width: 40.h,
@@ -240,4 +254,26 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       )
     );
   }
+}
+
+Future<List<String>> getUser() async {
+  final supabase = Supabase.instance.client;
+  final email = supabase.auth.currentUser!.email;
+
+  final res = await supabase
+    .from('users')
+    .select()
+    .eq('email', email);
+
+  final form = await supabase
+    .from('form')
+    .select()
+    .eq('id', res[0]['form_id']);
+
+  return [
+    res[0]['id'].toString(), 
+    res[0]['name'], 
+    res[0]['surname'],
+    '${form[0]['number'].toString()}.${form[0]['letter']}'
+  ];
 }

@@ -29,6 +29,9 @@ class ScheduleService {
     return await scheduleRepository.getForms();
   }
 
+  Future<List<String>> getUser() async {
+    return await scheduleRepository.getUser();
+  }
 }
 
 final scheduleServiceProvider = Provider<ScheduleService>((ref) {

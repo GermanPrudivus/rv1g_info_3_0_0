@@ -36,6 +36,10 @@ class ShopService {
   Future<List<Item>> getItems() async {
     return await shopRepository.getItems();
   }
+
+  Future<List<String>> getUser() async {
+    return await shopRepository.getUser();
+  }
 }
 
 final shopServiceProvider = Provider<ShopService>((ref) {

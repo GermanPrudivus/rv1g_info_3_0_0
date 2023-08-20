@@ -8,6 +8,7 @@ import 'package:rv1g_info/src/features/shop/presentation/controllers/shop_contro
 import 'package:rv1g_info/src/features/shop/presentation/widgets/crud_shop_page.dart';
 import 'package:styled_text/styled_text.dart';
 
+import '../../../../components/drawer_widget.dart';
 import '../../../../constants/theme_colors.dart';
 import '../../domain/models/item.dart';
 import 'item_page.dart';
@@ -25,11 +26,23 @@ class ShopPage extends ConsumerStatefulWidget {
 }
 
 class _ShopPageState extends ConsumerState<ShopPage> {
+  String profilePicUrl = "";
+  String fullName = "";
+
   List<Item> items = [];
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+        .read(shopControllerProvider.notifier)
+        .getUser()
+        .then((value) {
+          setState(() {
+            profilePicUrl = value![0];
+            fullName = value[1];
+          });
+        });
       getItems();
     });
     super.initState();
@@ -44,6 +57,10 @@ class _ShopPageState extends ConsumerState<ShopPage> {
           items = value!;
         });
       });
+  }
+
+  void openDrawerCallback(BuildContext context) {
+    Scaffold.of(context).openDrawer();
   }
 
   @override
@@ -64,7 +81,13 @@ class _ShopPageState extends ConsumerState<ShopPage> {
             images: []
           ),
           showDialog: false,
+          openDrawerCallback: openDrawerCallback,
         ),
+      ),
+      drawer: DrawerWidget(
+        profilePicUrl: profilePicUrl,
+        fullName: fullName,
+        isAdmin: widget.isAdmin,
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
