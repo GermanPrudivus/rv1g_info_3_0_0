@@ -94,9 +94,16 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: IconThemeData(
-          size: 28.h,
-          color: blue
+        leading: IconButton(
+          splashRadius: 0.01,
+          icon: Icon(
+            Icons.chevron_left,
+            color: blue, 
+            size: 34.h,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         toolbarHeight: 60.h,
       ),

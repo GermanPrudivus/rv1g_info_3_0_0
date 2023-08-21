@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppBarWidget extends StatefulWidget {
   final String title;
+  final String profilePicUrl;
   final bool add;
   final Widget navigateTo;
   final bool showDialog;
@@ -13,6 +14,7 @@ class AppBarWidget extends StatefulWidget {
   const AppBarWidget({
     super.key, 
     required this.title,
+    required this.profilePicUrl,
     required this.add,
     required this.navigateTo,
     required this.showDialog,
@@ -24,20 +26,6 @@ class AppBarWidget extends StatefulWidget {
 }
 
 class _AppBarWidgetState extends State<AppBarWidget> {
-
-  String profilePicUrl = "";
-
-  @override
-  void initState() {
-    getProfilePicUrl()
-      .then((value) {
-        setState(() {
-          profilePicUrl = value;
-        });
-      }
-    );
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +40,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         child: Container(
           height: 60.h,
           alignment: Alignment.centerRight,
-          child: profilePicUrl == ""
+          child: widget.profilePicUrl == ""
             ? CircleAvatar(
                 radius: 18.h,
                 backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
@@ -65,7 +53,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             : CircleAvatar(
                 radius: 18.h,
                 backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-                backgroundImage: NetworkImage(profilePicUrl),
+                backgroundImage: NetworkImage(widget.profilePicUrl),
               ),
         ),
       ),
@@ -114,18 +102,4 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       ],
     );
   }
-}
-
-Future<String> getProfilePicUrl() async{
-  final supabase = Supabase.instance.client;
-
-  final email = supabase.auth.currentUser?.email;
-  final res = await supabase
-    .from('users')
-    .select('profile_pic_url')
-    .eq('email', email);
-
-  final profilePicUrl = res[0]['profile_pic_url'];
-
-  return await profilePicUrl;
 }

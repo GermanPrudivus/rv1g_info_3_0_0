@@ -89,7 +89,8 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.h),
         child: AppBarWidget(
-          title: "Stundu saraksts", 
+          title: "Stundu saraksts",
+          profilePicUrl: profilePicUrl,
           add: widget.isAdmin, 
           navigateTo: CRUDScheduleWidget(tag: tag, imageUrl: image),
           showDialog: true,

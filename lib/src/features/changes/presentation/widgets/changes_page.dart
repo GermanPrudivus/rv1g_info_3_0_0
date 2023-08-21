@@ -105,6 +105,7 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
         preferredSize: Size.fromHeight(60.h),
         child: AppBarWidget(
           title: "Izmaiņas", 
+          profilePicUrl: profilePicUrl,
           add: widget.isAdmin, 
           navigateTo: CRUDChangesWidget(
             tag: "changes$selectedStr",

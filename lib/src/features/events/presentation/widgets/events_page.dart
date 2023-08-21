@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:rv1g_info/src/components/clean_navigator.dart';
 import 'package:rv1g_info/src/components/drawer_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/events/presentation/widgets/crud_event_page.dart';
 import 'package:styled_text/styled_text.dart';
@@ -180,27 +181,12 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                                 ]
                               ),
                               onTap: () {
-                                Navigator.of(context).push(
-                                  PageRouteBuilder(
-                                    pageBuilder: (context, animation, secondaryAnimation) {
-                                      return EventPage(
-                                        isAdmin: widget.isAdmin,
-                                        event: events[index],
-                                      );
-                                    },
-                                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                      const begin = Offset(1.0, 0.0);
-                                      const end = Offset.zero;
-                                      const curve = Curves.easeIn;
-                                          
-                                      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                                          
-                                      return SlideTransition(
-                                        position: animation.drive(tween),
-                                        child: child,
-                                      );
-                                    },
-                                  )
+                                return navigateTo(
+                                  EventPage(
+                                    isAdmin: widget.isAdmin,
+                                    event: events[index],
+                                  ),
+                                  context
                                 );
                               },
                               isThreeLine: true,

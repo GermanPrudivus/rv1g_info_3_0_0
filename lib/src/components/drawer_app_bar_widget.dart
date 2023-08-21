@@ -23,9 +23,16 @@ class _DrawerAppBarWidgetState extends State<DrawerAppBarWidget> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      iconTheme: IconThemeData(
-        size: 28.h,
-        color: blue
+      leading: IconButton(
+        splashRadius: 0.01,
+        icon: Icon(
+          Icons.chevron_left,
+          color: blue, 
+          size: 34.h,
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
       ),
 
       backgroundColor: Colors.white,
