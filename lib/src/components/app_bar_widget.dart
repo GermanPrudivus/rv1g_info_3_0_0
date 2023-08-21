@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/constants/theme_colors.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppBarWidget extends StatefulWidget {
   final String title;
