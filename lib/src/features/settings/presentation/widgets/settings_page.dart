@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rv1g_info/src/components/clean_navigator.dart';
 import 'package:rv1g_info/src/components/drawer_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/settings/presentation/controllers/settings_controller.dart';
 import 'package:rv1g_info/src/features/settings/presentation/widgets/edit_user_page.dart';
@@ -20,7 +19,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   AppUser user = AppUser(
     id: 0, 
     profilePicUrl: "", 
-    fullName: "", 
+    fullName: "",
+    formId: 0, 
     form: "", 
     email: "", 
     verified: false, 
@@ -132,10 +132,25 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   ),
                 ),
                 onTap: () {
-                  return navigateTo(
-                    EditUserPage(), 
-                    context
-                  );
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                        return EditUserPage(user: user);
+                      },
+                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(1.0, 0.0);
+                        const end = Offset.zero;
+                        const curve = Curves.easeIn;
+                                          
+                        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                          
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    )
+                  ).whenComplete(() => getUser());
                 },
               )
             ],

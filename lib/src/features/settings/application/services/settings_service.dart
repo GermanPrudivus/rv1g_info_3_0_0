@@ -15,6 +15,17 @@ class SettingsService {
     return await settingsRepository.getUser();
   }
 
+  Future<String> updateProfilePicUrl(int id, String email, String profilePicPath) async {
+    return await settingsRepository.updateProfilePicUrl(id, email, profilePicPath);
+  }
+
+  Future<void> updateUser(int id, String fullName, int formId, String newPassword) async {
+    await settingsRepository.updateUser(id, fullName, formId);
+    if(newPassword.isNotEmpty){
+      await settingsRepository.updatePassword(id, newPassword);
+    }
+  }
+
   /*Future<void> editUser(int itemId, String title, String shortText, 
     String price, String description, List imagesPath, List imagesUrls) async {
     

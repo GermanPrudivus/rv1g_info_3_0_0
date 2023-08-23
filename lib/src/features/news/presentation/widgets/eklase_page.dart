@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:rv1g_info/src/components/clean_navigator.dart';
 import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/one_eklase_news_page.dart';
 import 'package:styled_text/styled_text.dart';
@@ -162,13 +161,28 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                   ]
                                 ),
                                 onTap: () {
-                                  return navigateTo(
-                                    OneEklaseNewsPage(
-                                      isAdmin: widget.isAdmin,
-                                      news: news[index],
-                                    ),
-                                    context
-                                  );
+                                  Navigator.of(context).push(
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation, secondaryAnimation) {
+                                        return OneEklaseNewsPage(
+                                          isAdmin: widget.isAdmin,
+                                          news: news[index],
+                                        );
+                                      },
+                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                        const begin = Offset(1.0, 0.0);
+                                        const end = Offset.zero;
+                                        const curve = Curves.easeIn;
+                                          
+                                        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                          
+                                        return SlideTransition(
+                                          position: animation.drive(tween),
+                                          child: child,
+                                        );
+                                      },
+                                    )
+                                  ).whenComplete(() => getNews());
                                 },
                                 isThreeLine: true,
                               )

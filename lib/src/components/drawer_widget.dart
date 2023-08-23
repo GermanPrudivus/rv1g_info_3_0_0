@@ -6,7 +6,6 @@ import 'package:rv1g_info/src/features/settings/presentation/widgets/settings_pa
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../features/volunteering/presentation/widgets/volunteering_jobs_page.dart';
-import 'clean_navigator.dart';
 
 class DrawerWidget extends StatefulWidget {
   final String profilePicUrl;
@@ -41,6 +40,28 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         userData = value.toString();
       });
     super.initState();
+  }
+
+  void navigateTo(Widget page) {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return page;
+        },
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0);
+          const end = Offset.zero;
+          const curve = Curves.easeIn;
+                                           
+          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                          
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+      )
+    );
   }
 
   @override
@@ -124,8 +145,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
                   onTap: () {
                     return navigateTo(
-                      EventsPage(isAdmin: widget.isAdmin),
-                      context
+                      EventsPage(isAdmin: widget.isAdmin)
                     );
                   },
                 ),
@@ -152,8 +172,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
                   onTap: () {
                     return navigateTo(
-                      VolunteeringJobsPage(isAdmin: widget.isAdmin),
-                      context
+                      VolunteeringJobsPage(isAdmin: widget.isAdmin)
                     );
                   },
                 ),
@@ -236,7 +255,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   onTap: () {
                     return navigateTo(
                       SettingsPage(),
-                      context
                     );
                   },
                 ),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/components/app_bar_widget.dart';
-import 'package:rv1g_info/src/components/clean_navigator.dart';
 import 'package:rv1g_info/src/features/shop/presentation/controllers/shop_controller.dart';
 import 'package:rv1g_info/src/features/shop/presentation/widgets/crud_shop_page.dart';
 import 'package:styled_text/styled_text.dart';
@@ -112,13 +111,28 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap:() {
-                            return navigateTo(
-                              ItemPage(
-                                isAdmin: widget.isAdmin,
-                                item: items[index],
-                              ), 
-                              context
-                            );
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                pageBuilder: (context, animation, secondaryAnimation) {
+                                  return ItemPage(
+                                    isAdmin: widget.isAdmin,
+                                    item: items[index],
+                                  );
+                                },
+                                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                  const begin = Offset(1.0, 0.0);
+                                  const end = Offset.zero;
+                                  const curve = Curves.easeIn;
+                                          
+                                 var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                          
+                                  return SlideTransition(
+                                    position: animation.drive(tween),
+                                    child: child,
+                                  );
+                                },
+                              )
+                            ).whenComplete(() => getItems());
                           },
                           child: Container(
                             margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
