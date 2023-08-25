@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/repositories/settings_repository.dart';
 import '../../domain/models/app_user.dart';
+import '../../domain/models/role.dart';
 
 
 class SettingsService {
@@ -27,6 +28,14 @@ class SettingsService {
     if(newPassword.isNotEmpty){
       await settingsRepository.updatePassword(id, newPassword);
     }
+  }
+
+  Future<List<Role>> getUserRoles(int id) async {
+    return await settingsRepository.getUserRoles(id);
+  }
+
+  Future<void> logout() async {
+    return await settingsRepository.logout();
   }
 
   /*Future<void> editUser(int itemId, String title, String shortText, 

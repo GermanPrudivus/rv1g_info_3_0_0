@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/services/settings_service.dart';
 import '../../domain/models/app_user.dart';
+import '../../domain/models/role.dart';
 
 class SettingsController extends StateNotifier<AsyncValue<void>> {
   SettingsController({required this.settingService})
@@ -16,6 +17,22 @@ class SettingsController extends StateNotifier<AsyncValue<void>> {
     });
     state = asyncValue;
     return asyncValue.value;
+  }
+
+  Future<List<Role>?> getUserRoles(int id) async {
+    state = const AsyncLoading<void>();
+    final AsyncValue<List<Role>> asyncValue = await AsyncValue.guard<List<Role>>(() {
+      return settingService.getUserRoles(id);
+    });
+    state = asyncValue;
+    return asyncValue.value;
+  }
+
+  Future<void> logout() async {
+    state = const AsyncLoading<void>();
+    state = await AsyncValue.guard<void>(() {
+      return settingService.logout();
+    });
   }
 }
 

@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 
 import '../../domain/models/app_user.dart';
+import '../../domain/models/role.dart';
 
 class SettingsRepository {
   final supabase = Supabase.instance.client;
@@ -104,6 +105,36 @@ class SettingsRepository {
       .storage
       .from(bucket)
       .remove([imageUrl.split("/").last]);
+  }
+
+  Future<List<Role>> getUserRoles(int id) async {
+    List<Role> roles = [];
+
+    final res = await supabase
+      .from('roles')
+      .select()
+      .eq('user_id', id);
+
+    for(int i=0;i<res.length;i++){
+      roles.add(
+        Role(
+          id: res[i]['id'], 
+          role: res[i]['role'], 
+          description: res[i]['description'], 
+          userId: res[i]['user_id'], 
+          startedDatetime: res[i]['started_datetime'], 
+          endedDatetime: res[i]['ended_datetime'] ?? ""
+        )
+      );
+    }
+
+    return roles;
+  }
+
+  Future<void> logout() async {
+    await supabase
+      .auth
+      .signOut();
   }
 
   /*Future<void> deleteItem(int id) async {
