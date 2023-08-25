@@ -122,7 +122,8 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                                     .updateProfilePicUrl(
                                       user.id,
                                       user.email,
-                                      value
+                                      value,
+                                      profilePicUrl
                                     ).then((value) {
                                       setState(() {
                                         profilePicUrl = value!;

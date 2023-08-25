@@ -8,10 +8,12 @@ class EditUserController extends StateNotifier<AsyncValue<void>> {
 
   SettingsService settingService;
 
-  Future<String?> updateProfilePicUrl(int id, String email, String profilePicPath) async {
+  Future<String?> updateProfilePicUrl(int id, String email, 
+    String profilePicPath, String avatarUrl) async {
+      
     state = const AsyncLoading<void>();
     final AsyncValue<String> asyncValue = await AsyncValue.guard<String>(() {
-      return settingService.updateProfilePicUrl(id, email, profilePicPath);
+      return settingService.updateProfilePicUrl(id, email, profilePicPath, avatarUrl);
     });
     state = asyncValue;
     return asyncValue.value;

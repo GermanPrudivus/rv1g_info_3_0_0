@@ -99,6 +99,13 @@ class SettingsRepository {
       .eq('id', id);
   }
 
+  Future<void> deleteImage(String imageUrl, String bucket) async {
+    await supabase
+      .storage
+      .from(bucket)
+      .remove([imageUrl.split("/").last]);
+  }
+
   /*Future<void> deleteItem(int id) async {
     await supabase
       .from('shop_item')

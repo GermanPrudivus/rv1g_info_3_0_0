@@ -15,7 +15,10 @@ class SettingsService {
     return await settingsRepository.getUser();
   }
 
-  Future<String> updateProfilePicUrl(int id, String email, String profilePicPath) async {
+  Future<String> updateProfilePicUrl(int id, String email, 
+    String profilePicPath, String avatarUrl) async {
+
+    await settingsRepository.deleteImage(avatarUrl, 'avatars');
     return await settingsRepository.updateProfilePicUrl(id, email, profilePicPath);
   }
 
