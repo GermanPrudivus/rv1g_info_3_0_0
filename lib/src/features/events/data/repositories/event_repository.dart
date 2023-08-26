@@ -69,6 +69,23 @@ class EventRepository {
       );
   }
 
+  Future<void> addRole(String title, String email, String endDate) async {
+    final res = await supabase
+      .from('users')
+      .select()
+      .eq('email', email);
+
+    await supabase
+      .from('roles')
+      .insert({
+        'role' : 'Pasākumu organizators ${title}',
+        'description' : 'Tev ir iespēja pievienot sava pasākuma dalībniekus un atļauta pieeja QR kodu skeneru sadaļai.',
+        'user_id' : res[0]['id'],
+        'started_datetime': DateTime.now().toIso8601String(),
+        'ended_datetime' : endDate
+      });
+  }
+
   Future<void> editEvent(
     int id, String title, String shortText, String description, 
     String startDate, String endDate, List imagesPath, List imagesUrls) async{
@@ -150,6 +167,18 @@ class EventRepository {
       .from('events')
       .delete()
       .eq('id', id);
+  }
+
+  Future<void> deleteRole(int eventId) async {
+    final res = await supabase
+      .from('events')
+      .select()
+      .eq('id', eventId);
+
+    await supabase
+      .from('roles')
+      .delete()
+      .eq('role', 'Pasākumu organizators ${res[0]['title']}');
   }
 
   //Event page

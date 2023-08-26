@@ -43,6 +43,7 @@ class CRUDEventPage extends ConsumerStatefulWidget {
 class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
 
   late String title;
+  String email = "";
   late String shortText;
   late String description;
   late DateTime startDate;
@@ -209,6 +210,59 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                     ],
                   )
                 ),
+
+                if(!widget.edit)
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 5.w, bottom: 5.h),
+                          child: Text(
+                            "Autora e-pasts",
+                            style: TextStyle(
+                              fontSize: 14.h,
+                            ),
+                          ),
+                        ),
+                        TextFormField(
+                          initialValue: email,
+                          textInputAction: TextInputAction.next,
+                          style: TextStyle(
+                            fontSize: 14.h
+                          ),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                width: 2.h,
+                                color: Colors.black
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                width: 2.h,
+                                color: blue
+                              ),
+                            ),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: 'Ieraksti pasākuma autora e-pastu',
+                            hintStyle: TextStyle(
+                              fontSize: 13.h
+                            )
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              email = value;
+                            });
+                          },
+                          cursorColor: blue,
+                        ),
+                      ],
+                    )
+                  ),
 
                 Padding(
                   padding: EdgeInsets.only(top: 15.h),
@@ -584,7 +638,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                         ref
                           .read(crudEventControllerProvider.notifier)
                           .addEvent(
-                            title, 
+                            title,
+                            email,
                             shortText, 
                             description,
                             startDate.toIso8601String(),

@@ -8,13 +8,13 @@ class CrudEventController extends StateNotifier<AsyncValue<void>> {
 
   EventService eventService;
 
-  Future<void> addEvent(String title,String shortText, String description, 
-    String startDate, String endDate, List imagesPath) async {
+  Future<void> addEvent(String title, String email, String shortText, 
+    String description, String startDate, String endDate, List imagesPath) async {
 
     state = const AsyncLoading<void>();
     state = await AsyncValue.guard<void>(() {
       return eventService.addEvent(
-        title, shortText, description, startDate, endDate, imagesPath
+        title, email, shortText, description, startDate, endDate, imagesPath
       );
     });
   }

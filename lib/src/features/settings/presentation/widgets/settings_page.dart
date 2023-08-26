@@ -198,6 +198,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       itemCount: roles.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
+                        String title = "";
+
+                        if(roles[index].role[0] == "P"){
+                          title = roles[index].role.substring(0,21);
+                        } else if(roles[index].role[0] == "B"){
+                          title = roles[index].role.substring(0,19);
+                        } else {
+                          title = roles[index].role;
+                        }
+
                         return Container(
                           margin: EdgeInsets.only(left: 25.w, right: 25.w),
                           padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
@@ -214,7 +224,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                roles[index].role,
+                                title,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16.h

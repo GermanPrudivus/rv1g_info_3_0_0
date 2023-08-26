@@ -11,13 +11,14 @@ class EventService {
   final EventRepository eventRepository;
 
   //CRUD EVENT PAGE
-  Future<void> addEvent(
-    String title, String shortText, String description, 
-    String startDate, String endDate, List imagesPath) async {
+  Future<void> addEvent(String title, String email, String shortText, 
+    String description, String startDate, String endDate, List imagesPath) async {
 
-    return eventRepository.addEvent(
+    await eventRepository.addEvent(
       title, shortText, description, startDate, endDate, imagesPath
     );
+
+    await eventRepository.addRole(title, email, endDate);
   }
 
   Future<void> editEvent(
@@ -32,6 +33,7 @@ class EventService {
 
   Future<void> deleteEvent(int id, List images) async{
     await eventRepository.deleteEvent(id);
+    await eventRepository.deleteRole(id);
 
     if(images.isNotEmpty){
       for(int i=0;i<images.length;i++){

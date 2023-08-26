@@ -35,10 +35,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   String userData = '';
 
+  bool enabled = false;
+
   @override
   void initState() {
     profilePicUrl = widget.profilePicUrl;
     fullName = widget.fullName;
+    enabled = widget.isAdmin || widget.controllers.isNotEmpty || widget.events.isNotEmpty;
     getUser()
       .then((value) {
         userData = value.toString();
@@ -208,13 +211,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 SizedBox(height: 5.h),
                 ListTile(
-                  enabled: widget.isAdmin || widget.controllers.isNotEmpty,
+                  enabled: enabled,
                   contentPadding: EdgeInsets.zero,
                   title: Row(
                     children: [
                       Icon(
                         Icons.qr_code_scanner,
-                        color: widget.isAdmin
+                        color: enabled
                           ? Colors.black
                           : Colors.grey,
                         size: 30.h,
@@ -223,7 +226,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Text(
                         "Skeneri",
                         style: TextStyle(
-                          color: widget.isAdmin
+                          color: enabled
                             ? Colors.black
                             : Colors.grey,
                           fontSize: 18.h,

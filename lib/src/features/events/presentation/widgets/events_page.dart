@@ -186,7 +186,7 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                                   PageRouteBuilder(
                                     pageBuilder: (context, animation, secondaryAnimation) {
                                       return EventPage(
-                                        hasRole: widget.events.contains('Pasākumu organizators ${events[index].title}'),
+                                        hasRole: widget.events.contains('${events[index].title}'),
                                         isAdmin: widget.isAdmin,
                                         event: events[index],
                                       );
