@@ -149,7 +149,7 @@ class SettingsRepository {
         user.id
       );
 
-    final res = await supabase
+    /*final res = await supabase
       .from('users')
       .select('id')
       .eq('email', user.email);
@@ -159,7 +159,8 @@ class SettingsRepository {
     await supabase
       .from('users')
       .delete()
-      .eq('id', res[0]['id']);
+      .eq('id', res[0]['id']);8*/
+
   }
 }
 

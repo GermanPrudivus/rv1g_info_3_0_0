@@ -43,7 +43,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
           Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(builder: (context) => const MyHomePage()),
-            (route) => true
+            (route) => false
           );
         }
         state.showSnackbarOnError(context);

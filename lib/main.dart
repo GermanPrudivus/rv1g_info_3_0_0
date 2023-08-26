@@ -152,6 +152,12 @@ class _MyHomePageState extends State<MyHomePage> {
     final email = supabase.auth.currentUser!.email;
     final res = await supabase.from('users').select().eq('email', email);
 
+    await supabase.auth.updateUser(
+      UserAttributes(
+        data: {'admin':true}
+      )
+    );
+
     return [
       await supabase.auth.currentUser!.userMetadata!['admin'] ?? false,
       res[0]['verified']

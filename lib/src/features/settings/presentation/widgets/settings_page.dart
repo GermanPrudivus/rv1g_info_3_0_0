@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:rv1g_info/main.dart';
 import 'package:rv1g_info/src/components/drawer_app_bar_widget.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_in_page.dart';
 import 'package:rv1g_info/src/features/settings/presentation/controllers/settings_controller.dart';
 import 'package:rv1g_info/src/features/settings/presentation/widgets/edit_user_page.dart';
 
@@ -160,9 +161,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                         const begin = Offset(1.0, 0.0);
                         const end = Offset.zero;
                         const curve = Curves.easeIn;
-                                          
+
                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                                          
+
                         return SlideTransition(
                           position: animation.drive(tween),
                           child: child,
@@ -329,7 +330,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                             Navigator.push(
                               context, 
                               MaterialPageRoute(
-                                builder: (context) => MyApp()
+                                builder: (context) => SignInPage()
                               )
                             );
                           });
@@ -391,7 +392,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                             Navigator.push(
                               context, 
                               MaterialPageRoute(
-                                builder: (context) => MyApp()
+                                builder: (context) => SignInPage()
                               )
                             );
                           });

@@ -3,16 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../application/services/auth_service.dart';
 
 class ForgotPasswordScreenController extends StateNotifier<AsyncValue<void>> {
-  // set the initial value
   ForgotPasswordScreenController({required this.authService})
       : super(const AsyncData<void>(null));
 
   AuthService authService;
 
   Future<void> resetPassword(String email) async {
-    // set the state to loading
     state = const AsyncLoading<void>();
-    // call `authRepository.signIn` and await for the result
     state = await AsyncValue.guard<void>(
       () => authService.resetPassword(email),
     );
