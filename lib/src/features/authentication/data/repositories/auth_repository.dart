@@ -55,7 +55,7 @@ class AuthRepository {
     late String surname;
 
     if(fullname.length == 3){
-      name = fullname[0]+fullname[1];
+      name = fullname[0]+" "+fullname[1];
       surname = fullname[2];
     } else {
       name = fullname[0];

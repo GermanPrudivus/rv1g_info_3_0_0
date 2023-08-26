@@ -277,7 +277,7 @@ Future<List<String>> getUser() async {
     .eq('email', email);
 
   final form = await supabase
-    .from('form')
+    .from('forms')
     .select()
     .eq('id', res[0]['form_id']);
 

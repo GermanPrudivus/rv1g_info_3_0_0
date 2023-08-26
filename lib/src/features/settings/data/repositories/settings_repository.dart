@@ -20,7 +20,7 @@ class SettingsRepository {
       .eq('email', email);
 
     final form = await supabase
-      .from('form')
+      .from('forms')
       .select()
       .eq('id', res[0]['form_id']);
 
@@ -39,18 +39,20 @@ class SettingsRepository {
   Future<String> updateProfilePicUrl(int id, String email, String profilePicPath) async {
     String profilePicUrl = "";
 
-    final bytes = await File(profilePicPath).readAsBytes();
-    final fileExt = File(profilePicPath).path.split('.').last;
-    final fileName = '$email.${DateTime.now().toIso8601String()}.$fileExt';
-    final filePath = fileName;
-    await supabase.storage.from('avatars').uploadBinary(
-          filePath,
-          bytes,
-        );
+    if(profilePicPath != ""){
+      final bytes = await File(profilePicPath).readAsBytes();
+      final fileExt = File(profilePicPath).path.split('.').last;
+      final fileName = '$email.${DateTime.now().toIso8601String()}.$fileExt';
+      final filePath = fileName;
+      await supabase.storage.from('avatars').uploadBinary(
+            filePath,
+            bytes,
+          );
         
-    profilePicUrl = supabase.storage
-        .from('avatars')
-        .getPublicUrl(filePath);
+      profilePicUrl = supabase.storage
+          .from('avatars')
+          .getPublicUrl(filePath);
+    }
 
     final res = await supabase
       .from('users')
@@ -68,7 +70,7 @@ class SettingsRepository {
     late String surname;
 
     if(fullname.length == 3){
-      name = fullname[0]+fullname[1];
+      name = fullname[0]+" "+fullname[1];
       surname = fullname[2];
     } else {
       name = fullname[0];
@@ -137,12 +139,28 @@ class SettingsRepository {
       .signOut();
   }
 
-  /*Future<void> deleteItem(int id) async {
+  Future<void> deleteUser() async {
+    final user = await supabase.auth.currentUser!; 
+
     await supabase
-      .from('shop_item')
+      .auth
+      .admin
+      .deleteUser(
+        user.id
+      );
+
+    final res = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', user.email);
+
+    print(res[0]['id']);
+
+    await supabase
+      .from('users')
       .delete()
-      .eq('id', id);
-  }*/
+      .eq('id', res[0]['id']);
+  }
 }
 
 final settingsRepositoryProvider = riverpod.Provider<SettingsRepository>((ref) {

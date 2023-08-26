@@ -38,17 +38,9 @@ class SettingsService {
     return await settingsRepository.logout();
   }
 
-  /*Future<void> editUser(int itemId, String title, String shortText, 
-    String price, String description, List imagesPath, List imagesUrls) async {
-    
-    return await shopRepository.editItem(
-      itemId, title, shortText, price, description, imagesPath, imagesUrls
-    );
+  Future<void> deleteUser() async {
+    return await settingsRepository.deleteUser();
   }
-
-  Future<void> deleteUser(int id) async {
-    return await shopRepository.deleteItem(id);
-  }*/
 }
 
 final settingsServiceProvider = Provider<SettingsService>((ref) {

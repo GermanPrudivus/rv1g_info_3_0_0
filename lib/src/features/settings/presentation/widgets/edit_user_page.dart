@@ -62,9 +62,12 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
       imageQuality: 100,
     );
 
-    File imageFile = File(image!.path);
-
-    return imageFile.path;
+    if(image == null){
+      return "";
+    } else {
+      File imageFile = File(image.path);
+      return imageFile.path;
+    }
   }
   
   @override

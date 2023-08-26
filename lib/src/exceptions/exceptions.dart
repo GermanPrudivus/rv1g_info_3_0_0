@@ -5,6 +5,10 @@ Map<String, String> authExceptions = {
   :"Please check your internet connection!",
   "AuthException(message: Email not confirmed, statusCode: 400)"
   :"Please verify your email to login!",
+  'PostgrestException(message: duplicate key value violates unique constraint "users_email_key", code: 23505, details: Conflict, hint: null)'
+  :"User already exists! Please try different email!",
+  "AuthException(message: Email rate limit exceeded, statusCode: 429)"
+  :"Please wait 5 minutes and then try again!"
 };
 
 Map<String, String> exceptions = {

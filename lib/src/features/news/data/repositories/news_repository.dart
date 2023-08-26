@@ -246,6 +246,12 @@ class NewsRepository {
         .select()
         .eq('news_id', resNews[i]['id']);
 
+      String authorName = "Nav noteikts";
+
+      if(resAuthor.isNotEmpty){
+        authorName = "${resAuthor[0]['name']} ${resAuthor[0]['surname']}";
+      }
+
       bool hasVoted = false;
       int choosedAnswer = 0;
       List<Answer> answers = [];
@@ -303,8 +309,8 @@ class NewsRepository {
 
       SchoolNews oneNews = SchoolNews(
         id: resNews[i]['id'], 
-        authorName: "${resAuthor[0]['name']} ${resAuthor[0]['surname']}", 
-        authorAvatar: resAuthor[0]['profile_pic_url'], 
+        authorName: authorName, 
+        authorAvatar: resAuthor[0]['profile_pic_url'] ?? "",
         text: List.from(resNews[i]['text']), 
         media: List.from(resNews[i]['media']), 
         likes: resNews[i]['likes'],

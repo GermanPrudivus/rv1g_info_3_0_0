@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:rv1g_info/main.dart';
 import 'package:rv1g_info/src/components/drawer_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/settings/presentation/controllers/settings_controller.dart';
 import 'package:rv1g_info/src/features/settings/presentation/widgets/edit_user_page.dart';
@@ -82,55 +83,60 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          user.profilePicUrl == ""
-                            ? CircleAvatar(
-                              radius: 30.h,
-                              backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.white,
-                                size: 40.h,
-                              )
-                            )
-                            : CircleAvatar(
-                                radius: 30.h,
-                                backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-                                backgroundImage: NetworkImage(user.profilePicUrl),
-                              )
-                        ],
-                      ),
-                      SizedBox(width: 5.w),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
+                          Column(
                             children: [
-                              Text(
-                                user.fullName,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16.h,
-                                  fontWeight: FontWeight.bold
-                                ),
+                              user.profilePicUrl == ""
+                                ? CircleAvatar(
+                                    radius: 30.h,
+                                    backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                      size: 40.h,
+                                    )
+                                  )
+                                : CircleAvatar(
+                                    radius: 30.h,
+                                    backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+                                    backgroundImage: NetworkImage(user.profilePicUrl),
+                                  )
+                            ],
+                          ),
+                          SizedBox(width: 15.w),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    user.fullName,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.h,
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: 2.5.h),
+                              Row(
+                                children: [
+                                  Text(
+                                    user.email,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 13.h
+                                    ),
+                                  )
+                                ],
                               )
                             ],
                           ),
-                          SizedBox(height: 2.5.h),
-                          Row(
-                            children: [
-                              Text(
-                                user.email,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 13.h
-                                ),
-                              )
-                            ],
-                          )
-                        ],
+                        ]
                       ),
                       SizedBox(width: 15.w),
                       Column(
@@ -320,6 +326,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                           .logout()
                           .whenComplete(() {
                             Navigator.popUntil(context, (route) => false);
+                            Navigator.push(
+                              context, 
+                              MaterialPageRoute(
+                                builder: (context) => MyApp()
+                              )
+                            );
                           });
                       },
                     ),
@@ -371,7 +383,18 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                         ),
                       ),
                       onTap: () {
-                  
+                        ref
+                          .read(settingsControllerProvider.notifier)
+                          .deleteUser()
+                          .whenComplete(() {
+                            Navigator.popUntil(context, (route) => false);
+                            Navigator.push(
+                              context, 
+                              MaterialPageRoute(
+                                builder: (context) => MyApp()
+                              )
+                            );
+                          });
                       },
                     ),
                   ],

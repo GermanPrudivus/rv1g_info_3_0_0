@@ -34,6 +34,13 @@ class SettingsController extends StateNotifier<AsyncValue<void>> {
       return settingService.logout();
     });
   }
+
+  Future<void> deleteUser() async {
+    state = const AsyncLoading<void>();
+    state = await AsyncValue.guard<void>(() {
+      return settingService.deleteUser();
+    });
+  }
 }
 
 final settingsControllerProvider =
