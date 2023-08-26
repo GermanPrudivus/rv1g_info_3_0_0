@@ -24,10 +24,6 @@ class MenuService {
   Future<Map<String, Menu>> getMenu() async{
     return await menuRepository.getMenu();
   }
-
-  Future<List<String>> getUser() async {
-    return await menuRepository.getUser();
-  }
 }
 
 final menuServiceProvider = Provider<MenuService>((ref) {

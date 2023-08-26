@@ -69,7 +69,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     ref.listen<AsyncValue>(
       signUpScreenControllerProvider,
       (_, state) {
-        if(state.isLoading || state.asData != null) {
+        if(state.isLoading) {
           showDialog(
             context: context,
             barrierDismissible: false,

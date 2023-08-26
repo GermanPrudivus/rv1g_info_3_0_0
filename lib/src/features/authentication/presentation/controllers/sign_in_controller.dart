@@ -8,11 +8,13 @@ class SignInScreenController extends StateNotifier<AsyncValue<void>> {
 
   AuthService authService;
 
-  Future<void> signIn(String email, String password) async {
+  Future<bool?> signIn(String email, String password) async {
     state = const AsyncLoading<void>();
-    state = await AsyncValue.guard<void>(
-      () => authService.signIn(email, password),
-    );
+    final AsyncValue<bool> asyncValue = await AsyncValue.guard<bool>(() {
+      return authService.signIn(email, password);
+    });
+    state = asyncValue;
+    return asyncValue.value;
   }
 }
 

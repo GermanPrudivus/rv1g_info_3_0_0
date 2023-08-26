@@ -5,10 +5,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 
 class AuthRepository {
+  final supabase = Supabase.instance.client;
 
   Future<void> signIn(String email, String password) async {
-    final supabase = Supabase.instance.client;
-
     await supabase
       .auth
       .signInWithPassword(
@@ -17,9 +16,7 @@ class AuthRepository {
       );
   }
 
-  Future findCurrentUser(String email) async{
-    final supabase = Supabase.instance.client;
-
+  Future<bool> findCurrentUser(String email) async{
     final response = await supabase
       .from('users')
       .select()
@@ -32,10 +29,18 @@ class AuthRepository {
     }
   }
 
+  Future<bool> checkUserDeleted() async{
+    final userDeleted = await supabase.auth.currentUser?.userMetadata?['deleted'] ?? false;
+
+    if(userDeleted){
+      await supabase
+        .auth
+        .signOut();
+    }
+    return userDeleted;
+  }
+
   Future<void> signUp(String email, String password) async {
-
-    final supabase = Supabase.instance.client;
-
     await supabase
       .auth
       .signUp(
@@ -46,8 +51,6 @@ class AuthRepository {
 
   Future<void> createUserInDB(
     String avatarPath, String email, String fullName, int form, String password) async {
-
-    final supabase = Supabase.instance.client;
 
     final fullname = fullName.split(" ");
 
@@ -95,8 +98,6 @@ class AuthRepository {
   }
 
   Future<void> resetPassword(String email) async {
-    final supabase = Supabase.instance.client;
-
     await supabase
       .auth
       .resetPasswordForEmail(email);

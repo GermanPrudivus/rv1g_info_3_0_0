@@ -13,10 +13,12 @@ import '../../../../constants/theme_colors.dart';
 import '../../doamain/models/event.dart';
 
 class EventPage extends StatelessWidget {
+  final bool hasRole;
   final bool isAdmin;
   final Event event;
   
   const EventPage({
+    required this.hasRole,
     required this.isAdmin,
     required this.event,
     super.key
@@ -89,7 +91,7 @@ class EventPage extends StatelessWidget {
                 ),
               ),
             ),
-          if(isAdmin)
+          if(isAdmin || hasRole)
             GestureDetector(
               onTap: () {
                 Navigator.push(

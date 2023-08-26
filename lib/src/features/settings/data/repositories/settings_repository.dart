@@ -143,24 +143,16 @@ class SettingsRepository {
     final user = await supabase.auth.currentUser!; 
 
     await supabase
-      .auth
-      .admin
-      .deleteUser(
-        user.id
+      .auth.updateUser(
+        UserAttributes(
+          data: {'deleted':true}
+        )
       );
-
-    /*final res = await supabase
-      .from('users')
-      .select('id')
-      .eq('email', user.email);
-
-    print(res[0]['id']);
 
     await supabase
       .from('users')
       .delete()
-      .eq('id', res[0]['id']);8*/
-
+      .eq('email', user.email);
   }
 }
 

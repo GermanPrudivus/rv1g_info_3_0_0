@@ -24,10 +24,6 @@ class ChangesService {
   Future<Map<String, Changes>> getChanges() async{
     return await changesRepository.getChanges();
   }
-
-  Future<List<String>> getUser() async {
-    return await changesRepository.getUser();
-  }
 }
 
 final changesServiceProvider = Provider<ChangesService>((ref) {

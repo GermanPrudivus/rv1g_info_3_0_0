@@ -14,10 +14,18 @@ import '../../domain/models/item.dart';
 import 'item_page.dart';
 
 class ShopPage extends ConsumerStatefulWidget {
+  final String profilePicUrl;
+  final String fullName;
   final bool isAdmin;
+  final List<String> events;
+  final List<String> controllers;
 
   const ShopPage({
+    required this.profilePicUrl,
+    required this.fullName,
     required this.isAdmin,
+    required this.events,
+    required this.controllers,
     super.key
   });
 
@@ -26,23 +34,11 @@ class ShopPage extends ConsumerStatefulWidget {
 }
 
 class _ShopPageState extends ConsumerState<ShopPage> {
-  String profilePicUrl = "";
-  String fullName = "";
-
   List<Item> items = [];
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref
-        .read(shopControllerProvider.notifier)
-        .getUser()
-        .then((value) {
-          setState(() {
-            profilePicUrl = value![0];
-            fullName = value[1];
-          });
-        });
       getItems();
     });
     super.initState();
@@ -70,7 +66,7 @@ class _ShopPageState extends ConsumerState<ShopPage> {
         preferredSize: Size.fromHeight(60.h),
         child: AppBarWidget(
           title: "Veikals", 
-          profilePicUrl: profilePicUrl,
+          profilePicUrl: widget.profilePicUrl,
           add: widget.isAdmin, 
           navigateTo: CRUDShopPage(
             edit: false, 
@@ -86,8 +82,10 @@ class _ShopPageState extends ConsumerState<ShopPage> {
         ),
       ),
       drawer: DrawerWidget(
-        profilePicUrl: profilePicUrl,
-        fullName: fullName,
+        profilePicUrl: widget.profilePicUrl,
+        fullName: widget.fullName,
+        events: widget.events,
+        controllers: widget.controllers,
         isAdmin: widget.isAdmin,
       ),
       backgroundColor: Colors.white,

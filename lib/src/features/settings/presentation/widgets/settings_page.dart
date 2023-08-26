@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:rv1g_info/main.dart';
 import 'package:rv1g_info/src/components/drawer_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_in_page.dart';
 import 'package:rv1g_info/src/features/settings/presentation/controllers/settings_controller.dart';
+import 'package:rv1g_info/src/features/settings/presentation/widgets/confirm_delete_widget.dart';
 import 'package:rv1g_info/src/features/settings/presentation/widgets/edit_user_page.dart';
 
 import '../../../../constants/theme_colors.dart';
@@ -384,18 +384,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                         ),
                       ),
                       onTap: () {
-                        ref
-                          .read(settingsControllerProvider.notifier)
-                          .deleteUser()
-                          .whenComplete(() {
-                            Navigator.popUntil(context, (route) => false);
-                            Navigator.push(
-                              context, 
-                              MaterialPageRoute(
-                                builder: (context) => SignInPage()
-                              )
-                            );
-                          });
+                        showDialog(
+                          context: context, 
+                          builder: (context) => ConfirmDeleteWidget(
+                            fullName: user.fullName,
+                            avatarUrl: user.profilePicUrl,
+                          ),
+                          barrierDismissible: true,
+                        );
                       },
                     ),
                   ],

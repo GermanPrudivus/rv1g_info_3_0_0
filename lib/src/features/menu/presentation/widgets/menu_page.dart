@@ -12,12 +12,20 @@ import '../../../../constants/theme_colors.dart';
 import '../../domain/models/menu.dart';
 
 class MenuPage extends ConsumerStatefulWidget {
-  final bool isAdmin;
+  final String profilePicUrl;
+  final String fullName;
   final bool isVerified;
+  final bool isAdmin;
+  final List<String> events;
+  final List<String> controllers;
 
   const MenuPage({
-    required this.isAdmin,
+    required this.profilePicUrl,
+    required this.fullName,
     required this.isVerified,
+    required this.isAdmin,
+    required this.events,
+    required this.controllers,
     super.key
   });
 
@@ -27,8 +35,6 @@ class MenuPage extends ConsumerStatefulWidget {
 
 class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMixin {
   late TabController _tabController;
-  String profilePicUrl = "";
-  String fullName = "";
 
   Map<String, Menu> images = {};
   String menu = noMenu;
@@ -36,15 +42,6 @@ class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMix
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref
-        .read(menuControllerProvider.notifier)
-        .getUser()
-        .then((value) {
-          setState(() {
-            profilePicUrl = value![0];
-            fullName = value[1];
-          });
-        });
       getMenu();
     });
     _tabController = TabController(length: 3, vsync: this);
@@ -80,7 +77,7 @@ class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMix
         preferredSize: Size.fromHeight(90.h),
         child: TabAppBarWidget(
           title: "Pusdienas",
-          profilePicUrl: profilePicUrl,
+          profilePicUrl: widget.profilePicUrl,
           tabQuant: 3, 
           tabNames: const ["Pusdienu grafiks", "Ēdienkarte", "Ēdienkarte(bez glutēna)"],
           tabController: _tabController, 
@@ -115,8 +112,10 @@ class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMix
         ),
       ),
       drawer: DrawerWidget(
-        profilePicUrl: profilePicUrl,
-        fullName: fullName,
+        profilePicUrl: widget.profilePicUrl,
+        fullName: widget.fullName,
+        events: widget.events,
+        controllers: widget.controllers,
         isAdmin: widget.isAdmin,
       ),
       backgroundColor: Colors.white,

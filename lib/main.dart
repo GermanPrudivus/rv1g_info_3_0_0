@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rv1g_info/src/components/difference_in_dates.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,25 +59,67 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  bool admin = false;
+  String profilePicUrl = "";
+  String fullName = "";
   bool verified = false;
+  bool admin = false;
+  List<String> events = [];
+  List<String> controllers = [];
+
   int index = 0;
   List<Widget> screens = [];
 
   @override
   void initState() {
-    isUserAdminAndVerified()
+    getUserData()
       .then((value) {
+        print(value);
         setState(() {
-          admin = value[0];
-          verified = value[1];
+          profilePicUrl = value[0];
+          fullName = value[1];
+          verified = value[2];
+          admin = value[3];
+          events = value[4];
+          controllers = value[5];
+
           screens = [
-            NewsPage(isAdmin: admin),
-            ChangesPage(isAdmin: admin),
-            SchedulePage(isAdmin: admin, isVerified: verified),
-            MenuPage(isAdmin: admin, isVerified: verified),
-            ShopPage(isAdmin: admin),
+            NewsPage(
+              profilePicUrl: profilePicUrl,
+              fullName: fullName,
+              events: events,
+              controllers: controllers,
+              isAdmin: admin
+            ),
+            ChangesPage(
+              profilePicUrl: profilePicUrl,
+              fullName: fullName,
+              events: events,
+              controllers: controllers,
+              isAdmin: admin
+            ),
+            SchedulePage(
+              profilePicUrl: profilePicUrl,
+              fullName: fullName,
+              isVerified: verified,
+              events: events,
+              controllers: controllers,
+              isAdmin: admin
+            ),
+            MenuPage(
+              profilePicUrl: profilePicUrl,
+              fullName: fullName,
+              isVerified: verified,
+              events: events,
+              controllers: controllers,
+              isAdmin: admin
+            ),
+            ShopPage(
+              profilePicUrl: profilePicUrl,
+              fullName: fullName,
+              events: events,
+              controllers: controllers,
+              isAdmin: admin
+            ),
           ];
         });
       });
@@ -146,21 +189,46 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<List<bool>> isUserAdminAndVerified() async{
+  Future<List> getUserData() async{
     final supabase = Supabase.instance.client;
 
     final email = supabase.auth.currentUser!.email;
-    final res = await supabase.from('users').select().eq('email', email);
+    final res = await supabase
+      .from('users')
+      .select()
+      .eq('email', email);
 
-    await supabase.auth.updateUser(
-      UserAttributes(
-        data: {'admin':true}
-      )
-    );
+    final profilePicUrl = res[0]['profile_pic_url'];
+    final name = '${res[0]['name']} ${res[0]['surname']}';
+
+    final resRoles = await supabase
+      .from('roles')
+      .select()
+      .eq('user_id', res[0]['id']);
+
+    List<String> events = [];
+    List<String> controllers = [];
+
+    for(int i=0;i<resRoles.length;i++){
+      String role = resRoles[i]['role'];
+      if(role[0] == 'P'){
+        if(differenceInDates(DateTime.parse(resRoles[i]['ended_datetime']), DateTime.now())[0] == "-"){
+          events.add(role.substring(23));
+        }
+      } else if(role == 'B'){
+        if(differenceInDates(DateTime.parse(resRoles[i]['ended_datetime']), DateTime.now())[0] == "-"){
+          controllers.add(role.substring(21));
+        }
+      }
+    }
 
     return [
+      profilePicUrl,
+      name,
+      res[0]['verified'],
       await supabase.auth.currentUser!.userMetadata!['admin'] ?? false,
-      res[0]['verified']
+      events,
+      controllers,
     ];
   }
 }

@@ -35,10 +35,10 @@ class SettingsController extends StateNotifier<AsyncValue<void>> {
     });
   }
 
-  Future<void> deleteUser() async {
+  Future<void> deleteUser(String avatarUrl) async {
     state = const AsyncLoading<void>();
     state = await AsyncValue.guard<void>(() {
-      return settingService.deleteUser();
+      return settingService.deleteUser(avatarUrl);
     });
   }
 }

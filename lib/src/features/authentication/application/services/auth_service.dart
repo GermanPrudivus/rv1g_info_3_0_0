@@ -9,8 +9,9 @@ class AuthService {
 
   final AuthRepository authRepository;
 
-  Future<void> signIn(String email, String password) async {
+  Future<bool> signIn(String email, String password) async {
     await authRepository.signIn(email, password);
+    return await authRepository.checkUserDeleted();
   }
 
   Future<void> signUp(String avatarPath, String email, String fullName, int form, String password) async {

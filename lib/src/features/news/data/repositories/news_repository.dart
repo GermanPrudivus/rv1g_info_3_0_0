@@ -247,9 +247,11 @@ class NewsRepository {
         .eq('news_id', resNews[i]['id']);
 
       String authorName = "Nav noteikts";
+      String authorAvatar = "";
 
       if(resAuthor.isNotEmpty){
         authorName = "${resAuthor[0]['name']} ${resAuthor[0]['surname']}";
+        authorAvatar = resAuthor[0]['profile_pic_url'];
       }
 
       bool hasVoted = false;
@@ -310,7 +312,7 @@ class NewsRepository {
       SchoolNews oneNews = SchoolNews(
         id: resNews[i]['id'], 
         authorName: authorName, 
-        authorAvatar: resAuthor[0]['profile_pic_url'] ?? "",
+        authorAvatar: authorAvatar,
         text: List.from(resNews[i]['text']), 
         media: List.from(resNews[i]['media']), 
         likes: resNews[i]['likes'],
@@ -517,21 +519,6 @@ class NewsRepository {
       .eq('email', email);
 
     return res[0]['id'];
-  }
-
-  Future<List<String>> getUser() async {
-    final supabase = Supabase.instance.client;
-
-    final email = supabase.auth.currentUser?.email;
-    final res = await supabase
-      .from('users')
-      .select()
-      .eq('email', email);
-
-    final profilePicUrl = res[0]['profile_pic_url'];
-    final name = '${res[0]['name']} ${res[0]['surname']}';
-
-    return await [profilePicUrl, name];
   }
 }
 

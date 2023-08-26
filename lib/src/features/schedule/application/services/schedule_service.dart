@@ -28,10 +28,6 @@ class ScheduleService {
   Future<Map<String, List<String>>> getForms() async {
     return await scheduleRepository.getForms();
   }
-
-  Future<List<String>> getUser() async {
-    return await scheduleRepository.getUser();
-  }
 }
 
 final scheduleServiceProvider = Provider<ScheduleService>((ref) {

@@ -38,8 +38,9 @@ class SettingsService {
     return await settingsRepository.logout();
   }
 
-  Future<void> deleteUser() async {
-    return await settingsRepository.deleteUser();
+  Future<void> deleteUser(String avatarUrl) async {
+    await settingsRepository.deleteImage(avatarUrl, 'avatars');
+    await settingsRepository.deleteUser();
   }
 }
 

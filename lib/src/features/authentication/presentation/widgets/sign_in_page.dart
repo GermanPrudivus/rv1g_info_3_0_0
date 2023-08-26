@@ -192,7 +192,26 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   onPressed: () {
                     ref
                       .read(signInScreenControllerProvider.notifier)
-                      .signIn(emailController.text, passwordController.text);
+                      .signIn(emailController.text, passwordController.text)
+                      .then((value) {
+                        if(value!){
+                          Navigator.popUntil(context, (route) => false);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignInPage()
+                            )
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text(
+                                'Account is deleted! Please try different one!'
+                              )
+                            )
+                          );
+                        }
+                      });
                   },
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(1.sw, 50.h),

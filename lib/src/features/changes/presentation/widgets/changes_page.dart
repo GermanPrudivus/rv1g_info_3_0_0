@@ -13,10 +13,18 @@ import '../controllers/changes_controller.dart';
 import 'crud_changes_widget.dart';
 
 class ChangesPage extends ConsumerStatefulWidget {
+  final String profilePicUrl;
+  final String fullName;
   final bool isAdmin;
+  final List<String> events;
+  final List<String> controllers;
 
   const ChangesPage({
+    required this.profilePicUrl,
+    required this.fullName,
     required this.isAdmin,
+    required this.events,
+    required this.controllers,
     super.key
   });
 
@@ -25,9 +33,6 @@ class ChangesPage extends ConsumerStatefulWidget {
 }
 
 class _ChangesPageState extends ConsumerState<ChangesPage> {
-  String profilePicUrl = "";
-  String fullName = "";
-
   CalendarFormat format = CalendarFormat.week;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
@@ -40,15 +45,6 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref
-        .read(changesControllerProvider.notifier)
-        .getUser()
-        .then((value) {
-          setState(() {
-            profilePicUrl = value![0];
-            fullName = value[1];
-          });
-        });
       getChanges();
       setChanges();
     });
@@ -105,7 +101,7 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
         preferredSize: Size.fromHeight(60.h),
         child: AppBarWidget(
           title: "Izmaiņas", 
-          profilePicUrl: profilePicUrl,
+          profilePicUrl: widget.profilePicUrl,
           add: widget.isAdmin, 
           navigateTo: CRUDChangesWidget(
             tag: "changes$selectedStr",
@@ -116,8 +112,10 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
         ),
       ),
       drawer: DrawerWidget(
-        profilePicUrl: profilePicUrl,
-        fullName: fullName,
+        profilePicUrl: widget.profilePicUrl,
+        fullName: widget.fullName,
+        events: widget.events,
+        controllers: widget.controllers,
         isAdmin: widget.isAdmin,
       ),
       backgroundColor: Colors.white,

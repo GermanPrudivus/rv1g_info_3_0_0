@@ -13,9 +13,11 @@ import '../controllers/events_controller.dart';
 import 'event_page.dart';
 
 class EventsPage extends ConsumerStatefulWidget {
+  final List<String> events;
   final bool isAdmin;
 
   const EventsPage({
+    required this.events,
     required this.isAdmin,
     super.key
   });
@@ -184,6 +186,7 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                                   PageRouteBuilder(
                                     pageBuilder: (context, animation, secondaryAnimation) {
                                       return EventPage(
+                                        hasRole: widget.events.contains('Pasākumu organizators ${events[index].title}'),
                                         isAdmin: widget.isAdmin,
                                         event: events[index],
                                       );

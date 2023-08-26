@@ -12,12 +12,20 @@ import '../../../../components/app_bar_widget.dart';
 import '../../domain/models/schedule.dart';
 
 class SchedulePage extends ConsumerStatefulWidget {
-  final bool isAdmin;
+  final String profilePicUrl;
+  final String fullName;
   final bool isVerified;
+  final bool isAdmin;
+  final List<String> events;
+  final List<String> controllers;
 
   const SchedulePage({
-    required this.isAdmin,
+    required this.profilePicUrl,
+    required this.fullName,
     required this.isVerified,
+    required this.isAdmin,
+    required this.events,
+    required this.controllers,
     super.key
   });
 
@@ -26,9 +34,6 @@ class SchedulePage extends ConsumerStatefulWidget {
 }
 
 class _SchedulePageState extends ConsumerState<SchedulePage> {
-  String profilePicUrl = "";
-  String fullName = "";
-  
   String dropdownValue = 'Konsultāciju grafiks';
 
   String image = noSchedule;
@@ -44,15 +49,6 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref
-        .read(scheduleControllerProvider.notifier)
-        .getUser()
-        .then((value) {
-          setState(() {
-            profilePicUrl = value![0];
-            fullName = value[1];
-          });
-        });
       getSchedule();
     });
     super.initState();
@@ -90,7 +86,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
         preferredSize: Size.fromHeight(60.h),
         child: AppBarWidget(
           title: "Stundu saraksts",
-          profilePicUrl: profilePicUrl,
+          profilePicUrl: widget.profilePicUrl,
           add: widget.isAdmin, 
           navigateTo: CRUDScheduleWidget(tag: tag, imageUrl: image),
           showDialog: true,
@@ -98,8 +94,10 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
         ),
       ),
       drawer: DrawerWidget(
-        profilePicUrl: profilePicUrl,
-        fullName: fullName,
+        profilePicUrl: widget.profilePicUrl,
+        fullName: widget.fullName,
+        events: widget.events,
+        controllers: widget.controllers,
         isAdmin: widget.isAdmin,
       ),
       backgroundColor: Colors.white,

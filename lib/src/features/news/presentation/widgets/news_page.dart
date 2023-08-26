@@ -7,16 +7,23 @@ import 'package:rv1g_info/src/features/news/presentation/widgets/eklase_page.dar
 import 'package:rv1g_info/src/features/news/presentation/widgets/school_page.dart';
 
 import '../../domain/models/poll.dart';
-import '../controllers/news_controller.dart';
 import 'crud_eklase_news_page.dart';
 import 'crud_school_news_page.dart';
 
 class NewsPage extends ConsumerStatefulWidget {
+  final String profilePicUrl;
+  final String fullName;
   final bool isAdmin;
+  final List<String> events;
+  final List<String> controllers;
 
   const NewsPage({
+    required this.profilePicUrl,
+    required this.fullName,
+    required this.isAdmin,
+    required this.events,
+    required this.controllers,
     super.key,
-    required this.isAdmin
   });
 
   @override
@@ -25,23 +32,10 @@ class NewsPage extends ConsumerStatefulWidget {
 
 class _NewsPageState extends ConsumerState<NewsPage> with TickerProviderStateMixin {
   late TabController _tabController;
-  String profilePicUrl = "";
-  String fullName = "";
 
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref
-        .read(newsControllerProvider.notifier)
-        .getUser()
-        .then((value) {
-          setState(() {
-            profilePicUrl = value![0];
-            fullName = value[1];
-          });
-        });
-    });
     super.initState();
   }
 
@@ -57,7 +51,7 @@ class _NewsPageState extends ConsumerState<NewsPage> with TickerProviderStateMix
         preferredSize: Size.fromHeight(90.h),
         child: TabAppBarWidget(
           title: "Ziņas", 
-          profilePicUrl: profilePicUrl,
+          profilePicUrl: widget.profilePicUrl,
           tabQuant: 2, 
           tabNames: const ["Skola","E-klase"],
           tabController: _tabController,
@@ -96,8 +90,10 @@ class _NewsPageState extends ConsumerState<NewsPage> with TickerProviderStateMix
         ),
       ),
       drawer: DrawerWidget(
-        profilePicUrl: profilePicUrl,
-        fullName: fullName,
+        profilePicUrl: widget.profilePicUrl,
+        fullName: widget.fullName,
+        events: widget.events,
+        controllers: widget.controllers,
         isAdmin: widget.isAdmin,
       ),
       backgroundColor: Colors.white,

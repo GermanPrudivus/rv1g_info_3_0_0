@@ -10,11 +10,15 @@ import '../features/volunteering/presentation/widgets/volunteering_jobs_page.dar
 class DrawerWidget extends StatefulWidget {
   final String profilePicUrl;
   final String fullName;
+  final List<String> events;
+  final List<String> controllers;
   final bool isAdmin;
 
   const DrawerWidget({
     required this.profilePicUrl,
     required this.fullName,
+    required this.events,
+    required this.controllers,
     required this.isAdmin,
     super.key
   });
@@ -145,7 +149,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
                   onTap: () {
                     return navigateTo(
-                      EventsPage(isAdmin: widget.isAdmin)
+                      EventsPage(
+                        isAdmin: widget.isAdmin, 
+                        events: widget.events
+                      )
                     );
                   },
                 ),
@@ -201,7 +208,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 SizedBox(height: 5.h),
                 ListTile(
-                  enabled: widget.isAdmin,
+                  enabled: widget.isAdmin || widget.controllers.isNotEmpty,
                   contentPadding: EdgeInsets.zero,
                   title: Row(
                     children: [

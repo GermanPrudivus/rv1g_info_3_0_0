@@ -24,15 +24,6 @@ class MenuController extends StateNotifier<AsyncValue<void>> {
     state = asyncValue;
     return asyncValue.value;
   }
-
-  Future<List<String>?> getUser() async {
-    state = const AsyncLoading<void>();
-    final AsyncValue<List<String>> asyncValue = await AsyncValue.guard<List<String>>(() {
-      return menuService.getUser();
-    });
-    state = asyncValue;
-    return asyncValue.value;
-  }
 }
 
 final menuControllerProvider =
