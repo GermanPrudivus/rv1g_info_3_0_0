@@ -134,7 +134,7 @@ class NewsRepository {
 
   Future<int> addPoll(String title, DateTime pollEnd, int newsId) async{
     final res = await supabase
-      .from('poll')
+      .from('polls')
       .insert(
         toJson({
           'title': title,
@@ -152,7 +152,7 @@ class NewsRepository {
 
   Future<void> addAnswer(int pollId, String answer) async {
     await supabase
-      .from('answer')
+      .from('answers')
       .insert(
         toJson({
           'answer': answer,
@@ -164,7 +164,7 @@ class NewsRepository {
 
   Future<void> updatePoll(int id, String title, DateTime pollEnd) async{
     await supabase
-      .from('poll')
+      .from('polls')
       .update(
         toJson({
           'title': title,
@@ -176,7 +176,7 @@ class NewsRepository {
 
   Future<void> updateAnswer(int id, String answer) async {
     await supabase
-      .from('answer')
+      .from('answers')
       .update(
         toJson({
           'answer': answer,
@@ -211,14 +211,14 @@ class NewsRepository {
 
   Future<void> deletePoll(int id) async {
     await supabase
-      .from('poll')
+      .from('polls')
       .delete()
       .eq('id', id);
   }
 
   Future<void> deleteAnswer(int id) async {
     await supabase
-      .from('answer')
+      .from('answers')
       .delete()
       .eq('id', id);
   }
@@ -242,7 +242,7 @@ class NewsRepository {
 
       //poll
       final resPoll = await supabase
-        .from('poll')
+        .from('polls')
         .select()
         .eq('news_id', resNews[i]['id']);
 
@@ -277,7 +277,7 @@ class NewsRepository {
 
         //answers
         final resAnswers = await supabase
-          .from('answer')
+          .from('answers')
           .select()
           .eq('poll_id', resPoll[0]['id'])
           .order('id', ascending: true);
@@ -322,7 +322,7 @@ class NewsRepository {
 
   Future<void> updateVotes(int pollId, int answerId, int userdId) async{
     final res1 = await supabase
-      .from('poll')
+      .from('polls')
       .select()
       .eq('id', pollId);
 
@@ -336,7 +336,7 @@ class NewsRepository {
     );
 
     await supabase
-      .from('poll')
+      .from('polls')
       .update({
         'all_votes': res1[0]['all_votes']+1,
         'voted_users': votedUsers
@@ -344,12 +344,12 @@ class NewsRepository {
       .eq('id', pollId);
 
     final res2 = await supabase
-      .from('answer')
+      .from('answers')
       .select('votes')
       .eq('id', answerId);
 
     await supabase
-      .from('answer')
+      .from('answers')
       .update({'votes': res2[0]['votes']+1})
       .eq('id', answerId);
   }

@@ -52,7 +52,7 @@ class VolunteeringRepository {
     }).toList();
 
     await supabase
-      .from('volunteering_job')
+      .from('volunteering_jobs')
       .insert(
         toJson({
           'title': title,
@@ -109,7 +109,7 @@ class VolunteeringRepository {
     jsonImages = imagesUrls + jsonImages;
 
     await supabase
-      .from('volunteering_job')
+      .from('volunteering_jobs')
       .update(
         toJson({
           'title': title,
@@ -127,7 +127,7 @@ class VolunteeringRepository {
     imagesEdited.remove(imageUrl);
 
     await supabase
-      .from('volunteering_job')
+      .from('volunteering_jobs')
       .update({'media':imagesEdited})
       .eq('id', id);
   }
@@ -141,7 +141,7 @@ class VolunteeringRepository {
 
   Future<void> deleteJob(int id) async {
     await supabase
-      .from('volunteering_job')
+      .from('volunteering_jobs')
       .delete()
       .eq('id', id);
   }
@@ -151,7 +151,7 @@ class VolunteeringRepository {
     List<Job> events = [];
     
     final res = await supabase
-      .from('volunteering_job')
+      .from('volunteering_jobs')
       .select()
       .order('start_date', ascending: false);
 

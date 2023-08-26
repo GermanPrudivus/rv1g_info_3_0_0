@@ -53,7 +53,7 @@ class EventRepository {
     }).toList();
 
     await supabase
-      .from('event')
+      .from('events')
       .insert(
         toJson({
           'title': title,
@@ -114,7 +114,7 @@ class EventRepository {
     jsonImages = imagesUrls + jsonImages;
 
     await supabase
-      .from('event')
+      .from('events')
       .update(
         toJson({
           'title': title,
@@ -133,7 +133,7 @@ class EventRepository {
     imagesEdited.remove(imageUrl);
 
     await supabase
-      .from('event')
+      .from('events')
       .update({'media':imagesEdited})
       .eq('id', id);
   }
@@ -147,7 +147,7 @@ class EventRepository {
 
   Future<void> deleteEvent(int id) async {
     await supabase
-      .from('event')
+      .from('events')
       .delete()
       .eq('id', id);
   }
@@ -157,7 +157,7 @@ class EventRepository {
     List<Event> events = [];
     
     final res = await supabase
-      .from('event')
+      .from('events')
       .select()
       .order('start_date', ascending: false);
 

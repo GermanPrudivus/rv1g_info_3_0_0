@@ -51,7 +51,7 @@ class ShopRepository {
     }).toList();
 
     await supabase
-      .from('shop_item')
+      .from('shop_items')
       .insert(
         toJson({
           'title': title,
@@ -108,7 +108,7 @@ class ShopRepository {
     jsonImages = imagesUrls + jsonImages;
 
     await supabase
-      .from('shop_item')
+      .from('shop_items')
       .update(
         toJson({
           'title': title,
@@ -123,7 +123,7 @@ class ShopRepository {
 
   Future<void> deleteItem(int id) async {
     await supabase
-      .from('shop_item')
+      .from('shop_items')
       .delete()
       .eq('id', id);
   }
@@ -133,7 +133,7 @@ class ShopRepository {
     imagesEdited.remove(imageUrl);
 
     await supabase
-      .from('shop_item')
+      .from('shop_items')
       .update({'media':imagesEdited})
       .eq('id', id);
   }
@@ -141,13 +141,13 @@ class ShopRepository {
   Future<void> deleteImage(String imageUrl) async {
     await supabase
       .storage
-      .from('shop_item')
+      .from('shop_items')
       .remove([json.decode(imageUrl)['image_url'].split("/").last]);
   }
 
   Future<List<Item>> getItems() async {
     final res = await supabase
-      .from('shop_item')
+      .from('shop_items')
       .select()
       .order('created_datetime', ascending: false);
 

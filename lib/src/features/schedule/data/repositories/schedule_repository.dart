@@ -95,7 +95,7 @@ class ScheduleRepository {
     
     for(int i=0;i<number.length;i++){
       final res = await supabase
-        .from('form')
+        .from('forms')
         .select()
         .eq('number', number[i])
         .order('id', ascending: true);
