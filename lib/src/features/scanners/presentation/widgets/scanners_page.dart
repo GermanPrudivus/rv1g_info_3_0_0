@@ -85,7 +85,7 @@ class _ScannersPageState extends ConsumerState<ScannersPage> {
                           children: [
                             Container(
                               margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
-                              padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 15.w, left: 15.w),
+                              padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 20.w, left: 20.w),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.w),
                                 color: Colors.white,
