@@ -73,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     getUserData()
       .then((value) {
+        print(value);
         setState(() {
           profilePicUrl = value[0];
           fullName = value[1];
@@ -213,10 +214,11 @@ class _MyHomePageState extends State<MyHomePage> {
       if(role[0] == 'P'){
         if(differenceInDates(DateTime.parse(resRoles[i]['ended_datetime']), DateTime.now())[0] != "-"){
           events.add(role.substring(22));
+          controllers.add(role.substring(22));
         }
       } else if(role == 'B'){
         if(differenceInDates(DateTime.parse(resRoles[i]['ended_datetime']), DateTime.now())[0] != "-"){
-          controllers.add(role.substring(20));
+          controllers.add(role.substring(22));
         }
       }
     }

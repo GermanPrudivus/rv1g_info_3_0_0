@@ -130,6 +130,11 @@ class EventRepository {
 
     jsonImages = imagesUrls + jsonImages;
 
+    final res = await supabase
+      .from('events')
+      .select()
+      .eq('id', id);
+
     await supabase
       .from('events')
       .update(
@@ -143,6 +148,14 @@ class EventRepository {
         })
       )
       .eq('id', id);
+
+    await supabase
+      .from('roles')
+      .update({
+        'ended_datetime':endDate,
+        'role':'Pasākumu organizators ${title}'
+      })
+      .eq('role', 'Pasākumu organizators ${res[0]['title']}');
   }
 
   Future<void> updateImages(int id, List images, String imageUrl) async{

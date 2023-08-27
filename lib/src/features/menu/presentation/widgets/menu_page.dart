@@ -79,7 +79,7 @@ class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMix
           title: "Pusdienas",
           profilePicUrl: widget.profilePicUrl,
           tabQuant: 3, 
-          tabNames: const ["Pusdienu grafiks", "Ēdienkarte", "Ēdienkarte(bez glutēna)"],
+          tabNames: const ["Pusdienu grafiks", "Ēdienkarte", "Ēdienkarte (bez glutēna)"],
           tabController: _tabController, 
           openDrawerCallback: openDrawerCallback,
           parametrs: [widget.isAdmin, true, true],//1.isAdmin, 2.showDialog, 3.isScrollable

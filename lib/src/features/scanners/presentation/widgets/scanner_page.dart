@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rv1g_info/src/features/scanners/presentation/widgets/scan_ticket_page.dart';
 
 import '../../../../constants/theme_colors.dart';
 import '../../domain/models/participant.dart';
@@ -76,7 +77,7 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
               Navigator.push(
                 context, 
                 MaterialPageRoute(
-                  builder: (context) => AboutDialog()
+                  builder: (context) => ScanTicketPage()
                 )
               );
             },
