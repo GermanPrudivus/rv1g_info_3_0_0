@@ -11,8 +11,6 @@ class SettingsRepository {
   final supabase = Supabase.instance.client;
 
   Future<AppUser> getUser() async {
-    final supabase = Supabase.instance.client;
-
     final email = supabase.auth.currentUser?.email;
     final res = await supabase
       .from('users')

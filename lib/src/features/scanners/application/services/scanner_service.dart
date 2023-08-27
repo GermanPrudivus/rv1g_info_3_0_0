@@ -1,21 +1,25 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/repositories/settings_repository.dart';
-import '../../domain/models/app_user.dart';
-import '../../domain/models/role.dart';
+import '../../data/repositories/scanner_repository.dart';
+import '../../domain/models/participant.dart';
+import '../../domain/models/scanner.dart';
 
-class SettingsService {
-  SettingsService({
-    required this.settingsRepository,
+class ScannerService {
+  ScannerService({
+    required this.scannerRepository,
   });
 
-  final SettingsRepository settingsRepository;
+  final ScannerRepository scannerRepository;
 
-  Future<AppUser> getUser() async {
-    return await settingsRepository.getUser();
+  Future<List<Scanner>> getScanners() async {
+    return await scannerRepository.getScanners();
   }
 
-  Future<String> updateProfilePicUrl(int id, String email, 
+  Future<List<Participant>> getParticipants(int eventId) async {
+    return await scannerRepository.getParticipants(eventId);
+  }
+
+  /*Future<String> updateProfilePicUrl(int id, String email, 
     String profilePicPath, String avatarUrl) async {
 
     await settingsRepository.deleteImage(avatarUrl, 'avatars');
@@ -40,11 +44,11 @@ class SettingsService {
   Future<void> deleteUser(String avatarUrl) async {
     await settingsRepository.deleteImage(avatarUrl, 'avatars');
     await settingsRepository.deleteUser();
-  }
+  }*/
 }
 
-final settingsServiceProvider = Provider<SettingsService>((ref) {
-  return SettingsService(
-    settingsRepository: ref.watch(settingsRepositoryProvider),
+final scannerServiceProvider = Provider<ScannerService>((ref) {
+  return ScannerService(
+    scannerRepository: ref.watch(scannerRepositoryProvider),
   );
 });

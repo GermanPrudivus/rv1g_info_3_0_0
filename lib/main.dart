@@ -73,7 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     getUserData()
       .then((value) {
-        print(value);
         setState(() {
           profilePicUrl = value[0];
           fullName = value[1];

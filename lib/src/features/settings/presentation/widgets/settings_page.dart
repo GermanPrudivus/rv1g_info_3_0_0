@@ -80,6 +80,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             children: [
               GestureDetector(
                 child: Container(
+                  color: Colors.white,
                   padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 15.h, bottom: 15.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

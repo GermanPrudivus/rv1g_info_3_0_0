@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/components/user_qr_code_widget.dart';
 import 'package:rv1g_info/src/features/events/presentation/widgets/events_page.dart';
+import 'package:rv1g_info/src/features/scanners/presentation/widgets/scanners_page.dart';
 import 'package:rv1g_info/src/features/settings/presentation/widgets/settings_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -236,8 +237,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     ],
                   ),
                   onTap: () {
-                    if(widget.isAdmin){
-                      
+                    if(enabled){
+                      navigateTo(
+                        ScannersPage(
+                          isAdmin: widget.isAdmin, 
+                          controllers: widget.controllers
+                        )
+                      );
                     }
                   },
                 ),
