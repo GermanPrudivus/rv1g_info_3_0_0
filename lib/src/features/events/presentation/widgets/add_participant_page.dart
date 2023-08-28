@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rv1g_info/src/components/qr_code_border_painter.dart';
+import 'package:rv1g_info/src/components/scanner_border_painter.dart';
 
 import '../../../../constants/theme_colors.dart';
 
@@ -70,7 +70,7 @@ class _AddParticipantPageState extends State<AddParticipantPage> {
                     ),
                     CustomPaint(
                       size: Size(240.w, 240.h), // Adjust the size as needed
-                      painter: QRCodeBorderPainter(),
+                      painter: ScannerBorderPainter(),
                     ),
                   ],
                 )

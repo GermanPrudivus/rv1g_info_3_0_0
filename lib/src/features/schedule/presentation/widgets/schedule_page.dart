@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rv1g_info/src/components/verification_page.dart';
 import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/features/schedule/presentation/controllers/schedule_controller.dart';
 import 'package:rv1g_info/src/features/schedule/presentation/widgets/crud_schedule_page.dart';
@@ -102,7 +103,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: !widget.isVerified
+        child: widget.isVerified
           ? RefreshIndicator(
               onRefresh: () {
                 return getSchedule();
@@ -263,7 +264,52 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                 )
               ),
             )
-          : const Center(child: CircularProgressIndicator()),
+          : Center(
+              child: Container(
+                child:Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Verificē savu profilu,\nlai redzētu stundu sarakstu!",
+                      style: TextStyle(
+                        color: blue,
+                        fontSize: 18.h,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 10.h),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context) => VerificationPage()
+                          )
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(180.w, 40.h),
+                        backgroundColor: blue,
+                        padding: EdgeInsets.zero,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.h)
+                        )
+                      ),
+                      child: Text(
+                        "Verificēties",
+                        style: TextStyle(
+                          fontSize: 15.h,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              )
+            ),
       )
     );
   }

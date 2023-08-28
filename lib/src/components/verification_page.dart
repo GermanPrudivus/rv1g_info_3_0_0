@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../components/scanner_border_painter.dart';
-import '../../../../constants/theme_colors.dart';
+import '../constants/theme_colors.dart';
+import 'scanner_border_painter.dart';
 
-class ScanTicketPage extends StatefulWidget {
-  const ScanTicketPage({super.key});
+class VerificationPage extends StatefulWidget {
+  const VerificationPage({super.key});
 
   @override
-  State<ScanTicketPage> createState() => _ScanTicketPageState();
+  State<VerificationPage> createState() => _VerificationPageState();
 }
 
-class _ScanTicketPageState extends State<ScanTicketPage> {
+class _VerificationPageState extends State<VerificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,26 +42,36 @@ class _ScanTicketPageState extends State<ScanTicketPage> {
                 Row(
                   children: [
                     Text(
-                      "Noskanēt biļeti:",
+                      "Verificēšana:",
                       style: TextStyle(
                         fontSize: 22.h,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 40.h),
+                SizedBox(height: 5.h),
                 Text(
-                  "Ievietojiet QR kodu kvadrāta laukā",
+                  "Ievietojiet savu Rīgas Skolēna karti attiecīgajā laukā!",
                   style: TextStyle(
                     fontSize: 16.h,
                     color: blue
                   ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 10.h),
+                Text(
+                  "Jūsu kartes fotogrāfija un informācija no tās netiek nekur saglabāta, un tā tiek izmantota tikai vienreizēji!",
+                  style: TextStyle(
+                    fontSize: 15.h,
+                    color: Colors.red
+                  ),
+                  textAlign: TextAlign.center,
                 ),
                 Stack(
                   alignment: Alignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 10.h, bottom: 10.h),
+                      margin: EdgeInsets.only(top: 5.h, bottom: 10.h),
                       decoration: BoxDecoration(
                        borderRadius: BorderRadius.circular(15.h),
                         color: Colors.grey.shade400,
@@ -69,7 +79,7 @@ class _ScanTicketPageState extends State<ScanTicketPage> {
                       height: 450.h,
                     ),
                     CustomPaint(
-                      size: Size(240.w, 240.h), // Adjust the size as needed
+                      size: Size(240.w, 360.h), // Adjust the size as needed
                       painter: ScannerBorderPainter(),
                     ),
                   ],

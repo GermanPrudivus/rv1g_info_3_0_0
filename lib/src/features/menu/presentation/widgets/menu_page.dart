@@ -7,6 +7,7 @@ import 'package:rv1g_info/src/components/tab_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/menu/presentation/controllers/menu_controller.dart';
 import 'package:rv1g_info/src/features/menu/presentation/widgets/crud_menu_widget.dart';
 
+import '../../../../components/verification_page.dart';
 import '../../../../constants/const.dart';
 import '../../../../constants/theme_colors.dart';
 import '../../domain/models/menu.dart';
@@ -124,69 +125,117 @@ class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMix
           controller: _tabController,
           children: [
             //first page
-            RefreshIndicator(
-              onRefresh: () async {
-                return getMenu();
-              },
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 15.h, bottom: 15.h, left: 10.w, right: 10.w),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.w),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black54,
-                          blurRadius: 2.0,
-                          offset: Offset(0, 1)
-                        ),
-                      ],
-                    ),
-                    child: InteractiveViewer(
-                      child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => buildImageZoom(context, menu),
-                            barrierDismissible: true,
-                          );
-                        },
-                        child: ClipRRect(
+
+            widget.isVerified
+              ? RefreshIndicator(
+                  onRefresh: () async {
+                    return getMenu();
+                  },
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 15.h, bottom: 15.h, left: 10.w, right: 10.w),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(20.w),
-                          child: Image.network(
-                            menu,
-                            fit: BoxFit.cover,
-                            frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                              if (frame != null) return child;
-                                return Container(
-                                  height: 500.h,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20.w),
-                                  ),
-                                  child: CircularProgressIndicator(color: blue),
-                                );
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 2.0,
+                              offset: Offset(0, 1)
+                            ),
+                          ],
+                        ),
+                        child: InteractiveViewer(
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => buildImageZoom(context, menu),
+                                barrierDismissible: true,
+                              );
                             },
-                            loadingBuilder: (BuildContext context, Widget child,ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) return child;
-                                return Container(
-                                  height: 500.h,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20.w),
-                                  ),
-                                  child: CircularProgressIndicator(color: blue),
-                                );
-                            },
-                          ),
-                        )
-                      )
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20.w),
+                              child: Image.network(
+                                menu,
+                                fit: BoxFit.cover,
+                                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                                  if (frame != null) return child;
+                                    return Container(
+                                      height: 500.h,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20.w),
+                                      ),
+                                      child: CircularProgressIndicator(color: blue),
+                                    );
+                                },
+                                loadingBuilder: (BuildContext context, Widget child,ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                    return Container(
+                                      height: 500.h,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20.w),
+                                      ),
+                                      child: CircularProgressIndicator(color: blue),
+                                    );
+                                },
+                              ),
+                            )
+                          )
+                        ),
+                      ),
                     ),
-                  ),
+                  )
+                )
+              : Center(
+                  child: Container(
+                    child:Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Verificē savu profilu,\nlai redzētu pusdienu grafiku!",
+                          style: TextStyle(
+                            color: blue,
+                            fontSize: 18.h,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                       ),
+                        SizedBox(height: 10.h),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context, 
+                              MaterialPageRoute(
+                                builder: (context) => VerificationPage()
+                              )
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            fixedSize: Size(180.w, 40.h),
+                            backgroundColor: blue,
+                            padding: EdgeInsets.zero,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.h)
+                            )
+                          ),
+                          child: Text(
+                            "Verificēties",
+                            style: TextStyle(
+                              fontSize: 15.h,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                       ),
+                      ],
+                    )
+                  )
                 ),
-              )
-            ),
 
             //second page
             RefreshIndicator(
