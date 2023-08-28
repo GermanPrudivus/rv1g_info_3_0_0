@@ -62,13 +62,7 @@ class _ScannersPageState extends ConsumerState<ScannersPage> {
             scanners.isEmpty
               ? Expanded(
                   child: Center(
-                    child: Text(
-                      "Nav skeneru",
-                      style: TextStyle(
-                        fontSize: 16.h,
-                        color: blue
-                      ),
-                    ),
+                    child: CircularProgressIndicator(color: blue)
                   ),
                 )
               : Expanded(

@@ -2,20 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import '../constants/theme_colors.dart';
+class TicketQRCodeWidget extends StatelessWidget {
+  final String data;
 
-class UserQRCodeWidget extends StatelessWidget {
-  final String userData;
-
-  const UserQRCodeWidget({
-    required this.userData,
+  const TicketQRCodeWidget({
+    required this.data,
     super.key
   });
 
   @override
   Widget build(BuildContext context) {
-    String data = userData.toString();
-    
     return AlertDialog(
       shape: RoundedRectangleBorder(
 		    borderRadius: BorderRadius.circular(15.h),
@@ -28,7 +24,7 @@ class UserQRCodeWidget extends StatelessWidget {
           height: 300.h,
           alignment: Alignment.topLeft,
           color: Colors.white,
-          margin: EdgeInsets.only(left: 15.w, right: 15.w, top: 20.h, bottom: 5.h),
+          margin: EdgeInsets.only(left: 15.w, right: 15.w, top: 20.h),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,22 +33,14 @@ class UserQRCodeWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "Tava profila QR kods:",
+                    "Biļetes QR kods:",
                     style: TextStyle(
                       fontSize: 18.h
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 15.h),
-              Text(
-                "Rādi to, lai nopirkt biļeti",
-                style: TextStyle(
-                  fontSize: 14.h,
-                  color: blue
-                ),
-              ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 25.h),
               QrImageView(
                 data: data,
                 version: QrVersions.auto,

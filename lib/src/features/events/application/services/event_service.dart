@@ -18,7 +18,9 @@ class EventService {
       title, shortText, description, startDate, endDate, imagesPath
     );
 
-    await eventRepository.addRole(title, email, endDate);
+    if(email != ""){
+      await eventRepository.addRole(title, email, endDate);
+    }
   }
 
   Future<void> editEvent(

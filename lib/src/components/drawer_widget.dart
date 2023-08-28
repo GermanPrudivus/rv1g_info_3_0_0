@@ -4,6 +4,7 @@ import 'package:rv1g_info/src/components/user_qr_code_widget.dart';
 import 'package:rv1g_info/src/features/events/presentation/widgets/events_page.dart';
 import 'package:rv1g_info/src/features/scanners/presentation/widgets/scanners_page.dart';
 import 'package:rv1g_info/src/features/settings/presentation/widgets/settings_page.dart';
+import 'package:rv1g_info/src/features/tickets/presentation/widgets/tickets_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../features/volunteering/presentation/widgets/volunteering_jobs_page.dart';
@@ -45,7 +46,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     enabled = widget.isAdmin || widget.controllers.isNotEmpty || widget.events.isNotEmpty;
     getUser()
       .then((value) {
-        userData = value.toString();
+        print(value);
+        userData = value;
       });
     super.initState();
   }
@@ -208,7 +210,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ),
                     ],
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    navigateTo(
+                      TicketsPage()
+                    );
+                  },
                 ),
                 SizedBox(height: 5.h),
                 ListTile(
@@ -283,7 +289,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   }
 }
 
-Future<List<String>> getUser() async {
+Future<String> getUser() async {
   final supabase = Supabase.instance.client;
   final email = supabase.auth.currentUser!.email;
 
@@ -297,10 +303,8 @@ Future<List<String>> getUser() async {
     .select()
     .eq('id', res[0]['form_id']);
 
-  return [
-    res[0]['id'].toString(), 
-    res[0]['name'], 
-    res[0]['surname'],
-    '${form[0]['number'].toString()}.${form[0]['letter']}'
-  ];
+  return res[0]['id'].toString() + " "
+       + res[0]['name'] + " "
+       + res[0]['surname'] + " "
+       + '${form[0]['number'].toString()}.${form[0]['letter']}';
 }

@@ -248,7 +248,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                               ),
                             ),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
-                            hintText: 'Ieraksti pasākuma autora e-pastu',
+                            hintText: 'Ieraksti pasākuma autora e-pastu (ja nav VD)',
                             hintStyle: TextStyle(
                               fontSize: 13.h
                             )

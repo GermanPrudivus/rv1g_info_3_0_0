@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:rv1g_info/src/components/difference_in_dates.dart';
 import 'package:rv1g_info/src/components/drawer_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/volunteering/presentation/widgets/volunteering_job_page.dart';
 
@@ -89,6 +90,12 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                    itemCount: jobs.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
+                      bool enabled = true;
+
+                      if(differenceInDates(DateTime.parse(jobs[index].endDate), DateTime.now())[0] == "-"){
+                        enabled = false;
+                      }
+
                       return GestureDetector(
                         child: Column(
                           children: [
@@ -100,9 +107,13 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                                 color: Colors.white,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: shadowBlue,
+                                    color: enabled
+                                      ? shadowBlue
+                                      : Colors.black26,
                                     blurRadius: 2.w,
-                                    spreadRadius: 1.w,
+                                    spreadRadius: enabled
+                                      ? 1.w
+                                      : 0.5.w,
                                     offset: const Offset(0, 2)
                                   ),
                                 ]
@@ -114,7 +125,9 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                                     jobs[index].title,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black,
+                                      color: enabled
+                                        ? Colors.black
+                                        : Colors.black45,
                                       fontSize: 18.h
                                     ),
                                   ),
@@ -133,6 +146,9 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                                               ),
                                             style: TextStyle(
                                               fontSize: 14.h,
+                                              color: enabled
+                                                ? Colors.black
+                                                : Colors.black45
                                             ),
                                           )
                                         ]
@@ -145,28 +161,30 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                           ],
                         ),
                         onTap: () {
-                          Navigator.of(context).push(
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation, secondaryAnimation) {
-                                return VolunteeringJobPage(
-                                  isAdmin: widget.isAdmin,
-                                  job: jobs[index],
-                                );
-                              },
-                             transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                const begin = Offset(1.0, 0.0);
-                                const end = Offset.zero;
-                                const curve = Curves.easeIn;
+                          if(enabled){
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                pageBuilder: (context, animation, secondaryAnimation) {
+                                  return VolunteeringJobPage(
+                                    isAdmin: widget.isAdmin,
+                                    job: jobs[index],
+                                  );
+                                },
+                                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                  const begin = Offset(1.0, 0.0);
+                                  const end = Offset.zero;
+                                  const curve = Curves.easeIn;
                                           
-                                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                  var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
                                           
-                                return SlideTransition(
-                                  position: animation.drive(tween),
-                                  child: child,
-                                );
-                              },
-                            )
-                          ).whenComplete(() => getJobs());
+                                  return SlideTransition(
+                                    position: animation.drive(tween),
+                                    child: child,
+                                  );
+                                },
+                              )
+                            ).whenComplete(() => getJobs());
+                          }
                         },
                       );
                     }
