@@ -29,12 +29,24 @@ dependencies:
   flutter_polls: ^0.1.2
   intl: ^0.18.1
   table_calendar: ^3.0.9
+  rename: ^2.1.1
+  flutter_native_splash: ^2.3.2
 
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/rv1g_info_logo.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/rv1g_info_logo_foreground.png"
 
 flutter:
 
@@ -43,10 +55,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/Instagram_icon.png
+    - assets/2021_Facebook_icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

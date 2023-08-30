@@ -16,7 +16,7 @@
     </queries>
     
     <application
-        android:label="rv1g_info"
+        android:label="RV1G info"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

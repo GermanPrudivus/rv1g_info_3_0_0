@@ -88,7 +88,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
         child: AppBarWidget(
           title: "Stundu saraksts",
           profilePicUrl: widget.profilePicUrl,
-          add: widget.isAdmin, 
+          add: widget.isAdmin && widget.isVerified, 
           navigateTo: CRUDScheduleWidget(tag: tag, imageUrl: image),
           showDialog: true,
           openDrawerCallback: openDrawerCallback,

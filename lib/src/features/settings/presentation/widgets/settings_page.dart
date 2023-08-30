@@ -6,6 +6,7 @@ import 'package:rv1g_info/src/components/drawer_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_in_page.dart';
 import 'package:rv1g_info/src/features/settings/presentation/controllers/settings_controller.dart';
 import 'package:rv1g_info/src/features/settings/presentation/widgets/confirm_delete_widget.dart';
+import 'package:rv1g_info/src/features/settings/presentation/widgets/contact_info_page.dart';
 import 'package:rv1g_info/src/features/settings/presentation/widgets/edit_user_page.dart';
 
 import '../../../../constants/theme_colors.dart';
@@ -453,7 +454,25 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                         ),
                       ),
                       onTap: () {
-                        
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation, secondaryAnimation) {
+                              return ContactInfoPage();
+                            },
+                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                              const begin = Offset(1.0, 0.0);
+                              const end = Offset.zero;
+                              const curve = Curves.easeIn;
+
+                              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                              return SlideTransition(
+                                position: animation.drive(tween),
+                                child: child,
+                              );
+                            },
+                          )
+                        ).whenComplete(() => getUserInfo());
                       },
                     ),
                   ],
