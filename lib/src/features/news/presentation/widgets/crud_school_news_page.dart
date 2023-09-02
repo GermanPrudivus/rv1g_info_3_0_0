@@ -297,7 +297,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                   Padding(
                     padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
                     child: Container(
-                      height: 525.h,
+                      height: 480.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.h),
                         color: Colors.white,
@@ -315,46 +315,45 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                               children: [
                                 Row(
                                   children: [
-                                    Expanded(
-                                      child: Container(
-                                        margin: EdgeInsets.only(right: 5.w),
-                                        child: TextFormField(
-                                          readOnly: widget.poll.allVotes != 0 && !showNewPoll,
-                                          initialValue: title,
-                                          textInputAction: TextInputAction.next,
-                                          style: TextStyle(
-                                            fontSize: 13.h
-                                          ),
-                                          decoration: InputDecoration(
-                                            isDense: true,
-                                            border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(10),
-                                              borderSide: BorderSide(
-                                                width: 2.h,
-                                                color: Colors.black
-                                              ),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(10),
-                                              borderSide: BorderSide(
-                                                width: 2.h,
-                                                color: blue
-                                              ),
-                                            ),
-                                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                                            hintText: 'Ieraksti jautājumu',
-                                            hintStyle: TextStyle(
-                                              fontSize: 13.h
-                                            )
-                                          ),
-                                          cursorColor: blue,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              title = value;
-                                            });
-                                          },
+                                    Expanded(child:Container(
+                                      margin: EdgeInsets.only(right: 5.w),
+                                      child: TextFormField(
+                                        readOnly: widget.poll.allVotes != 0 && !showNewPoll,
+                                        initialValue: title,
+                                        textInputAction: TextInputAction.next,
+                                        style: TextStyle(
+                                          fontSize: 13.h
                                         ),
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: BorderSide(
+                                              width: 2.h,
+                                              color: Colors.black
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: BorderSide(
+                                              width: 2.h,
+                                              color: blue
+                                            ),
+                                          ),
+                                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                                          hintText: 'Ieraksti jautājumu',
+                                          hintStyle: TextStyle(
+                                            fontSize: 13.h
+                                          )
+                                        ),
+                                        cursorColor: blue,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            title = value;
+                                          });
+                                        },
                                       ),
+                                    ),
                                     ),
                                     GestureDetector(
                                       child: ClipOval(
@@ -594,7 +593,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                 ),
                                 SizedBox(height: 5.h),
                                 SizedBox(
-                                  height: 200.h,
+                                  height: 160.h,
                                   child: CupertinoDatePicker(
                                     use24hFormat: true,
                                     initialDateTime: pollEnd,

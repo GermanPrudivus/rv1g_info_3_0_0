@@ -177,7 +177,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                         alignment: Alignment.centerRight,
                         child: Text(
                           "Forgot password?",
-                          style: TextStyle(color: blue, fontSize: 14.h),
+                          style: TextStyle(
+                            color: blue, 
+                            fontSize: 13.h
+                            ),
                         )
                       ),
                     )
@@ -235,7 +238,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                 padding: EdgeInsets.only(top: 13.h, left: 30.w, right: 30.w),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: Padding(
