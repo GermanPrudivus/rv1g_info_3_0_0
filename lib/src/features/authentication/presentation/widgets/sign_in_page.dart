@@ -237,24 +237,26 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 10.w),
-                      child: Container(
-                        height: 1.h,
-                        width: 129.w,
-                        color: lightGrey,
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 10.w),
+                        child: Container(
+                          height: 1.h,
+                          color: lightGrey,
+                        ),
                       ),
                     ),
                     Text(
                       "OR",
                         style: TextStyle(fontSize: 14.h, color: lightGrey),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10.w),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 10.w),
                         child: Container(
-                        height: 1.h,
-                        width: 129.w,
-                        color: lightGrey,
+                          height: 1.h,
+                          color: lightGrey,
+                        ),
                       ),
                     ),
                   ]

@@ -315,44 +315,45 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                               children: [
                                 Row(
                                   children: [
-                                    Container(
-                                      margin: EdgeInsets.only(right: 5.w),
-                                      width: 255.w,
-                                      child: TextFormField(
-                                        readOnly: widget.poll.allVotes != 0 && !showNewPoll,
-                                        initialValue: title,
-                                        textInputAction: TextInputAction.next,
-                                        style: TextStyle(
-                                          fontSize: 13.h
-                                        ),
-                                        decoration: InputDecoration(
-                                          isDense: true,
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(10),
-                                            borderSide: BorderSide(
-                                              width: 2.h,
-                                              color: Colors.black
-                                            ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(10),
-                                            borderSide: BorderSide(
-                                              width: 2.h,
-                                              color: blue
-                                            ),
-                                          ),
-                                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                                          hintText: 'Ieraksti jautājumu',
-                                          hintStyle: TextStyle(
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(right: 5.w),
+                                        child: TextFormField(
+                                          readOnly: widget.poll.allVotes != 0 && !showNewPoll,
+                                          initialValue: title,
+                                          textInputAction: TextInputAction.next,
+                                          style: TextStyle(
                                             fontSize: 13.h
-                                          )
+                                          ),
+                                          decoration: InputDecoration(
+                                            isDense: true,
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                              borderSide: BorderSide(
+                                                width: 2.h,
+                                                color: Colors.black
+                                              ),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                              borderSide: BorderSide(
+                                                width: 2.h,
+                                                color: blue
+                                              ),
+                                            ),
+                                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                                            hintText: 'Ieraksti jautājumu',
+                                            hintStyle: TextStyle(
+                                              fontSize: 13.h
+                                            )
+                                          ),
+                                          cursorColor: blue,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              title = value;
+                                            });
+                                          },
                                         ),
-                                        cursorColor: blue,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            title = value;
-                                          });
-                                        },
                                       ),
                                     ),
                                     GestureDetector(
