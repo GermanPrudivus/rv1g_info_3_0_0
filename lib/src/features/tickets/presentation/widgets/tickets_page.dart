@@ -96,8 +96,8 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                         child: Column(
                           children: [
                             Container(
-                              margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
-                              padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 20.w, left: 20.w),
+                              margin: EdgeInsets.only(left: 7.5.w, right: 7.5.w, top: 10.h, bottom: 10.h),
+                              padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 12.5.w, left: 12.5.w),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.w),
                                 color: Colors.white,
@@ -148,7 +148,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                                       Text(
                                                         "No:",
                                                         style: TextStyle(
-                                                          fontSize: 13.h,
+                                                          fontSize: 12.h,
                                                        ),
                                                       ),
                                                       SizedBox(height: 5.h,),
@@ -158,13 +158,13 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                                             DateTime.parse(tickets[index].createdDateTime)
                                                          ),
                                                         style: TextStyle(
-                                                          fontSize: 14.h,
+                                                          fontSize: 14.5.w,
                                                           fontWeight: FontWeight.bold
                                                        ),
                                                       ),
                                                     ],
                                                   ),
-                                                  SizedBox(width: 15.w,),
+                                                  SizedBox(width: 10.w),
                                                   Column(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,7 +172,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                                       Text(
                                                         "Līdz:",
                                                         style: TextStyle(
-                                                          fontSize: 13.h,
+                                                          fontSize: 12.h,
                                                        ),
                                                       ),
                                                       SizedBox(height: 5.h,),
@@ -182,7 +182,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                                             DateTime.parse(tickets[index].endDateTime)
                                                          ),
                                                         style: TextStyle(
-                                                          fontSize: 14.h,
+                                                          fontSize: 14.5.w,
                                                           fontWeight: FontWeight.bold
                                                        ),
                                                       ),
@@ -201,7 +201,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                     children: [
                                       Icon(
                                         Icons.chevron_right,
-                                        size: 30.h,
+                                        size: 26.h,
                                         color: blue,
                                       )
                                     ],

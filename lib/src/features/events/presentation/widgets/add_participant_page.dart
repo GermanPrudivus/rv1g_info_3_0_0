@@ -49,7 +49,7 @@ class _AddParticipantPageState extends State<AddParticipantPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 40.h),
+                SizedBox(height: 30.h),
                 Text(
                   "Ievietojiet QR kodu kvadrāta laukā",
                   style: TextStyle(

@@ -220,7 +220,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                         Padding(
                           padding: EdgeInsets.only(left: 5.w, bottom: 5.h),
                           child: Text(
-                            "Autora e-pasts",
+                            "Organizatora e-pasts",
                             style: TextStyle(
                               fontSize: 14.h,
                             ),
@@ -248,7 +248,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                               ),
                             ),
                             floatingLabelBehavior: FloatingLabelBehavior.always,
-                            hintText: 'Ieraksti pasākuma autora e-pastu (ja nav VD)',
+                            hintText: 'Ieraksti organizatora e-pastu (ja nav VD)',
                             hintStyle: TextStyle(
                               fontSize: 13.h
                             )
@@ -353,19 +353,19 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                               });
                             },
                             child: Container(
-                              padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 10.w, right: 10.w),
+                              padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 5.w),
                               child: Text(
                                 DateFormat('dd.MM.yyyy. HH:mm', 'en_US')
                                   .format(startDate),
                                 style: TextStyle(
-                                  fontSize: 14.h,
+                                  fontSize: 13.h,
                                     fontWeight: FontWeight.bold
                                 ),
                               ),
                             )
                           ),
                           Text(
-                            ' : ',
+                            ':',
                             style: TextStyle(
                               fontSize: 14.h,
                               fontWeight: FontWeight.bold,
@@ -378,12 +378,12 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                               });
                             },
                             child: Container(
-                              padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 10.w, right: 10.w),
+                              padding: EdgeInsets.only(top: 10.h, bottom: 10.h, right: 5.w),
                               child: Text(
                                 DateFormat('dd.MM.yyyy. HH:mm', 'en_US')
                                   .format(endDate),
                                 style: TextStyle(
-                                  fontSize: 14.h,
+                                  fontSize: 13.h,
                                     fontWeight: FontWeight.bold
                                 ),
                               ),

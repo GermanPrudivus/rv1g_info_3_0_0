@@ -82,7 +82,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               GestureDetector(
                 child: Container(
                   color: Colors.white,
-                  padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 15.h, bottom: 15.h),
+                  padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 15.h, bottom: 15.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -108,7 +108,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                   )
                             ],
                           ),
-                          SizedBox(width: 15.w),
+                          SizedBox(width: 10.w),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +132,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                     user.email,
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 13.h
+                                      fontSize: 14.w
                                     ),
                                   )
                                 ],
@@ -141,7 +141,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                           ),
                         ]
                       ),
-                      SizedBox(width: 15.w),
                       Column(
                         children: [
                           Icon(
@@ -237,7 +236,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                 roles[index].description,
                                 style: TextStyle(
                                   color: Colors.black54,
-                                  fontSize: 14.h
+                                  fontSize: 13.5.h
                                 ),
                               ),
                               SizedBox(height: 5.h,),
@@ -251,14 +250,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                       ),
                                     style: TextStyle(
                                      color: Colors.black54,
-                                      fontSize: 14.h
+                                      fontSize: 13.h
                                     ),
                                   ),
                                   Text(
                                     " - ",
                                     style: TextStyle(
                                      color: Colors.black54,
-                                      fontSize: 14.h
+                                      fontSize: 13.h
                                     ),
                                   ),
                                   Text(
@@ -270,7 +269,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                       : "Nav noteikts",
                                     style: TextStyle(
                                      color: Colors.black54,
-                                      fontSize: 14.h
+                                      fontSize: 13.h
                                     ),
                                   ),
                                 ],

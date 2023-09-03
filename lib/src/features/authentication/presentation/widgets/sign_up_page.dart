@@ -249,7 +249,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 child: DropdownButton<String>(
                   menuMaxHeight: 350.h,
                   isExpanded: true,
-                  itemHeight: 60.h,
+                  itemHeight: 55.h,
                   borderRadius: BorderRadius.circular(20.w),
                   iconEnabledColor: blue,
                   dropdownColor: const Color.fromRGBO(241, 244, 251, 1),

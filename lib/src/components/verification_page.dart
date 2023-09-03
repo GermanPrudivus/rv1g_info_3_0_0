@@ -76,10 +76,10 @@ class _VerificationPageState extends State<VerificationPage> {
                        borderRadius: BorderRadius.circular(15.h),
                         color: Colors.grey.shade400,
                       ),
-                      height: 450.h,
+                      height: 400.h,
                     ),
                     CustomPaint(
-                      size: Size(240.w, 360.h), // Adjust the size as needed
+                      size: Size(240.w, 310.h), // Adjust the size as needed
                       painter: ScannerBorderPainter(),
                     ),
                   ],

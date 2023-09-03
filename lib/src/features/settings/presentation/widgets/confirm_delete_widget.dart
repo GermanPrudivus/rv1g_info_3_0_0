@@ -56,11 +56,11 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
                   ),
                 ],
               ),
-              SizedBox(height: 30.h),
+              SizedBox(height: 20.h),
               Text(
                 "Ieraksti savu pilnu vārdu, lai turpināt!",
                 style: TextStyle(
-                  fontSize: 14.h,
+                  fontSize: 14.w,
                   color: blue
                 ),
               ),
@@ -105,7 +105,7 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
               ),
 
               Padding(
-                  padding: EdgeInsets.only(top: 70.h, bottom: 20.h),
+                  padding: EdgeInsets.only(top: 60.h, bottom: 20.h),
                   child: ElevatedButton(
                     onPressed: () {
                       if(_formKey.currentState!.validate()){

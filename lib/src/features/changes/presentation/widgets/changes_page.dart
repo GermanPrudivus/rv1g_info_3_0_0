@@ -193,6 +193,16 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
                   ),
                   headerStyle: HeaderStyle(
                     formatButtonVisible: false,
+                    leftChevronIcon: Icon(
+                      Icons.chevron_left,
+                      color: blue,
+                      size: 20.h,
+                    ),
+                    rightChevronIcon: Icon(
+                      Icons.chevron_right,
+                      color: blue,
+                      size: 20.h,
+                    ),
                     titleCentered: true,
                       titleTextStyle: TextStyle(
                         fontSize: 15.h,

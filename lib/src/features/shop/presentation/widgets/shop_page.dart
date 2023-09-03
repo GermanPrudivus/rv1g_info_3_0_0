@@ -163,7 +163,7 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                                           borderRadius: BorderRadius.circular(10.w),
                                           child: items[index].media.isEmpty
                                             ? Container(
-                                                height: 200.h,
+                                                height: 150.h,
                                                 color: Colors.grey,
                                               )
                                             : Image.network(
@@ -194,7 +194,7 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                                       StyledText(
                                         text: items[index].shortText,
                                         style: TextStyle(
-                                          fontSize: 15.h,
+                                          fontSize: 14.h,
                                          color: Colors.black
                                         ),
                                         tags: {

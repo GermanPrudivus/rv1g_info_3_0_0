@@ -144,8 +144,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                   children: [
                     Text(
                       widget.edit
-                      ? "Rediģēt brīvprātīgo darbu:"
-                      : "Pievienot brīvprātīgo darbu:",
+                      ? "Rediģēt darbu:"
+                      : "Pievienot darbu:",
                       style: TextStyle(
                         fontSize: 22.h,
                       ),
@@ -240,19 +240,19 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                               });
                             },
                             child: Container(
-                              padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 10.w, right: 10.w),
+                              padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 5.w),
                               child: Text(
                                 DateFormat('dd.MM.yyyy. HH:mm', 'en_US')
                                   .format(startDate),
                                 style: TextStyle(
-                                  fontSize: 14.h,
+                                  fontSize: 13.h,
                                     fontWeight: FontWeight.bold
                                 ),
                               ),
                             )
                           ),
                           Text(
-                            ' : ',
+                            ':',
                             style: TextStyle(
                               fontSize: 14.h,
                               fontWeight: FontWeight.bold,
@@ -265,12 +265,12 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                               });
                             },
                             child: Container(
-                              padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 10.w, right: 10.w),
+                              padding: EdgeInsets.only(top: 10.h, bottom: 10.h, right: 5.w),
                               child: Text(
                                 DateFormat('dd.MM.yyyy. HH:mm', 'en_US')
                                   .format(endDate),
                                 style: TextStyle(
-                                  fontSize: 14.h,
+                                  fontSize: 13.h,
                                     fontWeight: FontWeight.bold
                                 ),
                               ),

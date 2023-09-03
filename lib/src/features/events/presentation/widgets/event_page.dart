@@ -149,12 +149,14 @@ class EventPage extends StatelessWidget {
                         fontSize: 14.h,
                       ),
                     ),
+                    SizedBox(width: 5.w),
                     Text(
-                      "  -  ",
+                      "-",
                       style: TextStyle(
                         fontSize: 14.h,
                       ),
                     ),
+                    SizedBox(width: 5.w),
                     Text(
                       DateFormat('dd.MM.yyyy. HH:mm', 'en_US')
                         .format(

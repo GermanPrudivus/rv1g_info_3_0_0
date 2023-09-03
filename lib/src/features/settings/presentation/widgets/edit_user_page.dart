@@ -109,7 +109,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 15.h),
+                    padding: EdgeInsets.only(top: 20.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -230,7 +230,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                     child: DropdownButton<String>(
                       menuMaxHeight: 350.h,
                       isExpanded: true,
-                      itemHeight: 60.h,
+                      itemHeight: 50.h,
                       borderRadius: BorderRadius.circular(20.w),
                       iconEnabledColor: blue,
                       dropdownColor: const Color.fromRGBO(241, 244, 251, 1),
@@ -353,7 +353,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
 
                   //botton
                   Padding(
-                    padding: EdgeInsets.only(top: 150.h),
+                    padding: EdgeInsets.only(top: 160.h),
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate() && dropdownValue != "Choose your class" && fullName.split(' ').length > 1) {
