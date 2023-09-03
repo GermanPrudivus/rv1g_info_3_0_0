@@ -65,7 +65,7 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
         title: Text(
           "Dalībnieku saraksts",
           style: TextStyle(
-            fontSize: 19.h,
+            fontSize: 20.w,
             color: blue,
             fontWeight: FontWeight.bold
           ),
@@ -77,9 +77,13 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
               Navigator.push(
                 context, 
                 MaterialPageRoute(
-                  builder: (context) => ScanTicketPage()
+                  builder: (context) => ScanTicketPage(scanner: widget.scanner)
                 )
-              );
+              ).whenComplete(() {
+                setState(() {
+                  getParticipants();
+                });
+              });
             },
             child: Container(
               color: Colors.transparent,
@@ -105,7 +109,7 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
                     child: Text(
                       "Nav dalībnieku",
                       style: TextStyle(
-                        fontSize: 16.h,
+                        fontSize: 16.w,
                         color: blue
                       ),
                     ),
@@ -123,7 +127,6 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
                       return Column(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(top: 10.h, bottom: 10.h),
                             padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 25.w, left: 25.w),
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -145,10 +148,10 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
-                                        fontSize: 16.h
+                                        fontSize: 17.w
                                       ),
                                     ),
-                                    SizedBox(height: 10.h),
+                                    SizedBox(height: 5.h),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment: MainAxisAlignment.start,
@@ -181,7 +184,7 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
-                                        fontSize: 14.h
+                                        fontSize: 16.w
                                       ),
                                     ),
                                   ],

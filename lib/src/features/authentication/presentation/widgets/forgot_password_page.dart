@@ -85,7 +85,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                       child: Text(
                         "Forgot\npassword?",
                         style: TextStyle(
-                          fontSize: 28.h,
+                          fontSize: 30.w,
                           color: blue,
                           fontWeight: FontWeight.bold,
                         )
@@ -102,7 +102,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                         child: Text(
                           "Don’t worry! It happens. Please enter the address associated with your account.",
                           style: TextStyle(
-                            fontSize: 15.h,
+                            fontSize: 15.w,
                             color: lightGrey,    
                           )
                         ),
@@ -116,13 +116,13 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                   child: TextFormField(
                     controller: emailController,
                     style: TextStyle(
-                      fontSize: 14.h,
+                      fontSize: 15.w,
                       color: blue,
                     ),
                     decoration: InputDecoration(
                       hintText: "Email",
                       hintStyle: TextStyle(
-                        fontSize: 14.h,
+                        fontSize: 15.w,
                         color: lightGrey,
                       ),
                       icon: const Icon(Icons.alternate_email),
@@ -161,7 +161,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                     child: Text(
                       "Send an email",
                       style: TextStyle(
-                        fontSize: 16.h,
+                        fontSize: 17.w,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

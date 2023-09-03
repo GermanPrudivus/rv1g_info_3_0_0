@@ -221,6 +221,33 @@ class EventRepository {
 
     return events;
   }
+
+  //ADD PARTICIPANT PAGE
+  Future<void> addParticipant(int userId, Event event) async {
+    await supabase
+      .from('participants')
+      .insert({
+        'user_id' : userId,
+        'event_id' : event.id,
+        'active' : false,
+      });
+    
+    await supabase
+      .from('tickets')
+      .insert({
+        'user_id' : userId,
+        'event_id' : event.id,
+        'key' : event.key,
+        'created_datetime' : DateTime.now().toIso8601String()
+      });
+
+    await supabase
+      .from('events')
+      .update({
+        'participant_quant' : event.participantQuant+1
+      })
+      .eq('id', event.id);
+  }
 }
 
 final eventRepositoryProvider = riverpod.Provider<EventRepository>((ref) {

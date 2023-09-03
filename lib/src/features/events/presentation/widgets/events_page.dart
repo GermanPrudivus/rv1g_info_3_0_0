@@ -79,7 +79,7 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                     child: Text(
                       "Nav pasākumu",
                       style: TextStyle(
-                        fontSize: 16.h,
+                        fontSize: 16.w,
                         color: blue
                       ),
                     ),
@@ -120,7 +120,7 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
-                                      fontSize: 18.h
+                                      fontSize: 20.w
                                     ),
                                   ),
                                 ],
@@ -148,7 +148,7 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                                   StyledText(
                                     text: events[index].shortText,
                                     style: TextStyle(
-                                      fontSize: 13.h,
+                                      fontSize: 14.w,
                                       color: Colors.black54,
                                     ),
                                     textAlign: TextAlign.start,
@@ -172,7 +172,7 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                                                 DateTime.parse(events[index].startDate)
                                               ),
                                             style: TextStyle(
-                                              fontSize: 12.h,
+                                              fontSize: 13.w,
                                             ),
                                           )
                                         ]

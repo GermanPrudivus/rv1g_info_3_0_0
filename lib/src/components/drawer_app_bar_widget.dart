@@ -44,7 +44,7 @@ class _DrawerAppBarWidgetState extends State<DrawerAppBarWidget> {
       title: Text(
         widget.title,
         style: TextStyle(
-          fontSize: 19.h,
+          fontSize: 20.w,
           color: blue,
           fontWeight: FontWeight.bold
         ),

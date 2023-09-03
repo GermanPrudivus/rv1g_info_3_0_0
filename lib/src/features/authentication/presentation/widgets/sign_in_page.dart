@@ -71,7 +71,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     child: Text(
                       "Login",
                       style: TextStyle(
-                        fontSize: 28.h,
+                        fontSize: 30.w,
                         color: blue,
                         fontWeight: FontWeight.bold,
                       )
@@ -87,13 +87,13 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                 child: TextFormField(
                   controller: emailController,
                   style: TextStyle(
-                    fontSize: 14.h,
+                    fontSize: 15.w,
                     color: blue,
                   ),
                   decoration: InputDecoration(
                     hintText: "Email",
                     hintStyle: TextStyle(
-                      fontSize: 14.h,
+                      fontSize: 15.w,
                       color: lightGrey,
                     ),
                     icon: const Icon(Icons.alternate_email),
@@ -116,13 +116,13 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                 child: TextFormField(
                   controller: passwordController,
                   style: TextStyle(
-                    fontSize: 14.h,
+                    fontSize: 15.w,
                     color: blue,
                   ),
                   decoration: InputDecoration(
                     hintText: "Password",
                     hintStyle: TextStyle(
-                      fontSize: 14.h,
+                      fontSize: 15.w,
                       color: lightGrey,
                     ),
                     icon: const Icon(Icons.lock_outline),
@@ -179,7 +179,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                           "Forgot password?",
                           style: TextStyle(
                             color: blue, 
-                            fontSize: 13.h
+                            fontSize: 14.w
                             ),
                         )
                       ),
@@ -227,7 +227,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   child: Text(
                     "Login",
                     style: TextStyle(
-                      fontSize: 16.h,
+                      fontSize: 17.w,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -251,7 +251,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     ),
                     Text(
                       "OR",
-                        style: TextStyle(fontSize: 14.h, color: lightGrey),
+                        style: TextStyle(fontSize: 15.w, color: lightGrey),
                     ),
                     Expanded(
                       child: Padding(
@@ -273,7 +273,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   children: [
                     Text(
                       "New to school?",
-                      style: TextStyle(fontSize: 14.h, color: lightGrey),
+                      style: TextStyle(fontSize: 15.w, color: lightGrey),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -291,7 +291,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                         alignment: Alignment.center,
                         child: Text(
                           "Register",
-                          style: TextStyle(color: blue, fontSize: 14.h),
+                          style: TextStyle(color: blue, fontSize: 15.w),
                         )
                       ),
                     ),

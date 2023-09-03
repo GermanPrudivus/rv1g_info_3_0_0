@@ -19,32 +19,13 @@ class ScannerService {
     return await scannerRepository.getParticipants(eventId);
   }
 
-  /*Future<String> updateProfilePicUrl(int id, String email, 
-    String profilePicPath, String avatarUrl) async {
-
-    await settingsRepository.deleteImage(avatarUrl, 'avatars');
-    return await settingsRepository.updateProfilePicUrl(id, email, profilePicPath);
+  Future<void> activateParticipant(int userId, int eventId) async {
+    return await scannerRepository.activateParticipant(userId, eventId);
   }
 
-  Future<void> updateUser(int id, String fullName, int formId, String newPassword) async {
-    await settingsRepository.updateUser(id, fullName, formId);
-    if(newPassword.isNotEmpty){
-      await settingsRepository.updatePassword(id, newPassword);
-    }
+  Future<List> getParticipant(int userId, int eventId) async {
+    return await scannerRepository.getParticipant(userId, eventId);
   }
-
-  Future<List<Role>> getUserRoles(int id) async {
-    return await settingsRepository.getUserRoles(id);
-  }
-
-  Future<void> logout() async {
-    return await settingsRepository.logout();
-  }
-
-  Future<void> deleteUser(String avatarUrl) async {
-    await settingsRepository.deleteImage(avatarUrl, 'avatars');
-    await settingsRepository.deleteUser();
-  }*/
 }
 
 final scannerServiceProvider = Provider<ScannerService>((ref) {

@@ -124,7 +124,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       "Sign up",
                       style: TextStyle(
                         color: blue,
-                        fontSize: 28.h,
+                        fontSize: 30.w,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -186,13 +186,13 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 child: TextFormField(
                   controller: emailController,
                   style: TextStyle(
-                    fontSize: 14.h,
+                    fontSize: 15.w,
                     color: blue,
                   ),
                   decoration: InputDecoration(
                     hintText: "Email",
                     hintStyle: TextStyle(
-                      fontSize: 14.h,
+                      fontSize: 15.w,
                       color: lightGrey,
                     ),
                     icon: const Icon(Icons.alternate_email),
@@ -217,13 +217,13 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 child: TextFormField(
                   controller: fullNameController,
                   style: TextStyle(
-                    fontSize: 14.h,
+                    fontSize: 15.w,
                     color: blue,
                   ),
                   decoration: InputDecoration(
                     hintText: "Full Name",
                     hintStyle: TextStyle(
-                      fontSize: 14.h,
+                      fontSize: 15.w,
                       color: lightGrey,
                     ),
                     icon: const Icon(Icons.person_outline),
@@ -256,7 +256,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   value: dropdownValue,
                   elevation: 60.h.toInt(),
                   style: TextStyle(
-                    fontSize: 14.h,
+                    fontSize: 15.w,
                     color: blue,
                   ),
                   underline: Container(
@@ -290,13 +290,13 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 child: TextFormField(
                   controller: passwordController,
                   style: TextStyle(
-                    fontSize: 14.h,
+                    fontSize: 15.w,
                     color: blue,
                   ),
                   decoration: InputDecoration(
                     hintText: "Password",
                     hintStyle: TextStyle(
-                      fontSize: 14.h,
+                      fontSize: 15.w,
                       color: lightGrey,
                     ),
                     icon: const Icon(Icons.lock_outline),
@@ -339,13 +339,13 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 child: TextFormField(
                   controller: repeatPasswordController,
                   style: TextStyle(
-                    fontSize: 14.h,
+                    fontSize: 15.w,
                     color: blue,
                   ),
                   decoration: InputDecoration(
                     hintText: "Repeat Password",
                     hintStyle: TextStyle(
-                      fontSize: 14.h,
+                      fontSize: 15.w,
                       color: lightGrey,
                     ),
                     icon: const Icon(Icons.lock_outline),
@@ -405,7 +405,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   child: Text(
                     "Sign Up",
                     style: TextStyle(
-                      fontSize: 16.h,
+                      fontSize: 17.w,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -419,7 +419,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   children: [
                     Text(
                       "Already have a profile?",
-                      style: TextStyle(fontSize: 14.h, color: lightGrey),
+                      style: TextStyle(fontSize: 15.w, color: lightGrey),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -432,7 +432,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         alignment: Alignment.center,
                         child: Text(
                           "Login",
-                          style: TextStyle(color: blue, fontSize: 14.h),
+                          style: TextStyle(color: blue, fontSize: 15.w),
                         )
                       ),
                     ),

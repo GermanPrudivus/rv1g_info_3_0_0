@@ -24,7 +24,6 @@ class VolunteeringJobsPage extends ConsumerStatefulWidget {
 }
 
 class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
-
   List<Job> jobs = [];
 
   @override
@@ -75,7 +74,7 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                     child: Text(
                       "Nav brīvprātīgo darbu",
                       style: TextStyle(
-                        fontSize: 16.h,
+                        fontSize: 16.w,
                         color: blue
                       ),
                     ),
@@ -128,7 +127,7 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                                       color: enabled
                                         ? Colors.black
                                         : Colors.black45,
-                                      fontSize: 18.h
+                                      fontSize: 18.w
                                     ),
                                   ),
                                   SizedBox(height: 6.h),
@@ -145,7 +144,7 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                                                 DateTime.parse(jobs[index].startDate)
                                               ),
                                             style: TextStyle(
-                                              fontSize: 14.h,
+                                              fontSize: 15.w,
                                               color: enabled
                                                 ? Colors.black
                                                 : Colors.black45

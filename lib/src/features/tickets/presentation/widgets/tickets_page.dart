@@ -19,17 +19,7 @@ class TicketsPage extends ConsumerStatefulWidget {
 
 class _TicketsPageState extends ConsumerState<TicketsPage> {
 
-  List<Ticket> tickets = [
-    Ticket(
-      id: 1, 
-      userId: 3, 
-      title: "Zaļumballe", 
-      eventId: 2, 
-      key: 12232040248249, 
-      endDateTime: DateTime(2023, 9, 14).toIso8601String(), 
-      createdDateTime: DateTime.now().toIso8601String()
-    )
-  ];
+  List<Ticket> tickets = [];
   
   @override
   void initState() {
@@ -45,7 +35,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
       .getTickets()
       .then((value) {
         setState(() {
-          tickets = tickets + value!;
+          tickets = value!;
         });
       });
   }
@@ -72,7 +62,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                       "Nav biļetes",
                       style: TextStyle(
                         color: blue,
-                        fontSize: 16.h
+                        fontSize: 16.w
                       ),
                     )
                   ),
@@ -121,7 +111,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black,
-                                          fontSize: 18.h
+                                          fontSize: 20.w
                                         ),
                                       ),
                                       SizedBox(height: 7.5.h),
@@ -133,7 +123,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                               Text(
                                                 'Biļete derīga:',
                                                 style: TextStyle(
-                                                  fontSize: 14.h,
+                                                  fontSize: 15.w,
                                                   fontWeight: FontWeight.w500
                                                 ),
                                               ),
@@ -148,7 +138,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                                       Text(
                                                         "No:",
                                                         style: TextStyle(
-                                                          fontSize: 12.h,
+                                                          fontSize: 13.w,
                                                        ),
                                                       ),
                                                       SizedBox(height: 5.h,),
@@ -172,7 +162,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                                       Text(
                                                         "Līdz:",
                                                         style: TextStyle(
-                                                          fontSize: 12.h,
+                                                          fontSize: 13.w,
                                                        ),
                                                       ),
                                                       SizedBox(height: 5.h,),
@@ -199,11 +189,12 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
 
                                   Column(
                                     children: [
-                                      Icon(
-                                        Icons.chevron_right,
-                                        size: 26.h,
-                                        color: blue,
-                                      )
+                                      if(enabled)
+                                        Icon(
+                                          Icons.chevron_right,
+                                          size: 26.h,
+                                          color: blue,
+                                        )
                                     ],
                                   )
                                 ],
@@ -220,9 +211,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                 + ticket.eventId.toString() +" "
                                 + ticket.title +" "
                                 + ticket.key.toString() +" "
-                                + ticket.endDateTime;
-
-                          print(data);
+                                + ticket.endDateTime.toString();
                             
                           if(enabled){
                             showDialog(

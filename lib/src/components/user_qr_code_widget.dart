@@ -39,7 +39,7 @@ class UserQRCodeWidget extends StatelessWidget {
                   Text(
                     "Tava profila QR kods:",
                     style: TextStyle(
-                      fontSize: 18.h
+                      fontSize: 18.w
                     ),
                   ),
                 ],
@@ -48,7 +48,7 @@ class UserQRCodeWidget extends StatelessWidget {
               Text(
                 "Rādi to, lai nopirkt biļeti",
                 style: TextStyle(
-                  fontSize: 14.h,
+                  fontSize: 15.w,
                   color: blue
                 ),
               ),

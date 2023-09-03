@@ -98,7 +98,7 @@ class EventPage extends StatelessWidget {
                   context, 
                   MaterialPageRoute(
                     builder: (context) {
-                      return AddParticipantPage();
+                      return AddParticipantPage(event: event);
                     }
                   )
                 );
@@ -130,7 +130,7 @@ class EventPage extends StatelessWidget {
                         event.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 24.h
+                          fontSize: 24.w
                         ),
                       ),
                     )
@@ -146,14 +146,14 @@ class EventPage extends StatelessWidget {
                           DateTime.parse(event.startDate)
                         ),
                       style: TextStyle(
-                        fontSize: 14.h,
+                        fontSize: 15.w,
                       ),
                     ),
                     SizedBox(width: 5.w),
                     Text(
                       "-",
                       style: TextStyle(
-                        fontSize: 14.h,
+                        fontSize: 15.w,
                       ),
                     ),
                     SizedBox(width: 5.w),
@@ -163,7 +163,7 @@ class EventPage extends StatelessWidget {
                           DateTime.parse(event.endDate)
                         ),
                       style: TextStyle(
-                        fontSize: 14.h,
+                        fontSize: 15.w,
                       ),
                     ),
                   ],
@@ -182,7 +182,7 @@ class EventPage extends StatelessWidget {
                       StyledText(
                         text: formatedText(event.description),
                         style: TextStyle(
-                          fontSize: 15.h,
+                          fontSize: 16.w,
                         ),
                         textAlign: TextAlign.start,
                         tags: {

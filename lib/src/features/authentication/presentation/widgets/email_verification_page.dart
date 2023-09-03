@@ -46,7 +46,7 @@ class EmailVerificationPage extends StatelessWidget {
                   child: Text(
                     "Email\nverification",
                     style: TextStyle(
-                      fontSize: 28.h,
+                      fontSize: 30.w,
                       color: blue,
                       fontWeight: FontWeight.bold,
                     )
@@ -63,7 +63,7 @@ class EmailVerificationPage extends StatelessWidget {
                     child: Text(
                       "Verify your email to secure your account and access exclusive app features.",
                       style: TextStyle(
-                        fontSize: 16.h,
+                        fontSize: 16.w,
                         color: lightGrey,    
                       )
                     ),

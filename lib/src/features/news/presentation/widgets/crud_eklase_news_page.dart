@@ -147,7 +147,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                       ? "Rediģēt ziņu:"
                       : "Pievienot ziņu:",
                       style: TextStyle(
-                        fontSize: 24.h,
+                        fontSize: 24.w,
                       ),
                     ),
                   ],

@@ -48,6 +48,7 @@ class ScannerRepository {
         Scanner(
           id: res[i]['id'],
           title: res[i]['title'], 
+          key: res[i]['key'],
           participantQuant: res[i]['participant_quant'], 
           participants: participants, 
           endedDate: res[i]['end_date']
@@ -88,6 +89,40 @@ class ScannerRepository {
     }
 
     return participants;
+  }
+
+  Future<void> activateParticipant(int userId, int eventId) async {
+    await supabase
+      .from('participants')
+      .update({
+        'active' : true
+      })
+      .eq('user_id', userId)
+      .eq('event_id', eventId);
+  }
+
+  Future<List> getParticipant(int userId, int eventId) async {
+    final user = await supabase
+      .from('users')
+      .select()
+      .eq('id', userId);
+    
+    final form = await supabase
+      .from('forms')
+      .select()
+      .eq('id', user[0]['form_id']);
+    
+    final res = await supabase
+      .from('participants')
+      .select()
+      .eq('user_id', userId)
+      .eq('event_id', eventId);
+    
+    return [
+      '${user[0]['name']} ${user[0]['surname']}',
+      '${form[0]['number']}.${form[0]['letter']}',
+      res[0]['active']
+    ];
   }
 }
 

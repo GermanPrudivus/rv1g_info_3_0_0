@@ -104,10 +104,10 @@ class _ScannersPageState extends ConsumerState<ScannersPage> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black,
-                                            fontSize: 18.h
+                                            fontSize: 20.w
                                           ),
                                         ),
-                                        SizedBox(height: 5.h),
+                                        SizedBox(height: 2.5.h),
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment: MainAxisAlignment.start,
@@ -118,7 +118,7 @@ class _ScannersPageState extends ConsumerState<ScannersPage> {
                                                 Text(
                                                   'Dalībnieku skaits: ${scanners[index].participantQuant}',
                                                   style: TextStyle(
-                                                    fontSize: 14.h,
+                                                    fontSize: 15.w,
                                                   ),
                                                 )
                                               ]

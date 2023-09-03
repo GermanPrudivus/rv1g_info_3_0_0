@@ -35,7 +35,7 @@ class TicketQRCodeWidget extends StatelessWidget {
                   Text(
                     "Biļetes QR kods:",
                     style: TextStyle(
-                      fontSize: 18.h
+                      fontSize: 20.w
                     ),
                   ),
                 ],

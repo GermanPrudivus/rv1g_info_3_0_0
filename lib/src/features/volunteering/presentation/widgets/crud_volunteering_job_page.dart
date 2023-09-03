@@ -147,7 +147,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                       ? "Rediģēt darbu:"
                       : "Pievienot darbu:",
                       style: TextStyle(
-                        fontSize: 22.h,
+                        fontSize: 24.w,
                       ),
                     ),
                   ],
@@ -163,7 +163,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                         child: Text(
                           "Nosaukums",
                           style: TextStyle(
-                            fontSize: 14.h,
+                            fontSize: 14.w,
                           ),
                         ),
                       ),
@@ -171,7 +171,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                         initialValue: title,
                         textInputAction: TextInputAction.next,
                         style: TextStyle(
-                          fontSize: 14.h
+                          fontSize: 15.w
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -191,7 +191,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti amata nosaukumu',
                           hintStyle: TextStyle(
-                            fontSize: 13.h
+                            fontSize: 14.w
                           )
                         ),
                         onChanged: (value) {
@@ -212,7 +212,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                     Text(
                       "Darba ilgums:",
                       style: TextStyle(
-                        fontSize: 14.h
+                        fontSize: 14.w
                       ),
                     )
                   ],
@@ -245,7 +245,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                                 DateFormat('dd.MM.yyyy. HH:mm', 'en_US')
                                   .format(startDate),
                                 style: TextStyle(
-                                  fontSize: 13.h,
+                                  fontSize: 14.w,
                                     fontWeight: FontWeight.bold
                                 ),
                               ),
@@ -254,7 +254,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                           Text(
                             ':',
                             style: TextStyle(
-                              fontSize: 14.h,
+                              fontSize: 14.w,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -270,7 +270,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                                 DateFormat('dd.MM.yyyy. HH:mm', 'en_US')
                                   .format(endDate),
                                 style: TextStyle(
-                                  fontSize: 13.h,
+                                  fontSize: 14.w,
                                     fontWeight: FontWeight.bold
                                 ),
                               ),
@@ -291,7 +291,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                                     ? 'No:'
                                     : 'Līdz:',
                                   style: TextStyle(
-                                    fontSize: 13.h,
+                                    fontSize: 14.w,
                                   ),
                                 ),
                               ],
@@ -333,7 +333,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                         child: Text(
                           "Teksts",
                           style: TextStyle(
-                            fontSize: 14.h,
+                            fontSize: 14.w,
                           ),
                         ),
                       ),
@@ -341,7 +341,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                         initialValue: description,
                         textInputAction: TextInputAction.next,
                         style: TextStyle(
-                          fontSize: 14.h
+                          fontSize: 15.w
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -361,7 +361,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti darba aprakstu',
                           hintStyle: TextStyle(
-                            fontSize: 14.h
+                            fontSize: 14.w
                           )
                         ),
                         minLines: 25,
@@ -382,7 +382,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                   child: Text(
                     '<b></b> - lai uztaisītu bold tekstu\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu italic tekstu\n<link href="your_link"></link> - lai pievienotu saiti',
                     style: TextStyle(
-                      fontSize: 14.h
+                      fontSize: 15.w
                     ),
                   ),
                 ),
@@ -390,7 +390,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                 Text(
                   "Pievienot attēlu:",
                   style: TextStyle(
-                    fontSize: 14.h
+                    fontSize: 15.w
                   ),
                 ),
                 
@@ -461,14 +461,14 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                       children: [
                         Icon(
                           Icons.add,
-                          size: 30.h,
+                          size: 30.w,
                           color: Colors.black38,
                         ),
                         SizedBox(width: 5.w),
                         Text(
                           "Pievienot attēlu",
                           style: TextStyle(
-                            fontSize: 14.h,
+                            fontSize: 15.w,
                             color: Colors.black45
                           ),
                         )
@@ -547,7 +547,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                         ? "Rediģēt darbu"
                         : "Pievienot darbu",
                       style: TextStyle(
-                        fontSize: 16.h,
+                        fontSize: 17.w,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

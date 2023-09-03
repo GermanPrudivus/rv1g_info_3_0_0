@@ -54,6 +54,10 @@ class EventService {
     return await eventRepository.getEvents();
   }
 
+  //ADD PARTICIPANT PAGE
+  Future<void> addParticipant(int userId, Event event) async {
+    return await eventRepository.addParticipant(userId, event);
+  }
 }
 
 final eventServiceProvider = Provider<EventService>((ref) {

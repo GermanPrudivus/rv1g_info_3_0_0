@@ -128,7 +128,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 Text(
                   fullName,
                   style: TextStyle(
-                    fontSize: 16.h,
+                    fontSize: 17.w,
                     fontWeight: FontWeight.bold
                   ),
                 ),
@@ -147,7 +147,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         "Pasākumi",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 18.h,
+                          fontSize: 20.w,
                           fontWeight: FontWeight.bold
                         ),
                       ),
@@ -177,7 +177,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         "Brīvpratīgie",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 18.h,
+                          fontSize: 20.w,
                           fontWeight: FontWeight.bold
                         ),
                       ),
@@ -204,7 +204,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         "Biļetes",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 18.h,
+                          fontSize: 20.w,
                           fontWeight: FontWeight.bold
                         ),
                       ),
@@ -236,7 +236,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           color: enabled
                             ? Colors.black
                             : Colors.grey,
-                          fontSize: 18.h,
+                          fontSize: 20.w,
                           fontWeight: FontWeight.bold
                         ),
                       ),
@@ -268,7 +268,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         "Iestatījumi",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 18.h,
+                          fontSize: 20.w,
                           fontWeight: FontWeight.bold
                         ),
                       ),

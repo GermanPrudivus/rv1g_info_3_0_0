@@ -105,7 +105,7 @@ class VolunteeringJobPage extends StatelessWidget {
                         job.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 24.h
+                          fontSize: 24.w
                         ),
                       ),
                     )
@@ -121,22 +121,24 @@ class VolunteeringJobPage extends StatelessWidget {
                           DateTime.parse(job.startDate)
                         ),
                       style: TextStyle(
-                        fontSize: 14.h,
+                        fontSize: 15.w,
                       ),
                     ),
+                    SizedBox(width: 5.w),
                     Text(
-                      "  -  ",
+                      "-",
                       style: TextStyle(
-                        fontSize: 14.h,
+                        fontSize: 15.w,
                       ),
                     ),
+                    SizedBox(width: 5.w),
                     Text(
                       DateFormat('dd.MM.yyyy. HH:mm', 'en_US')
                         .format(
                           DateTime.parse(job.endDate)
                         ),
                       style: TextStyle(
-                        fontSize: 14.h,
+                        fontSize: 15.w,
                       ),
                     ),
                   ],
@@ -155,7 +157,7 @@ class VolunteeringJobPage extends StatelessWidget {
                       StyledText(
                         text: formatedText(job.description),
                         style: TextStyle(
-                          fontSize: 15.h,
+                          fontSize: 16.w,
                         ),
                         textAlign: TextAlign.start,
                         tags: {

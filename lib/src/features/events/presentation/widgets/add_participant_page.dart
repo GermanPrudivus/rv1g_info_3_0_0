@@ -1,17 +1,66 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:rv1g_info/src/components/scanner_border_painter.dart';
+import 'package:rv1g_info/src/features/events/presentation/widgets/confirm_widget.dart';
 
 import '../../../../constants/theme_colors.dart';
+import '../../doamain/models/event.dart';
 
 class AddParticipantPage extends StatefulWidget {
-  const AddParticipantPage({super.key});
+  final Event event;
+
+  const AddParticipantPage({
+    required this.event,
+    super.key
+  });
 
   @override
   State<AddParticipantPage> createState() => _AddParticipantPageState();
 }
 
 class _AddParticipantPageState extends State<AddParticipantPage> {
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  String result = "";
+  QRViewController? controller;
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    if (Platform.isAndroid) {
+      controller!.pauseCamera();
+    } else if (Platform.isIOS) {
+      controller!.resumeCamera();
+    }
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
+
+  void _onQRViewCreated(QRViewController controller) {
+    this.controller = controller;
+    controller.scannedDataStream.listen((scanData) {
+      setState(() {
+        if(result != scanData.code.toString()){
+          print(scanData.code.toString());
+          result = scanData.code.toString();
+          showDialog(
+            context: context, 
+            builder: (context) => ConfirmWidget(qrinfo: result, event: widget.event),
+            barrierDismissible: false,
+          ).whenComplete(() {
+            result = "";
+          });
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +93,7 @@ class _AddParticipantPageState extends State<AddParticipantPage> {
                     Text(
                       "Reģistrēt jaunu dalībnieku:",
                       style: TextStyle(
-                        fontSize: 22.h,
+                        fontSize: 22.w,
                       ),
                     ),
                   ],
@@ -53,7 +102,7 @@ class _AddParticipantPageState extends State<AddParticipantPage> {
                 Text(
                   "Ievietojiet QR kodu kvadrāta laukā",
                   style: TextStyle(
-                    fontSize: 16.h,
+                    fontSize: 16.w,
                     color: blue
                   ),
                 ),
@@ -63,10 +112,14 @@ class _AddParticipantPageState extends State<AddParticipantPage> {
                     Container(
                       margin: EdgeInsets.only(top: 10.h, bottom: 10.h),
                       decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(15.h),
-                        color: Colors.grey.shade400,
+                        borderRadius: BorderRadius.circular(15.h),
+                        color: Colors.white,
                       ),
                       height: 450.h,
+                      child: QRView(
+                        key: qrKey,
+                        onQRViewCreated: _onQRViewCreated,
+                      ),
                     ),
                     CustomPaint(
                       size: Size(240.w, 240.h), // Adjust the size as needed
