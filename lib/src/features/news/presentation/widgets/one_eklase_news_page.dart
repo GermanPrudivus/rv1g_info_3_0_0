@@ -120,7 +120,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                         news.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 24.h
+                          fontSize: 24.w
                         ),
                       ),
                     )
@@ -136,7 +136,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                           DateTime.parse(news.createdDateTime)
                         ),
                       style: TextStyle(
-                        fontSize: 14.h,
+                        fontSize: 15.w,
                       ),
                     ),
                   ],
@@ -155,7 +155,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                       StyledText(
                         text: formatedText(news.text),
                         style: TextStyle(
-                          fontSize: 15.h,
+                          fontSize: 16.w,
                         ),
                         textAlign: TextAlign.start,
                         tags: {
@@ -181,7 +181,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                       child: Text(
                         news.author,
                         style: TextStyle(
-                          fontSize: 14.5.h,
+                          fontSize: 15.w,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),

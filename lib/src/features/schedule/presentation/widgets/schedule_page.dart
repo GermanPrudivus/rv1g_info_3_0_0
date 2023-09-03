@@ -274,7 +274,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                       "Verificē savu profilu,\nlai redzētu stundu sarakstu!",
                       style: TextStyle(
                         color: blue,
-                        fontSize: 18.h,
+                        fontSize: 18.w,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
@@ -301,7 +301,7 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                       child: Text(
                         "Verificēties",
                         style: TextStyle(
-                          fontSize: 15.h,
+                          fontSize: 16.w,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

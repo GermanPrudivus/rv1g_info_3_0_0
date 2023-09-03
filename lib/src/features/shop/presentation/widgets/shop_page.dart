@@ -187,14 +187,14 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black,
-                                          fontSize: 18.h
+                                          fontSize: 18.w
                                         ),
                                       ),
                                       SizedBox(height: 5.h),
                                       StyledText(
                                         text: items[index].shortText,
                                         style: TextStyle(
-                                          fontSize: 14.h,
+                                          fontSize: 14.w,
                                          color: Colors.black
                                         ),
                                         tags: {
@@ -214,7 +214,7 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                                               Text(
                                                 items[index].price,
                                                 style: TextStyle(
-                                                  fontSize: 15.h,
+                                                  fontSize: 15.w,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black
                                                 ),

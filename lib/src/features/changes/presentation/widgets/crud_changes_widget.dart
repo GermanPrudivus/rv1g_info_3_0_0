@@ -82,7 +82,7 @@ class _CRUDChangesWidgetState extends ConsumerState<CRUDChangesWidget> {
                   Text(
                     "Pievienot jaunu attēlu:",
                     style: TextStyle(
-                      fontSize: 18.h
+                      fontSize: 18.w
                     ),
                   )
                 ],
@@ -101,14 +101,14 @@ class _CRUDChangesWidgetState extends ConsumerState<CRUDChangesWidget> {
                         children: [
                           Icon(
                             Icons.add,
-                            size: 30.h,
+                            size: 30.w,
                             color: Colors.black38,
                           ),
                           SizedBox(width: 5.w),
                           Text(
                             "Pievienot attēlu",
                             style: TextStyle(
-                              fontSize: 14.h,
+                              fontSize: 15.w,
                               color: Colors.black45
                             ),
                           )
@@ -166,7 +166,7 @@ class _CRUDChangesWidgetState extends ConsumerState<CRUDChangesWidget> {
                     child: Text(
                       "Atcelt",
                       style: TextStyle(
-                        fontSize: 15.h,
+                        fontSize: 15.w,
                         color: blue,
                         fontWeight: FontWeight.bold,
                       ),
@@ -193,7 +193,7 @@ class _CRUDChangesWidgetState extends ConsumerState<CRUDChangesWidget> {
                     child: Text(
                       "Saglabāt",
                       style: TextStyle(
-                        fontSize: 15.h,
+                        fontSize: 15.w,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

@@ -119,7 +119,7 @@ class _ItemPageState extends State<ItemPage> {
                         item.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 24.h
+                          fontSize: 24.w
                         ),
                       ),
                     )
@@ -141,7 +141,7 @@ class _ItemPageState extends State<ItemPage> {
                       StyledText(
                         text: formatedText(item.description),
                         style: TextStyle(
-                          fontSize: 15.h,
+                          fontSize: 16.w,
                         ),
                         textAlign: TextAlign.start,
                         tags: {
@@ -164,7 +164,7 @@ class _ItemPageState extends State<ItemPage> {
                             child: Text(
                               item.price,
                               style: TextStyle(
-                                fontSize: 17.h,
+                                fontSize: 17.w,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),

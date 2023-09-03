@@ -187,7 +187,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                                 child: Text(
                                                   authorName,
                                                   style: TextStyle(
-                                                    fontSize: 14.h,
+                                                    fontSize: 15.w,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
@@ -196,15 +196,15 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                               ClipOval(
                                                 child: Container(
                                                   color: Colors.grey,
-                                                  height: 3.h,
-                                                  width: 3.h,
+                                                  height: 3.w,
+                                                  width: 3.w,
                                                 ),
                                               ),
                                               SizedBox(width: 7.5.w),
                                               Text(
                                                 differenceInDates(DateTime.now(), created),
                                                 style: TextStyle(
-                                                  fontSize: 13.h,
+                                                  fontSize: 15.w,
                                                   color: Colors.grey,
                                                 ),
                                               ),
@@ -248,7 +248,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                       StyledText(
                                         text: json.decode(text[i])['text'],
                                         style: TextStyle(
-                                          fontSize: 14.h,
+                                          fontSize: 15.w,
                                         ),
                                         textAlign: TextAlign.start,
                                         tags: {
@@ -287,7 +287,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                           child: Text(
                                             poll.title,
                                             style: TextStyle(
-                                              fontSize: 14.h,
+                                              fontSize: 15.w,
                                               fontWeight: FontWeight.bold
                                             ),
                                           ),
@@ -306,7 +306,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                                   child: Text(
                                                     answersForNews[i].answer,
                                                     style: TextStyle(
-                                                      fontSize: 13.h
+                                                      fontSize: 14.w
                                                     ),
                                                   ),
                                                 ),
@@ -319,12 +319,12 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                         votedBackgroundColor: Colors.white,
                                         leadingVotedProgessColor: transparentLightGrey,
                                         votedPercentageTextStyle: TextStyle(
-                                          fontSize: 14.h,
+                                          fontSize: 14.w,
                                           color: Colors.black
                                         ),
                                         votesText: "nobalsoja",
                                         votesTextStyle: TextStyle(
-                                          fontSize: 13.h,
+                                          fontSize: 13.w,
                                           fontWeight: FontWeight.bold
                                         ),
                                         metaWidget: Row(
@@ -333,8 +333,8 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                             ClipOval(
                                               child: Container(
                                                 color: Colors.black,
-                                                height: 3.h,
-                                                width: 3.h,
+                                                height: 2.5.w,
+                                                width: 2.5.w,
                                               ),
                                             ),
                                             SizedBox(width: 7.5.w),
@@ -343,7 +343,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                                 ? "${differenceInDates(pollEnd, DateTime.now())} palika nobalsot"
                                                 : "balsošana beidzās",
                                               style: TextStyle(
-                                                fontSize: 13.h,
+                                                fontSize: 13.w,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold
                                               ),

@@ -179,7 +179,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                       ? "Rediģēt ziņu:"
                       : "Pievienot ziņu:",
                       style: TextStyle(
-                        fontSize: 22.h,
+                        fontSize: 24.w,
                       ),
                     ),
                   ],
@@ -195,7 +195,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                         child: Text(
                           "Teksts",
                           style: TextStyle(
-                            fontSize: 13.h,
+                            fontSize: 14.w,
                           ),
                         ),
                       ),
@@ -203,7 +203,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                         initialValue: text,
                         textInputAction: TextInputAction.next,
                         style: TextStyle(
-                          fontSize: 14.h
+                          fontSize: 15.w
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -244,7 +244,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                   child: Text(
                     '<b></b> - lai uztaisītu bold tekstu\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu italic tekstu\n<link href="your_link"></link> - lai pievienotu saiti',
                     style: TextStyle(
-                      fontSize: 14.h
+                      fontSize: 15.w
                     ),
                   ),
                 ),
@@ -276,7 +276,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                         Text(
                           "Piestiprināt ziņu augšā",
                           style: TextStyle(
-                            fontSize: 14.h,
+                            fontSize: 15.w,
                           ),
                         )
                       ],
@@ -289,7 +289,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                     ? "Rediģēt aptauju:"
                     : "Peivienot aptauju:",
                   style: TextStyle(
-                    fontSize: 14.h
+                    fontSize: 15.w
                   ),
                 ),
 
@@ -297,7 +297,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                   Padding(
                     padding: EdgeInsets.only(top: 10.h, bottom: 15.h),
                     child: Container(
-                      height: 480.h,
+                      height: 530.w,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.h),
                         color: Colors.white,
@@ -322,7 +322,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                         initialValue: title,
                                         textInputAction: TextInputAction.next,
                                         style: TextStyle(
-                                          fontSize: 13.h
+                                          fontSize: 14.w
                                         ),
                                         decoration: InputDecoration(
                                           isDense: true,
@@ -413,7 +413,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                       initialValue: answer1,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
-                                        fontSize: 13.h
+                                        fontSize: 14.w
                                       ),
                                       decoration: InputDecoration(
                                         isDense: true,
@@ -434,7 +434,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                         floatingLabelBehavior: FloatingLabelBehavior.always,
                                         hintText: '1. Atbilde',
                                         hintStyle: TextStyle(
-                                          fontSize: 13.h
+                                          fontSize: 14.w
                                         )
                                       ),
                                       cursorColor: blue,
@@ -456,7 +456,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                       initialValue: answer2,
                                       textInputAction: TextInputAction.next,
                                       style: TextStyle(
-                                        fontSize: 13.h
+                                        fontSize: 14.w
                                       ),
                                       decoration: InputDecoration(
                                         isDense: true,
@@ -477,7 +477,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                         floatingLabelBehavior: FloatingLabelBehavior.always,
                                         hintText: '2. Atbilde',
                                         hintStyle: TextStyle(
-                                          fontSize: 13.h
+                                          fontSize: 14.w
                                         )
                                       ),
                                       cursorColor: blue,
@@ -501,7 +501,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                   initialValue: answer3,
                                   textInputAction: TextInputAction.next,
                                   style: TextStyle(
-                                    fontSize: 13.h
+                                    fontSize: 14.w
                                   ),
                                   decoration: InputDecoration(
                                     isDense: true,
@@ -522,7 +522,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                     floatingLabelBehavior: FloatingLabelBehavior.always,
                                     hintText: '3. Atbilde (opcionāli)',
                                     hintStyle: TextStyle(
-                                      fontSize: 13.h
+                                      fontSize: 14.w
                                     )
                                   ),
                                   cursorColor: blue,
@@ -538,7 +538,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                   initialValue: answer4,
                                   textInputAction: TextInputAction.next,
                                   style: TextStyle(
-                                    fontSize: 13.h
+                                    fontSize: 14.w
                                   ),
                                   decoration: InputDecoration(
                                     isDense: true,
@@ -559,7 +559,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                     floatingLabelBehavior: FloatingLabelBehavior.always,
                                     hintText: '4. Atbilde (opcionāli)',
                                     hintStyle: TextStyle(
-                                      fontSize: 13.h
+                                      fontSize: 14.w
                                     )
                                   ),
                                   cursorColor: blue,
@@ -586,14 +586,14 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                                     Text(
                                       "Aptaujas ilgums:",
                                       style: TextStyle(
-                                        fontSize: 13.h
+                                        fontSize: 14.w
                                       ),
                                     )
                                   ],
                                 ),
                                 SizedBox(height: 5.h),
                                 SizedBox(
-                                  height: 160.h,
+                                  height: 180.w,
                                   child: CupertinoDatePicker(
                                     use24hFormat: true,
                                     initialDateTime: pollEnd,
@@ -649,7 +649,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                 Text(
                   "Pievienot attēlu:",
                   style: TextStyle(
-                    fontSize: 14.h
+                    fontSize: 15.w
                   ),
                 ),
                 
@@ -720,14 +720,14 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                       children: [
                         Icon(
                           Icons.add,
-                          size: 30.h,
+                          size: 30.w,
                           color: Colors.black38,
                         ),
                         SizedBox(width: 5.w),
                         Text(
                           "Pievienot attēlu",
                           style: TextStyle(
-                            fontSize: 14.h,
+                            fontSize: 15.w,
                             color: Colors.black45
                           ),
                         )
@@ -826,7 +826,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                         ? "Rediģēt ziņu"
                         : "Pievienot ziņu",
                       style: TextStyle(
-                        fontSize: 16.h,
+                        fontSize: 17.w,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

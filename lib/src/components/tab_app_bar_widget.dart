@@ -67,7 +67,7 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
       title: Text(
         widget.title,
         style: TextStyle(
-          fontSize: 20.h,
+          fontSize: 20.w,
           color: blue,
           fontWeight: FontWeight.bold
         ),
@@ -100,7 +100,7 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
               child: Icon(
                 Icons.add,
                 color: blue,
-                size: 30.h,
+                size: 30.w,
               ),
             ),
           ),
@@ -116,8 +116,8 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
         unselectedLabelColor: Colors.black45,
         labelStyle: TextStyle(
           fontSize: widget.parametrs[2]
-            ? 14.h
-            : 16.h,
+            ? 15.w
+            : 17.w,
         ),
         tabs: <Widget>[
           for(int i=0;i<widget.tabQuant;i++)

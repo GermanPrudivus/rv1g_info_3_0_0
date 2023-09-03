@@ -232,14 +232,14 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
                         Text(
                           'Šodien vārda dienu svin:',
                           style: TextStyle(
-                            fontSize: 15.5.h,
+                            fontSize: 17.w,
                           ),
                           textAlign: TextAlign.center,
                         ),
                         Text(
                           vardaDiena,
                           style: TextStyle(
-                            fontSize: 16.5.h,
+                            fontSize: 18.w,
                             fontWeight: FontWeight.bold
                           ),
                           textAlign: TextAlign.center,

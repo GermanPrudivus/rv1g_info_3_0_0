@@ -200,7 +200,7 @@ class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMix
                           "Verificē savu profilu,\nlai redzētu pusdienu grafiku!",
                           style: TextStyle(
                             color: blue,
-                            fontSize: 18.h,
+                            fontSize: 18.w,
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.center,
@@ -227,7 +227,7 @@ class _MenuPageState extends ConsumerState<MenuPage> with TickerProviderStateMix
                           child: Text(
                             "Verificēties",
                             style: TextStyle(
-                              fontSize: 15.h,
+                              fontSize: 16.w,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

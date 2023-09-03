@@ -93,7 +93,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
-                                        fontSize: 18.h
+                                        fontSize: 20.w
                                       ),
                                     ),
                                   ],
@@ -121,7 +121,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                     StyledText(
                                       text: news[index].shortText,
                                       style: TextStyle(
-                                        fontSize: 13.h,
+                                        fontSize: 14.w,
                                         color: Colors.black54,
                                       ),
                                       textAlign: TextAlign.start,
@@ -142,7 +142,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                             Text(
                                               news[index].author,
                                               style: TextStyle(
-                                                fontSize: 12.h,
+                                                fontSize: 13.w,
                                               ),
                                             ),
                                             Text(
@@ -151,7 +151,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                                   DateTime.parse(news[index].createdDateTime)
                                                 ),
                                               style: TextStyle(
-                                                fontSize: 12.h,
+                                                fontSize: 13.w,
                                               ),
                                             )
                                           ]

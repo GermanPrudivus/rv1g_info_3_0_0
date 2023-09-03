@@ -61,7 +61,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       title: Text(
         widget.title,
         style: TextStyle(
-          fontSize: 19.h,
+          fontSize: 20.w,
           color: blue,
           fontWeight: FontWeight.bold
         ),
@@ -94,7 +94,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
               child: Icon(
                 Icons.add,
                 color: blue,
-                size: 30.h,
+                size: 30.w,
               ),
             ),
           )
