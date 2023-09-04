@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:styled_text/tags/styled_text_tag.dart';
+import 'package:styled_text/widgets/styled_text.dart';
 
 import '../constants/theme_colors.dart';
-import 'scanner_border_painter.dart';
 
 class VerificationPage extends StatefulWidget {
   const VerificationPage({super.key});
@@ -50,19 +51,25 @@ class _VerificationPageState extends State<VerificationPage> {
                   ],
                 ),
                 SizedBox(height: 5.h),
-                Text(
-                  "Ievietojiet savu Rīgas Skolēna karti attiecīgajā laukā!",
-                  style: TextStyle(
-                    fontSize: 16.h,
-                    color: blue
+                Padding(
+                  padding: EdgeInsets.only(left: 2.w, right: 2.w),
+                  child: StyledText(
+                    text: "Nofotografējat Jūsas Rīgas Skolēna kartes aizmuguri! <b>Izdarot to, Jūs atļaujat apstrādāt datus no Jūsu dokumenta!</b>",
+                    style: TextStyle(
+                      fontSize: 16.w,
+                      color: blue
+                    ),
+                    textAlign: TextAlign.center,
+                    tags: {
+                      'b': StyledTextTag(style: const TextStyle(fontWeight: FontWeight.bold)),  
+                    },
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10.h),
                 Text(
-                  "Jūsu kartes fotogrāfija un informācija no tās netiek nekur saglabāta, un tā tiek izmantota tikai vienreizēji!",
+                  "Jūsu kartes fotogrāfija un informācija no tās netiek nekur glabāta, un tā tiek izmantota tikai vienreizēji!",
                   style: TextStyle(
-                    fontSize: 15.h,
+                    fontSize: 14.w,
                     color: Colors.red
                   ),
                   textAlign: TextAlign.center,
@@ -76,14 +83,34 @@ class _VerificationPageState extends State<VerificationPage> {
                        borderRadius: BorderRadius.circular(15.h),
                         color: Colors.grey.shade400,
                       ),
-                      height: 400.h,
-                    ),
-                    CustomPaint(
-                      size: Size(240.w, 310.h), // Adjust the size as needed
-                      painter: ScannerBorderPainter(),
+                      height: 350.h,
                     ),
                   ],
-                )
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 5.h),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      
+                    },
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size(1.sw, 50.h),
+                      backgroundColor: blue,
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.h)
+                      )
+                    ),
+                    child: Text(
+                      "Nofotografēt",
+                      style: TextStyle(
+                        fontSize: 17.w,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           )

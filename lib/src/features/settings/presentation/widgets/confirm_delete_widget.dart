@@ -51,7 +51,7 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
                   Text(
                     "Apstiprini savas darbības:",
                     style: TextStyle(
-                      fontSize: 18.h
+                      fontSize: 20.w
                     ),
                   ),
                 ],
@@ -72,13 +72,13 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
                   child: TextFormField(
                     controller: fullNameController,
                     style: TextStyle(
-                      fontSize: 14.h,
+                      fontSize: 15.w,
                       color: blue,
                     ),
                     decoration: InputDecoration(
                       hintText: "${widget.fullName}",
                       hintStyle: TextStyle(
-                        fontSize: 13.h,
+                        fontSize: 14.w,
                         color: Colors.grey,
                       ),
                       border: OutlineInputBorder(
@@ -105,41 +105,41 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
               ),
 
               Padding(
-                  padding: EdgeInsets.only(top: 60.h, bottom: 20.h),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if(_formKey.currentState!.validate()){
-                        ref
-                          .read(settingsControllerProvider.notifier)
-                          .deleteUser(widget.avatarUrl)
-                          .whenComplete(() {
-                            Navigator.popUntil(context, (route) => false);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SignInPage()
-                              )
-                            );
-                          });
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(1.sw, 50.h),
-                      backgroundColor: blue,
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.h)
-                      )
-                    ),
-                    child: Text(
-                      "Izdzēst profilu",
-                      style: TextStyle(
-                        fontSize: 16.h,
-                        fontWeight: FontWeight.bold,
-                      ),
+                padding: EdgeInsets.only(top: 60.h, bottom: 20.h),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if(_formKey.currentState!.validate()){
+                      ref
+                        .read(settingsControllerProvider.notifier)
+                        .deleteUser(widget.avatarUrl)
+                        .whenComplete(() {
+                          Navigator.popUntil(context, (route) => false);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignInPage()
+                            )
+                          );
+                        });
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: Size(1.sw, 50.h),
+                    backgroundColor: blue,
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.h)
+                    )
+                  ),
+                  child: Text(
+                    "Izdzēst profilu",
+                    style: TextStyle(
+                      fontSize: 17.w,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
+              ),
             ],
           ),
         )

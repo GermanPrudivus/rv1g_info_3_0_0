@@ -119,7 +119,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                     user.fullName,
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16.h,
+                                      fontSize: 17.w,
                                       fontWeight: FontWeight.bold
                                     ),
                                   )
@@ -146,6 +146,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                           Icon(
                             Icons.chevron_right,
                             size: 24.h,
+                            color: blue,
                           )
                         ],
                       )
@@ -191,7 +192,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                         "Nav amatu",
                         style: TextStyle(
                           color: blue,
-                          fontSize: 14.h
+                          fontSize: 15.w
                         ),
                       ),
                     )
@@ -228,15 +229,15 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                 title,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16.h
+                                  fontSize: 16.w
                                 ),
                               ),
-                              SizedBox(height: 5.h,),
+                              SizedBox(height: 5.w,),
                               Text(
                                 roles[index].description,
                                 style: TextStyle(
                                   color: Colors.black54,
-                                  fontSize: 13.5.h
+                                  fontSize: 14.w
                                 ),
                               ),
                               SizedBox(height: 5.h,),
@@ -250,14 +251,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                       ),
                                     style: TextStyle(
                                      color: Colors.black54,
-                                      fontSize: 13.h
+                                      fontSize: 13.5.w
                                     ),
                                   ),
                                   Text(
                                     " - ",
                                     style: TextStyle(
                                      color: Colors.black54,
-                                      fontSize: 13.h
+                                      fontSize: 13.5.w
                                     ),
                                   ),
                                   Text(
@@ -269,7 +270,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                       : "Nav noteikts",
                                     style: TextStyle(
                                      color: Colors.black54,
-                                      fontSize: 13.h
+                                      fontSize: 13.5.w
                                     ),
                                   ),
                                 ],
@@ -309,7 +310,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                   ),
                                   child: Icon(
                                     Icons.logout,
-                                    size: 22.h,
+                                    size: 24.w,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -318,7 +319,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                   "Iziet no sava profila",
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 16.h,
+                                    fontSize: 17.w,
                                   ),
                                 )
                               ],
@@ -327,7 +328,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                             Icon(
                               Icons.chevron_right,
                               color: Colors.grey,
-                              size: 24.h,
+                              size: 26.w,
                             )
                           ],
                         ),
@@ -371,7 +372,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                   ),
                                   child: Icon(
                                     Icons.delete,
-                                    size: 22.h,
+                                    size: 24.w,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -380,7 +381,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                   "Izdzēst savu profilu",
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 16.h,
+                                    fontSize: 17.w,
                                   ),
                                 )
                               ],
@@ -389,7 +390,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                             Icon(
                               Icons.chevron_right,
                               color: Colors.grey,
-                              size: 24.h,
+                              size: 26.w,
                             )
                           ],
                         ),
@@ -429,7 +430,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                   ),
                                   child: Icon(
                                     Icons.question_answer,
-                                    size: 22.h,
+                                    size: 24.w,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -438,7 +439,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                   "Kontaktinformācija",
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 16.h,
+                                    fontSize: 17.w,
                                   ),
                                 )
                               ],
@@ -447,7 +448,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                             Icon(
                               Icons.chevron_right,
                               color: Colors.grey,
-                              size: 24.h,
+                              size: 26.w,
                             )
                           ],
                         ),

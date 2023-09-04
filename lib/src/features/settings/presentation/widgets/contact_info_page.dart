@@ -28,7 +28,7 @@ class ContactInfoPage extends StatelessWidget {
                   'Ja Jums rodas kādas problēmas, droši dodiet mums ziņu!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 15.h,
+                    fontSize: 16.w,
                   ),
                 )
               ),
@@ -68,7 +68,7 @@ class ContactInfoPage extends StatelessWidget {
                                 Text(
                                   'Mūsu Instagram profils',
                                   style: TextStyle(
-                                    fontSize: 13.5.h,
+                                    fontSize: 14.w,
                                     color: Colors.black
                                   ),
                                 )
@@ -117,7 +117,7 @@ class ContactInfoPage extends StatelessWidget {
                                 Text(
                                   'Mūsu Facebook profils',
                                   style: TextStyle(
-                                    fontSize: 13.5.h,
+                                    fontSize: 14.w,
                                     color: Colors.black
                                   ),
                                 )
@@ -138,7 +138,7 @@ class ContactInfoPage extends StatelessWidget {
                       'Kā arī Jūs varat rakstīt mums uz e-pastu:',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 15.h,
+                        fontSize: 16.w,
                       ),
                     ),
                     SizedBox(height: 8.h),
@@ -146,7 +146,7 @@ class ContactInfoPage extends StatelessWidget {
                       'rv1g.info@gmail.com',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16.h,
+                        fontSize: 18.w,
                         fontWeight: FontWeight.bold
                       ),
                     )

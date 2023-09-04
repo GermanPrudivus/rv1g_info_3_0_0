@@ -193,13 +193,13 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                     child: TextFormField(
                       initialValue: user.fullName,
                       style: TextStyle(
-                        fontSize: 14.h,
+                        fontSize: 15.w,
                         color: blue,
                       ),
                       decoration: InputDecoration(
                         hintText: "Full Name",
                         hintStyle: TextStyle(
-                          fontSize: 14.h,
+                          fontSize: 15.w,
                           color: lightGrey,
                         ),
                         icon: const Icon(Icons.person_outline),
@@ -237,7 +237,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                       value: dropdownValue,
                       elevation: 60.h.toInt(),
                       style: TextStyle(
-                        fontSize: 14.h,
+                        fontSize: 15.w,
                         color: blue,
                       ),
                       underline: Container(
@@ -271,13 +271,13 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                     child: TextFormField(
                       controller: passwordController,
                       style: TextStyle(
-                        fontSize: 14.h,
+                        fontSize: 15.w,
                         color: blue,
                      ),
                       decoration: InputDecoration(
                         hintText: "New Password",
                         hintStyle: TextStyle(
-                          fontSize: 14.h,
+                          fontSize: 15.w,
                           color: lightGrey,
                         ),
                         icon: const Icon(Icons.lock_outline),
@@ -322,13 +322,13 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                     child: TextFormField(
                       controller: repeatPasswordController,
                       style: TextStyle(
-                        fontSize: 14.h,
+                        fontSize: 15.w,
                         color: blue,
                       ),
                       decoration: InputDecoration(
-                        hintText: "Repeat New Password",
+                        hintText: "Confirm New Password",
                         hintStyle: TextStyle(
-                          fontSize: 14.h,
+                          fontSize: 15.w,
                           color: lightGrey,
                         ),
                         icon: const Icon(Icons.lock_outline),
@@ -389,7 +389,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                       child: Text(
                         "Rediģēt profilu",
                         style: TextStyle(
-                          fontSize: 16.h,
+                          fontSize: 17.w,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
