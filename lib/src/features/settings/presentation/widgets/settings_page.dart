@@ -82,7 +82,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               GestureDetector(
                 child: Container(
                   color: Colors.white,
-                  padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 15.h, bottom: 15.h),
+                  padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 20.h, bottom: 15.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -251,14 +251,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                       ),
                                     style: TextStyle(
                                      color: Colors.black54,
-                                      fontSize: 13.5.w
+                                      fontSize: 12.w
                                     ),
                                   ),
                                   Text(
                                     " - ",
                                     style: TextStyle(
                                      color: Colors.black54,
-                                      fontSize: 13.5.w
+                                      fontSize: 12.w
                                     ),
                                   ),
                                   Text(
@@ -270,7 +270,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                       : "Nav noteikts",
                                     style: TextStyle(
                                      color: Colors.black54,
-                                      fontSize: 13.5.w
+                                      fontSize: 12.w
                                     ),
                                   ),
                                 ],

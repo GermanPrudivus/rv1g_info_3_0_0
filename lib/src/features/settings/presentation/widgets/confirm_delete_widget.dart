@@ -46,17 +46,18 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Apstiprini savas darbības:",
                     style: TextStyle(
-                      fontSize: 20.w
+                      fontSize: 19.w,
+                      fontWeight: FontWeight.bold
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 30.h),
               Text(
                 "Ieraksti savu pilnu vārdu, lai turpināt!",
                 style: TextStyle(
@@ -64,7 +65,7 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
                   color: blue
                 ),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 5.h),
               Form(
                 key: _formKey,
                 child: Padding(
@@ -105,7 +106,7 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
               ),
 
               Padding(
-                padding: EdgeInsets.only(top: 60.h, bottom: 20.h),
+                padding: EdgeInsets.only(top: 40.h, bottom: 20.h),
                 child: ElevatedButton(
                   onPressed: () {
                     if(_formKey.currentState!.validate()){

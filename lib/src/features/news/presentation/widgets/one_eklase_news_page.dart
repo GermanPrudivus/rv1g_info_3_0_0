@@ -136,7 +136,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                           DateTime.parse(news.createdDateTime)
                         ),
                       style: TextStyle(
-                        fontSize: 15.w,
+                        fontSize: 13.w,
                       ),
                     ),
                   ],

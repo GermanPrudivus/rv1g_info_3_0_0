@@ -146,14 +146,14 @@ class EventPage extends StatelessWidget {
                           DateTime.parse(event.startDate)
                         ),
                       style: TextStyle(
-                        fontSize: 15.w,
+                        fontSize: 13.w,
                       ),
                     ),
                     SizedBox(width: 5.w),
                     Text(
                       "-",
                       style: TextStyle(
-                        fontSize: 15.w,
+                        fontSize: 13.w,
                       ),
                     ),
                     SizedBox(width: 5.w),
@@ -163,7 +163,7 @@ class EventPage extends StatelessWidget {
                           DateTime.parse(event.endDate)
                         ),
                       style: TextStyle(
-                        fontSize: 15.w,
+                        fontSize: 13.w,
                       ),
                     ),
                   ],

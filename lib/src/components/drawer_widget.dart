@@ -140,15 +140,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Icon(
                         Icons.event_outlined,
                         color: Colors.black,
-                        size: 30.h,
+                        size: 26.h,
                       ),
                       SizedBox(width: 10.w),
                       Text(
                         "Pasākumi",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 20.w,
-                          fontWeight: FontWeight.bold
+                          fontSize: 18.w,
                         ),
                       ),
                     ],
@@ -170,15 +169,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Icon(
                         Icons.group_outlined,
                         color: Colors.black,
-                        size: 30.h,
+                        size: 26.h,
                       ),
                       SizedBox(width: 10.w),
                       Text(
                         "Brīvpratīgie",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 20.w,
-                          fontWeight: FontWeight.bold
+                          fontSize: 18.w,
                         ),
                       ),
                     ],
@@ -197,15 +195,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Icon(
                         Icons.receipt_outlined,
                         color: Colors.black,
-                        size: 30.h,
+                        size: 26.h,
                       ),
                       SizedBox(width: 10.w),
                       Text(
                         "Biļetes",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 20.w,
-                          fontWeight: FontWeight.bold
+                          fontSize: 18.w,
                         ),
                       ),
                     ],
@@ -227,7 +224,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         color: enabled
                           ? Colors.black
                           : Colors.grey,
-                        size: 30.h,
+                        size: 26.h,
                       ),
                       SizedBox(width: 10.w),
                       Text(
@@ -236,8 +233,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           color: enabled
                             ? Colors.black
                             : Colors.grey,
-                          fontSize: 20.w,
-                          fontWeight: FontWeight.bold
+                          fontSize: 18.w,
                         ),
                       ),
                     ],
@@ -261,15 +257,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Icon(
                         Icons.settings_outlined,
                         color: Colors.black,
-                        size: 30.h,
+                        size: 26.h,
                       ),
                       SizedBox(width: 10.w),
                       Text(
                         "Iestatījumi",
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 20.w,
-                          fontWeight: FontWeight.bold
+                          fontSize: 18.w,
                         ),
                       ),
                     ],

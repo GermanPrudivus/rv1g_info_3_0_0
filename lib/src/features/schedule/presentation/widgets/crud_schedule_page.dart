@@ -108,7 +108,8 @@ class _CRUDScheduleWidgetState extends ConsumerState<CRUDScheduleWidget> {
                             "Pievienot attēlu",
                             style: TextStyle(
                               fontSize: 15.w,
-                              color: Colors.black45
+                              color: Colors.black45,
+                              fontWeight: FontWeight.bold
                             ),
                           )
                         ],

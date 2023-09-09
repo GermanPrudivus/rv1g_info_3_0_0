@@ -121,14 +121,14 @@ class VolunteeringJobPage extends StatelessWidget {
                           DateTime.parse(job.startDate)
                         ),
                       style: TextStyle(
-                        fontSize: 15.w,
+                        fontSize: 13.w,
                       ),
                     ),
                     SizedBox(width: 5.w),
                     Text(
                       "-",
                       style: TextStyle(
-                        fontSize: 15.w,
+                        fontSize: 13.w,
                       ),
                     ),
                     SizedBox(width: 5.w),
@@ -138,7 +138,7 @@ class VolunteeringJobPage extends StatelessWidget {
                           DateTime.parse(job.endDate)
                         ),
                       style: TextStyle(
-                        fontSize: 15.w,
+                        fontSize: 13.w,
                       ),
                     ),
                   ],

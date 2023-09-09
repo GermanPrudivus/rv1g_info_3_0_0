@@ -154,16 +154,18 @@ class _ScanTicketPageState extends ConsumerState<ScanTicketPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Noskanēt biļeti:",
                       style: TextStyle(
                         fontSize: 24.w,
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 30.h),
+                SizedBox(height: 20.h),
                 Text(
                   "Ievietojiet QR kodu kvadrāta laukā",
                   style: TextStyle(

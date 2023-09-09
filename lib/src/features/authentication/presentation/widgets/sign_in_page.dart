@@ -274,7 +274,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
               ),
 
               Padding(
-                padding: EdgeInsets.only(top: 7.h),
+                padding: EdgeInsets.only(top: 2.5.h),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center, 
                   children: [

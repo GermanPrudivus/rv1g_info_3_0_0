@@ -413,7 +413,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
               ),
 
               Padding(
-                padding: EdgeInsets.only(top: 7.h),
+                padding: EdgeInsets.only(top: 10.h),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center, 
                   children: [

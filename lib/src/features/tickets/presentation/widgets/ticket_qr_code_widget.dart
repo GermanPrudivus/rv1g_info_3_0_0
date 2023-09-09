@@ -21,26 +21,26 @@ class TicketQRCodeWidget extends StatelessWidget {
       content: SingleChildScrollView(
         child: Container(
           width: 1.sw,
-          height: 300.h,
           alignment: Alignment.topLeft,
           color: Colors.white,
-          margin: EdgeInsets.only(left: 15.w, right: 15.w, top: 20.h),
+          margin: EdgeInsets.only(left: 15.w, right: 15.w, top: 30.h, bottom: 30.h),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Biļetes QR kods:",
                     style: TextStyle(
-                      fontSize: 20.w
+                      fontSize: 20.w,
+                      fontWeight: FontWeight.bold
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 25.h),
+              SizedBox(height: 10.h),
               QrImageView(
                 data: data,
                 version: QrVersions.auto,

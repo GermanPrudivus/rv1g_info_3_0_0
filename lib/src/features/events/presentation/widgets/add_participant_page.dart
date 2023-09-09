@@ -89,16 +89,18 @@ class _AddParticipantPageState extends State<AddParticipantPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Reģistrēt jaunu dalībnieku:",
                       style: TextStyle(
                         fontSize: 22.w,
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 30.h),
+                SizedBox(height: 20.h),
                 Text(
                   "Ievietojiet QR kodu kvadrāta laukā",
                   style: TextStyle(

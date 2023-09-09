@@ -109,7 +109,8 @@ class _CRUDChangesWidgetState extends ConsumerState<CRUDChangesWidget> {
                             "Pievienot attēlu",
                             style: TextStyle(
                               fontSize: 15.w,
-                              color: Colors.black45
+                              color: Colors.black45,
+                              fontWeight: FontWeight.bold
                             ),
                           )
                         ],

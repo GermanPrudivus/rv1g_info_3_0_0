@@ -163,7 +163,8 @@ class _CRUDMenuWidgetState extends ConsumerState<CRUDMenuWidget> {
                             "Pievienot attēlu",
                             style: TextStyle(
                               fontSize: 15.w,
-                              color: Colors.black45
+                              color: Colors.black45,
+                              fontWeight: FontWeight.bold
                             ),
                           )
                         ],

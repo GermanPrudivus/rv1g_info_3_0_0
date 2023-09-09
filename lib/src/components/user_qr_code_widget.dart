@@ -25,26 +25,26 @@ class UserQRCodeWidget extends StatelessWidget {
       content: SingleChildScrollView(
         child: Container(
           width: 1.sw,
-          height: 300.h,
           alignment: Alignment.topLeft,
           color: Colors.white,
-          margin: EdgeInsets.only(left: 15.w, right: 15.w, top: 20.h, bottom: 5.h),
+          margin: EdgeInsets.only(left: 15.w, right: 15.w, top: 20.h, bottom: 35.h),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Tava profila QR kods:",
                     style: TextStyle(
-                      fontSize: 18.w
+                      fontSize: 18.w,
+                      fontWeight: FontWeight.bold
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 15.h),
+              SizedBox(height: 17.5.h),
               Text(
                 "Rādi to, lai nopirkt biļeti",
                 style: TextStyle(

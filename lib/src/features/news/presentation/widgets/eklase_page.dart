@@ -193,7 +193,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                 endIndent: 20.w,
                                 indent: 20.w,
                                 height: 15.h,
-                                thickness: 3.5.h,
+                                thickness: 2.5.h,
                               ),
                           ],
                         );
