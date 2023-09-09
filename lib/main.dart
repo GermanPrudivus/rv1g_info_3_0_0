@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:rv1g_info/src/components/difference_in_dates.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +16,8 @@ import 'package:rv1g_info/src/features/menu/presentation/widgets/menu_page.dart'
 import 'package:rv1g_info/src/features/shop/presentation/widgets/shop_page.dart';
 
 Future<void> main() async{
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   
   await Supabase.initialize(
     url: supabaseUrl,
@@ -123,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ];
         });
       });
+    FlutterNativeSplash.remove();
     super.initState();
   }
 

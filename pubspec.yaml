@@ -51,6 +51,14 @@ flutter_icons:
   adaptive_icon_background: "#ffffff"
   adaptive_icon_foreground: "assets/rv1g_info_logo_foreground.png"
 
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/rv1g_splash_screen.png
+  android: true
+  ios: true
+  android_gravity: fill
+  ios_content_mode: scaleAspectFill
+
 flutter:
 
   # The following line ensures that the Material Icons font is
