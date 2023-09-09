@@ -285,7 +285,9 @@ class _SchedulePageState extends ConsumerState<SchedulePage> {
                         Navigator.push(
                           context, 
                           MaterialPageRoute(
-                            builder: (context) => VerificationPage()
+                            builder: (context) => VerificationPage(
+                              fullName: widget.fullName,
+                            )
                           )
                         );
                       },

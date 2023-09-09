@@ -7,6 +7,9 @@
 
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
+    <!-- Permissions options for the `camera` group -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
