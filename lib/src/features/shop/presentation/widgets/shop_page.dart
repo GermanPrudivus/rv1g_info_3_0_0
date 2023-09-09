@@ -163,7 +163,7 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                                           borderRadius: BorderRadius.circular(10.w),
                                           child: items[index].media.isEmpty
                                             ? Container(
-                                                height: 150.h,
+                                                height: 100.h,
                                                 color: Colors.grey,
                                               )
                                             : Image.network(

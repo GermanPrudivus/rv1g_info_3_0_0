@@ -141,7 +141,7 @@ class ShopRepository {
   Future<void> deleteImage(String imageUrl) async {
     await supabase
       .storage
-      .from('shop_items')
+      .from('shop_item')
       .remove([json.decode(imageUrl)['image_url'].split("/").last]);
   }
 

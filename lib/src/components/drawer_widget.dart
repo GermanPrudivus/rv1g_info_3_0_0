@@ -140,7 +140,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Icon(
                         Icons.event_outlined,
                         color: Colors.black,
-                        size: 26.h,
+                        size: 25.h,
                       ),
                       SizedBox(width: 10.w),
                       Text(
@@ -161,7 +161,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     );
                   },
                 ),
-                SizedBox(height: 5.h),
+                SizedBox(height: 2.5.h),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Row(
@@ -169,7 +169,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Icon(
                         Icons.group_outlined,
                         color: Colors.black,
-                        size: 26.h,
+                        size: 25.h,
                       ),
                       SizedBox(width: 10.w),
                       Text(
@@ -187,7 +187,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     );
                   },
                 ),
-                SizedBox(height: 5.h),
+                SizedBox(height: 2.5.h),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Row(
@@ -195,7 +195,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Icon(
                         Icons.receipt_outlined,
                         color: Colors.black,
-                        size: 26.h,
+                        size: 25.h,
                       ),
                       SizedBox(width: 10.w),
                       Text(
@@ -213,7 +213,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     );
                   },
                 ),
-                SizedBox(height: 5.h),
+                SizedBox(height: 2.5.h),
                 ListTile(
                   enabled: enabled,
                   contentPadding: EdgeInsets.zero,
@@ -224,7 +224,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         color: enabled
                           ? Colors.black
                           : Colors.grey,
-                        size: 26.h,
+                        size: 25.h,
                       ),
                       SizedBox(width: 10.w),
                       Text(
@@ -249,7 +249,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     }
                   },
                 ),
-                SizedBox(height: 5.h),
+                SizedBox(height: 2.5.h),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Row(
@@ -257,7 +257,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Icon(
                         Icons.settings_outlined,
                         color: Colors.black,
-                        size: 26.h,
+                        size: 25.h,
                       ),
                       SizedBox(width: 10.w),
                       Text(
