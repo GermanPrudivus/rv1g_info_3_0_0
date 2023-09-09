@@ -180,6 +180,16 @@ class EventRepository {
       .from('events')
       .delete()
       .eq('id', id);
+
+    await supabase
+      .from('participants')
+      .delete()
+      .eq('event_id', id);
+
+    await supabase
+      .from('tickets')
+      .delete()
+      .eq('event_id', id);
   }
 
   Future<void> deleteRole(int eventId) async {
