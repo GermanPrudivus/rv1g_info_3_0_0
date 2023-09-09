@@ -125,7 +125,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ];
         });
       });
-    FlutterNativeSplash.remove();
     super.initState();
   }
 

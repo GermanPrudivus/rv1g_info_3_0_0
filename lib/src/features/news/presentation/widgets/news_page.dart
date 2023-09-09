@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+
 import 'package:rv1g_info/src/components/drawer_widget.dart';
 import 'package:rv1g_info/src/components/tab_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/eklase_page.dart';
@@ -36,6 +38,7 @@ class _NewsPageState extends ConsumerState<NewsPage> with TickerProviderStateMix
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
+    FlutterNativeSplash.remove();
     super.initState();
   }
 
