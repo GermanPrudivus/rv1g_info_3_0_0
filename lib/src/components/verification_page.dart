@@ -252,10 +252,7 @@ class _VerificationPageState extends State<VerificationPage> with WidgetsBinding
       final recognizedText = await textRecognizer.processImage(inputImage);
 
       String text = recognizedText.text.toLowerCase();
-      print(text);
-
       List<String> fullname = widget.fullName.split(" ");
-      print(fullname);
 
       if(
         text.contains(fullname[0].toLowerCase()) &&
@@ -331,7 +328,7 @@ class _VerificationPageState extends State<VerificationPage> with WidgetsBinding
                     child: Text(
                       "Jūs esat veiksmīgi verificējušies! Tagad Jums ir pieejams viss lietotnes funkcionāls!",
                       style: TextStyle(
-                        fontSize: 18.w,
+                        fontSize: 17.w,
                         color: blue,
                       ),
                       textAlign: TextAlign.center,
@@ -350,7 +347,7 @@ class _VerificationPageState extends State<VerificationPage> with WidgetsBinding
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 30.h),
+                padding: EdgeInsets.only(top: 30.h, left: 30.w, right: 30.w),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.popUntil(context, (route) => false);

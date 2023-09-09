@@ -223,6 +223,16 @@ class EventRepository {
   }
 
   //ADD PARTICIPANT PAGE
+  Future<bool> checkIfExists(int userId, int eventId) async {
+    final res = await supabase
+      .from('participants')
+      .select()
+      .eq('user_id', userId)
+      .eq('event_id', eventId);
+
+    return res.isEmpty;
+  }
+
   Future<void> addParticipant(int userId, Event event) async {
     await supabase
       .from('participants')

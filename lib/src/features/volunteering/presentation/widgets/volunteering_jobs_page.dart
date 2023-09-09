@@ -144,7 +144,7 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                                                 DateTime.parse(jobs[index].startDate)
                                               ),
                                             style: TextStyle(
-                                              fontSize: 15.w,
+                                              fontSize: 14.w,
                                               color: enabled
                                                 ? Colors.black
                                                 : Colors.black45

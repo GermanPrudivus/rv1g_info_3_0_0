@@ -251,14 +251,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                       ),
                                     style: TextStyle(
                                      color: Colors.black54,
-                                      fontSize: 12.w
+                                      fontSize: 13.w
                                     ),
                                   ),
                                   Text(
                                     " - ",
                                     style: TextStyle(
                                      color: Colors.black54,
-                                      fontSize: 12.w
+                                      fontSize: 13.w
                                     ),
                                   ),
                                   Text(
@@ -270,7 +270,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                       : "Nav noteikts",
                                     style: TextStyle(
                                      color: Colors.black54,
-                                      fontSize: 12.w
+                                      fontSize: 13.w
                                     ),
                                   ),
                                 ],

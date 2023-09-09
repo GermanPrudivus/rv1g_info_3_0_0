@@ -56,7 +56,9 @@ class EventService {
 
   //ADD PARTICIPANT PAGE
   Future<void> addParticipant(int userId, Event event) async {
-    return await eventRepository.addParticipant(userId, event);
+    if(await eventRepository.checkIfExists(userId, event.id)){
+      return await eventRepository.addParticipant(userId, event);
+    }
   }
 }
 
