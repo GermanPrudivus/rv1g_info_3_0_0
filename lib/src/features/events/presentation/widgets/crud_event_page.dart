@@ -305,8 +305,9 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                             fontSize: 14.w
                           )
                         ),
-                        minLines: 6,
-                        maxLines: 10,
+                        maxLength: 200,
+                        minLines: 4,
+                        maxLines: 6,
                         onChanged: (value) {
                           setState(() {
                             shortText = value;
@@ -318,17 +319,20 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                   )
                 ),
 
-                SizedBox(height: 10.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Pasākuma ilgums:",
-                      style: TextStyle(
-                        fontSize: 14.w
-                      ),
-                    )
-                  ],
+                SizedBox(height: 5.h),
+                Padding(
+                  padding: EdgeInsets.only(left: 5.w),
+                    child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Pasākuma ilgums:",
+                        style: TextStyle(
+                          fontSize: 14.w
+                        ),
+                      )
+                    ],
+                  ),
                 ),
 
                 Container(
@@ -338,7 +342,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                     borderRadius: BorderRadius.circular(10.h),
                     color: Colors.white,
                     border: Border.all(
-                      color: Colors.black26
+                      color: Colors.black38
                     ),
                   ),
                   child:Column(
@@ -582,7 +586,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                           "Pievienot attēlu",
                           style: TextStyle(
                             fontSize: 15.w,
-                            color: Colors.black45
+                            color: Colors.black45,
+                            fontWeight: FontWeight.bold
                           ),
                         )
                       ],

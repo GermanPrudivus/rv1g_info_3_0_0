@@ -215,7 +215,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                         child: Text(
                           "Īss apraksts",
                           style: TextStyle(
-                            fontSize: 15.w,
+                            fontSize: 14.w,
                           ),
                         ),
                       ),
@@ -246,8 +246,9 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                             fontSize: 14.w
                           )
                         ),
-                        minLines: 6,
-                        maxLines: 10,
+                        maxLength: 200,
+                        minLines: 4,
+                        maxLines: 6,
                         onChanged: (value) {
                           setState(() {
                             shortText = value;
@@ -260,7 +261,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                 ),
 
                 Padding(
-                  padding: EdgeInsets.only(top: 15.h),
+                  padding: EdgeInsets.only(top: 5.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -269,7 +270,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                         child: Text(
                           "Autors",
                           style: TextStyle(
-                            fontSize: 15.w,
+                            fontSize: 14.w,
                           ),
                         ),
                       ),
@@ -321,7 +322,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                         child: Text(
                           "Teksts",
                           style: TextStyle(
-                            fontSize: 15.w,
+                            fontSize: 14.w,
                           ),
                         ),
                       ),
@@ -492,7 +493,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                           "Pievienot attēlu",
                           style: TextStyle(
                             fontSize: 15.w,
-                            color: Colors.black45
+                            color: Colors.black45,
+                            fontWeight: FontWeight.bold
                           ),
                         )
                       ],

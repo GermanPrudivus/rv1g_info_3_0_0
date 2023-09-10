@@ -206,16 +206,19 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                 ),
 
                 SizedBox(height: 10.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Darba ilgums:",
-                      style: TextStyle(
-                        fontSize: 14.w
-                      ),
-                    )
-                  ],
+                Padding(
+                  padding: EdgeInsets.only(left: 5.w),
+                    child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Darba ilgums:",
+                        style: TextStyle(
+                          fontSize: 14.w
+                        ),
+                      )
+                    ],
+                  ),
                 ),
 
                 Container(
@@ -225,7 +228,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                     borderRadius: BorderRadius.circular(10.h),
                     color: Colors.white,
                     border: Border.all(
-                      color: Colors.black26
+                      color: Colors.black38
                     ),
                   ),
                   child:Column(
@@ -390,7 +393,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                 Text(
                   "Pievienot attēlu:",
                   style: TextStyle(
-                    fontSize: 15.w
+                    fontSize: 15.w,
                   ),
                 ),
                 
@@ -469,7 +472,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                           "Pievienot attēlu",
                           style: TextStyle(
                             fontSize: 15.w,
-                            color: Colors.black45
+                            color: Colors.black45,
+                            fontWeight: FontWeight.bold
                           ),
                         )
                       ],

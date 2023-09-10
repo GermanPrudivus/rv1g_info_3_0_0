@@ -223,6 +223,7 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                         style: TextStyle(
                           fontSize: 15.w
                         ),
+                        maxLength: 100,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -244,8 +245,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                             fontSize: 14.w
                           )
                         ),
-                        minLines: 6,
-                        maxLines: 10,
+                        minLines: 3,
+                        maxLines: 3,
                         onChanged: (value) {
                           setState(() {
                             shortText = value;
@@ -258,7 +259,7 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                 ),
 
                 Padding(
-                  padding: EdgeInsets.only(top: 15.h),
+                  padding: EdgeInsets.only(top: 5.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -455,7 +456,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                           "Pievienot attēlu",
                           style: TextStyle(
                             fontSize: 15.w,
-                            color: Colors.black45
+                            color: Colors.black45,
+                            fontWeight: FontWeight.bold
                           ),
                         )
                       ],

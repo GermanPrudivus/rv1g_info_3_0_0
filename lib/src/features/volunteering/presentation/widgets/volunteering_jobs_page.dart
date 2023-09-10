@@ -144,7 +144,7 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                                                 DateTime.parse(jobs[index].startDate)
                                               ),
                                             style: TextStyle(
-                                              fontSize: 14.w,
+                                              fontSize: 13.5.w,
                                               color: enabled
                                                 ? Colors.black
                                                 : Colors.black45
@@ -160,7 +160,7 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                           ],
                         ),
                         onTap: () {
-                          if(enabled){
+                          if(!enabled){
                             Navigator.of(context).push(
                               PageRouteBuilder(
                                 pageBuilder: (context, animation, secondaryAnimation) {

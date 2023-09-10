@@ -633,7 +633,8 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                             "Pievienot aptauju",
                             style: TextStyle(
                               fontSize: 14.h,
-                              color: Colors.black45
+                              color: Colors.black45,
+                              fontWeight: FontWeight.bold
                             ),
                           )
                         ],
@@ -728,7 +729,8 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                           "Pievienot attēlu",
                           style: TextStyle(
                             fontSize: 15.w,
-                            color: Colors.black45
+                            color: Colors.black45,
+                            fontWeight: FontWeight.bold
                           ),
                         )
                       ],
