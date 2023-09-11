@@ -197,7 +197,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                         color: blue,
                       ),
                       decoration: InputDecoration(
-                        hintText: "Full Name",
+                        hintText: "Vārds Uzvārds",
                         hintStyle: TextStyle(
                           fontSize: 15.w,
                           color: lightGrey,
@@ -215,7 +215,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                       ),
                       cursorColor: blue,
                       validator: FieldValidator.required(
-                        message: "Type your full name"
+                        message: "Ieraksti savu vārdu un uzvārdu!"
                       ),
                       onChanged: (value) {
                         setState(() {
@@ -256,7 +256,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                               child: Text(
                                 value,
                                 style: TextStyle(
-                                  color: value == "Choose your class"
+                                  color: value == "Izvēlies savu klasi"
                                     ? lightGrey
                                     : blue
                                 ),
@@ -275,7 +275,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                         color: blue,
                      ),
                       decoration: InputDecoration(
-                        hintText: "New Password",
+                        hintText: "Jaunā Parole",
                         hintStyle: TextStyle(
                           fontSize: 15.w,
                           color: lightGrey,
@@ -326,7 +326,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                         color: blue,
                       ),
                       decoration: InputDecoration(
-                        hintText: "Confirm New Password",
+                        hintText: "Atkārto Jauno Paroli",
                         hintStyle: TextStyle(
                           fontSize: 15.w,
                           color: lightGrey,
@@ -346,7 +346,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                       cursorColor: blue,
                       validator: FieldValidator.equalTo(
                         passwordController,
-                        message: "Password Mismatch"
+                        message: "Paroles nesakrīt!"
                       ),
                     ),
                   ),
@@ -372,7 +372,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                             const SnackBar(
                               backgroundColor: Colors.red,
                               content: Text(
-                                'Please fill all forms with appropriative values!'
+                                'Lūdzu, aizpildiet visus laukus ar atbilstošām vērtībām!'
                               )
                             )
                           );

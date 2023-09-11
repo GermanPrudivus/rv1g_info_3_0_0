@@ -240,7 +240,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                 Padding(
                   padding: EdgeInsets.only(top: 10.h),
                   child: Text(
-                    '<b></b> - lai uztaisītu bold tekstu\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu italic tekstu\n<link href="your_link"></link> - lai pievienotu saiti',
+                    '<b></b> - lai uztaisītu tekstu treknrakstā\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu tekstu kursīvā\n<link href="your_link"></link> - lai pievienotu saiti',
                     style: TextStyle(
                       fontSize: 15.w
                     ),

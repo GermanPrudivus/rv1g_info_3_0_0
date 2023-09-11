@@ -46,7 +46,7 @@ class UserQRCodeWidget extends StatelessWidget {
               ),
               SizedBox(height: 17.5.h),
               Text(
-                "Rādi to, lai nopirkt biļeti",
+                "Rādi to, lai nopirktu biļeti",
                 style: TextStyle(
                   fontSize: 15.w,
                   color: blue

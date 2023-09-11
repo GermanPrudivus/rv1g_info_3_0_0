@@ -13,5 +13,5 @@ Map<String, String> authExceptions = {
 
 Map<String, String> exceptions = {
   "ClientException with SocketException: Failed host lookup: 'mznfnrsqtgzhhltmpwwh.supabase.co' (OS Error: No address associated with hostname, errno = 7), uri=https://mznfnrsqtgzhhltmpwwh.supabase.co/auth/v1/token?grant_type=password"
-  :"Please check your internet connection!",
+  :"Lūdzu, pārbaudiet savu inetrneta pieslēgumu!",
 };

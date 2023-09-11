@@ -59,7 +59,7 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
               ),
               SizedBox(height: 30.h),
               Text(
-                "Ieraksti savu pilnu vārdu, lai turpināt!",
+                "Ieraksti vārdu un uzvārdu, lai turpinātu!",
                 style: TextStyle(
                   fontSize: 14.w,
                   color: blue
