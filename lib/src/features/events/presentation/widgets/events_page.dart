@@ -27,8 +27,9 @@ class EventsPage extends ConsumerStatefulWidget {
 }
 
 class _EventsPageState extends ConsumerState<EventsPage> {
-
   List<Event> events = [];
+
+  bool hasNoEvents = false;
 
   @override
   void initState() {
@@ -45,6 +46,9 @@ class _EventsPageState extends ConsumerState<EventsPage> {
       .then((value) {
         setState(() {
           events = value!;
+          if(events.isEmpty){
+            hasNoEvents = true;
+          }
         });
       });
   }
@@ -76,13 +80,15 @@ class _EventsPageState extends ConsumerState<EventsPage> {
             events.isEmpty
               ? Expanded(
                   child: Center(
-                    child: Text(
-                      "Nav pasākumu",
-                      style: TextStyle(
-                        fontSize: 16.w,
-                        color: blue
-                      ),
-                    ),
+                    child: hasNoEvents
+                      ? Text(
+                          "Nav pasākumu",
+                          style: TextStyle(
+                            fontSize: 16.w,
+                            color: blue
+                          ),
+                        )
+                      : CircularProgressIndicator(color: blue),
                   ),
                 )
               : Expanded(

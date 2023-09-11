@@ -26,6 +26,8 @@ class VolunteeringJobsPage extends ConsumerStatefulWidget {
 class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
   List<Job> jobs = [];
 
+  bool hasNoJobs = false;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -41,6 +43,9 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
       .then((value) {
         setState(() {
           jobs = value!;
+          if(jobs.isEmpty){
+            hasNoJobs = true;
+          }
         });
       });
   }
@@ -71,13 +76,15 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
             jobs.isEmpty
               ? Expanded(
                   child: Center(
-                    child: Text(
-                      "Nav brīvprātīgo darbu",
-                      style: TextStyle(
-                        fontSize: 16.w,
-                        color: blue
-                      ),
-                    ),
+                    child: hasNoJobs
+                      ? Text(
+                          "Nav brīvprātīgo darbu",
+                          style: TextStyle(
+                            fontSize: 16.w,
+                            color: blue
+                          ),
+                        )
+                      : CircularProgressIndicator(color: blue),
                   ),
                 )
               : Expanded(

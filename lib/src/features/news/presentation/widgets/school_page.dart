@@ -31,6 +31,8 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
   int userId = 0;
   List<SchoolNews> news = [];
 
+  bool hasNoNews = false;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -54,6 +56,9 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
       .then((value) {
         setState(() {
           news = value!;
+          if(news.isEmpty){
+            hasNoNews = true;
+          }
         });
       });
   }
@@ -102,7 +107,15 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
             news.isEmpty
               ? Expanded(
                   child: Center(
-                    child: CircularProgressIndicator(color: blue),
+                    child: hasNoNews
+                      ? Text(
+                          "Nav skolas ziņu",
+                          style: TextStyle(
+                            fontSize: 16.w,
+                            color: blue
+                          ),
+                        )
+                      : CircularProgressIndicator(color: blue),
                   ),
                 )
               : Expanded(

@@ -36,6 +36,8 @@ class ShopPage extends ConsumerStatefulWidget {
 class _ShopPageState extends ConsumerState<ShopPage> {
   List<Item> items = [];
 
+  bool hasNoItems = false;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -51,6 +53,9 @@ class _ShopPageState extends ConsumerState<ShopPage> {
       .then((value) {
         setState(() {
           items = value!;
+          if(items.isEmpty){
+            hasNoItems = true;
+          }
         });
       });
   }
@@ -95,7 +100,15 @@ class _ShopPageState extends ConsumerState<ShopPage> {
             items.isEmpty
               ? Expanded(
                   child: Center(
-                    child: CircularProgressIndicator(color: blue),
+                    child: hasNoItems
+                      ? Text(
+                          "Nav piedāvājumu",
+                          style: TextStyle(
+                            fontSize: 16.w,
+                            color: blue
+                          ),
+                        )
+                      : CircularProgressIndicator(color: blue),
                   ),
                 )
               : Expanded(

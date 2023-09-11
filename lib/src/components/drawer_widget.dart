@@ -46,7 +46,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     enabled = widget.isAdmin || widget.controllers.isNotEmpty || widget.events.isNotEmpty;
     getUser()
       .then((value) {
-        print(value);
         userData = value;
       });
     super.initState();

@@ -63,8 +63,6 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
   Future pickImageFromGallery() async {
     final XFile? image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
-      maxHeight: 521,
-      maxWidth: 512,
       imageQuality: 100,
     );
 

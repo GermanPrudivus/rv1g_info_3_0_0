@@ -46,7 +46,6 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getChanges();
-      setChanges();
     });
     super.initState();
   }
@@ -58,6 +57,7 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
       .then((value) {
         setState(() {
           changes = value!;
+          setChanges();
         });
       });
   }

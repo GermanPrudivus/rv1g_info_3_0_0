@@ -18,8 +18,9 @@ class TicketsPage extends ConsumerStatefulWidget {
 }
 
 class _TicketsPageState extends ConsumerState<TicketsPage> {
-
   List<Ticket> tickets = [];
+
+  bool hasNoTickets = false;
   
   @override
   void initState() {
@@ -36,6 +37,9 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
       .then((value) {
         setState(() {
           tickets = value!;
+          if(tickets.isEmpty){
+            hasNoTickets = true;
+          }
         });
       });
   }
@@ -58,13 +62,15 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
             tickets.isEmpty
               ? Expanded(
                   child: Center(
-                    child: Text(
-                      "Nav biļetes",
-                      style: TextStyle(
-                        color: blue,
-                        fontSize: 16.w
-                      ),
-                    )
+                    child: hasNoTickets
+                      ? Text(
+                          "Nav biļetes",
+                          style: TextStyle(
+                            fontSize: 16.w,
+                            color: blue
+                          ),
+                        )
+                      : CircularProgressIndicator(color: blue)
                   ),
                 )
               : Expanded(

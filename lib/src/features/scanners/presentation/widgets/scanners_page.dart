@@ -25,6 +25,8 @@ class ScannersPage extends ConsumerStatefulWidget {
 class _ScannersPageState extends ConsumerState<ScannersPage> {
   List<Scanner> scanners = [];
 
+  bool hasNoScanners = false;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -40,6 +42,9 @@ class _ScannersPageState extends ConsumerState<ScannersPage> {
       .then((value) {
         setState(() {
           scanners = value!;
+          if(scanners.isEmpty){
+            hasNoScanners = true;
+          }
         });
       });
   }
@@ -62,7 +67,15 @@ class _ScannersPageState extends ConsumerState<ScannersPage> {
             scanners.isEmpty
               ? Expanded(
                   child: Center(
-                    child: CircularProgressIndicator(color: blue)
+                    child: hasNoScanners
+                      ? Text(
+                          "Nav pasākumu",
+                          style: TextStyle(
+                            fontSize: 16.w,
+                            color: blue
+                          ),
+                        )
+                      : CircularProgressIndicator(color: blue)
                   ),
                 )
               : Expanded(

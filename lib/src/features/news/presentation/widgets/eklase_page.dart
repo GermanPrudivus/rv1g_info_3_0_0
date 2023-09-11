@@ -26,6 +26,8 @@ class _EklasePageState extends ConsumerState<EklasePage> {
 
   List<EklaseNews> news = [];
 
+  bool hasNoNews = false;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -41,6 +43,9 @@ class _EklasePageState extends ConsumerState<EklasePage> {
       .then((value) {
         setState(() {
           news = value!;
+          if(news.isEmpty){
+            hasNoNews = true;
+          }
         });
       });
   }
@@ -55,7 +60,15 @@ class _EklasePageState extends ConsumerState<EklasePage> {
             news.isEmpty
               ? Expanded(
                   child: Center(
-                    child: CircularProgressIndicator(color: blue),
+                    child: hasNoNews
+                      ? Text(
+                          "Nav e-klases ziņu",
+                          style: TextStyle(
+                            fontSize: 16.w,
+                            color: blue
+                          ),
+                        )
+                      : CircularProgressIndicator(color: blue),
                   ),
                 )
               : Expanded(
