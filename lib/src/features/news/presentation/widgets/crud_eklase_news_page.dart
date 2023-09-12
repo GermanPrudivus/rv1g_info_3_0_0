@@ -132,6 +132,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
+        bottom: false,
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(left: 20.w, right: 20.w),
@@ -367,7 +368,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                 Padding(
                   padding: EdgeInsets.only(top: 10.h),
                   child: Text(
-                    '<b></b> - lai uztaisītu tekstu treknrakstā\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu tekstu kursīvā\n<link href="your_link"></link> - lai pievienotu saiti',
+                    '<b></b> - lai uztaisītu tekstu treknrakstā\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu tekstu kursīvā\n<link href=your_link></link> - lai pievienotu saiti',
                     style: TextStyle(
                       fontSize: 15.w
                     ),
@@ -525,7 +526,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
 
                 //Button
                 Padding(
-                  padding: EdgeInsets.only(top: 10.h, bottom: 20.h),
+                  padding: EdgeInsets.only(top: 10.h, bottom: 30.h),
                   child: ElevatedButton(
                     onPressed: () {
                       if(widget.edit) {

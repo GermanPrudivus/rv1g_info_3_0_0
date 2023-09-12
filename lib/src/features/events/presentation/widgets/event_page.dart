@@ -116,6 +116,7 @@ class EventPage extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
+        bottom: false,
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 5.h, bottom: 5.h),
@@ -231,7 +232,7 @@ class EventPage extends StatelessWidget {
                           )
                         )
                       ),
-                    SizedBox(height: 10.h)
+                    SizedBox(height: 20.h)
                   ],
                 )
               ],
