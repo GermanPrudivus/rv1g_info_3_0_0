@@ -168,7 +168,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                       ),
                       TextFormField(
                         initialValue: title,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                         style: TextStyle(
                           fontSize: 15.w
                         ),
@@ -220,7 +221,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                       ),
                       TextFormField(
                         initialValue: shortText,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                         style: TextStyle(
                           fontSize: 15.w
                         ),
@@ -275,7 +277,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                       ),
                       TextFormField(
                         initialValue: author,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                         style: TextStyle(
                           fontSize: 15.w
                         ),
@@ -327,7 +330,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                       ),
                       TextFormField(
                         initialValue: text,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                         style: TextStyle(
                           fontSize: 15.w
                         ),

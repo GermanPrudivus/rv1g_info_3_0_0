@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -31,6 +32,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
   
   @override
   void initState() {
+    FirebaseAnalytics.instance.logEvent(name: "one_eklase_page_opened");
     news = widget.news;
     super.initState();
   }
@@ -198,6 +200,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                           width: double.infinity,
                           child: GestureDetector(
                             onTap: () {
+                              FirebaseAnalytics.instance.logEvent(name: "image_opened");
                               showDialog(
                                 context: context,
                                 builder: (context) => buildImageZoom(context, json.decode(news.media[i])['image_url']),

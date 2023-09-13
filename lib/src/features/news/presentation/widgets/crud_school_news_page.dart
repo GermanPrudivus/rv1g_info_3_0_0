@@ -200,7 +200,8 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                       ),
                       TextFormField(
                         initialValue: text,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                         style: TextStyle(
                           fontSize: 15.w
                         ),

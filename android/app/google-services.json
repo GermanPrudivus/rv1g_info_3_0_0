@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "612731394663",
+    "project_id": "rv1g-info",
+    "storage_bucket": "rv1g-info.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612731394663:android:98e831470a1bbee59452c2",
+        "android_client_info": {
+          "package_name": "com.rv1g.info.rv1g_info"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612731394663-795ru4ipv61b7pik624uf7rmf0bdnivk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiX3lGQCSgNQRaE_6yZoj7PUwgzhsP0_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612731394663-795ru4ipv61b7pik624uf7rmf0bdnivk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

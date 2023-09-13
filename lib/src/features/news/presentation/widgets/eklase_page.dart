@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,6 +32,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      FirebaseAnalytics.instance.logEvent(name: "eklase_page_opened");
       getNews();
     });
     super.initState();

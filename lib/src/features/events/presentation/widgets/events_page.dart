@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,6 +35,7 @@ class _EventsPageState extends ConsumerState<EventsPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      FirebaseAnalytics.instance.logEvent(name: "events_page_opened");
       getEvents();
     });
     super.initState();
@@ -188,6 +190,7 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                                 ]
                               ),
                               onTap: () {
+                                FirebaseAnalytics.instance.logEvent(name: "event_page_opened");
                                 Navigator.of(context).push(
                                   PageRouteBuilder(
                                     pageBuilder: (context, animation, secondaryAnimation) {

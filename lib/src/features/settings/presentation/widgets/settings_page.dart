@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,6 +39,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      FirebaseAnalytics.instance.logEvent(name: "settings_page_opened");
       getUserInfo();
     });
     super.initState();
@@ -346,6 +348,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                               )
                             );
                           });
+                        FirebaseAnalytics.instance.logEvent(name: "user_logout");
                       },
                     ),
                   ],

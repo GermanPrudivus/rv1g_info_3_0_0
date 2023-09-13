@@ -168,7 +168,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                       ),
                       TextFormField(
                         initialValue: title,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                         style: TextStyle(
                           fontSize: 15.w
                         ),
@@ -341,7 +342,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                       ),
                       TextFormField(
                         initialValue: description,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                         style: TextStyle(
                           fontSize: 15.w
                         ),

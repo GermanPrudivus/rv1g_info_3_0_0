@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,6 +52,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
       (k) => dropdownValues[k] == widget.user.formId, 
       orElse: () => ""
     );
+    FirebaseAnalytics.instance.logEvent(name: "edit_user_page_opened");
     super.initState();
   }
 

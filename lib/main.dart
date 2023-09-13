@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:rv1g_info/src/components/difference_in_dates.dart';
@@ -18,6 +19,8 @@ import 'package:rv1g_info/src/features/shop/presentation/widgets/shop_page.dart'
 Future<void> main() async{
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  await Firebase.initializeApp();
   
   await Supabase.initialize(
     url: supabaseUrl,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,6 +37,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      FirebaseAnalytics.instance.logEvent(name: "school_page_opened");
       ref
         .read(schoolControllerProvider.notifier)
         .getUserId()

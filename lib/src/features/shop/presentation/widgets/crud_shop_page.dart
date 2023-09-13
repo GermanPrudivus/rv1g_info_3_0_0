@@ -166,7 +166,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                       ),
                       TextFormField(
                         initialValue: title,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                         style: TextStyle(
                           fontSize: 15.w
                         ),
@@ -218,7 +219,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                       ),
                       TextFormField(
                         initialValue: shortText,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                         style: TextStyle(
                           fontSize: 15.w
                         ),
@@ -273,7 +275,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                       ),
                       TextFormField(
                         initialValue: price,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                         style: TextStyle(
                           fontSize: 15.w
                         ),
@@ -325,7 +328,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                       ),
                       TextFormField(
                         initialValue: description,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
                         style: TextStyle(
                           fontSize: 15.w
                         ),

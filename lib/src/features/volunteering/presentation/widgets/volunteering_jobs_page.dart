@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,6 +32,7 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      FirebaseAnalytics.instance.logEvent(name: "jobs_page_opened");
       getJobs();
     });
     super.initState();
@@ -168,6 +170,7 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                         ),
                         onTap: () {
                           if(!enabled){
+                            FirebaseAnalytics.instance.logEvent(name: "job_page_opened");
                             Navigator.of(context).push(
                               PageRouteBuilder(
                                 pageBuilder: (context, animation, secondaryAnimation) {
