@@ -199,6 +199,9 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                             title = value;
                           });
                         },
+                        onTapOutside: (event) {
+                          FocusScope.of(context).unfocus();
+                        },
                         cursorColor: blue,
                       ),
                     ],
@@ -342,8 +345,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                       ),
                       TextFormField(
                         initialValue: description,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.multiline,
                         style: TextStyle(
                           fontSize: 15.w
                         ),
@@ -374,6 +376,9 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                           setState(() {
                             description = value;
                           });
+                        },
+                        onTapOutside: (event) {
+                          FocusScope.of(context).unfocus();
                         },
                         cursorColor: blue,
                       ),

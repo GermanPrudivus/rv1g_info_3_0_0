@@ -197,6 +197,9 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                             title = value;
                           });
                         },
+                        onTapOutside: (event) {
+                          FocusScope.of(context).unfocus();
+                        },
                         cursorColor: blue,
                       ),
                     ],
@@ -253,6 +256,9 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                             shortText = value;
                           });
                         },
+                        onTapOutside: (event) {
+                          FocusScope.of(context).unfocus();
+                        },
                         cursorColor: blue,
                       ),
                     ],
@@ -306,6 +312,9 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                             price = value;
                           });
                         },
+                        onTapOutside: (event) {
+                          FocusScope.of(context).unfocus();
+                        },
                         cursorColor: blue,
                       ),
                     ],
@@ -328,8 +337,7 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                       ),
                       TextFormField(
                         initialValue: description,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.multiline,
                         style: TextStyle(
                           fontSize: 15.w
                         ),
@@ -360,6 +368,9 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                           setState(() {
                             description = value;
                           });
+                        },
+                        onTapOutside: (event) {
+                          FocusScope.of(context).unfocus();
                         },
                         cursorColor: blue,
                       ),

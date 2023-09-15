@@ -200,8 +200,7 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                       ),
                       TextFormField(
                         initialValue: text,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.multiline,
                         style: TextStyle(
                           fontSize: 15.w
                         ),
@@ -232,6 +231,9 @@ class _CRUDSchoolNewsPageState extends ConsumerState<CRUDSchoolNewsPage> {
                           setState(() {
                             text = value;
                           });
+                        },
+                        onTapOutside: (event) {
+                          FocusScope.of(context).unfocus();
                         },
                         cursorColor: blue,
                       ),

@@ -205,6 +205,9 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                             title = value;
                           });
                         },
+                        onTapOutside: (event) {
+                          FocusScope.of(context).unfocus();
+                        },
                         cursorColor: blue,
                       ),
                     ],
@@ -258,6 +261,9 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                             setState(() {
                               email = value;
                             });
+                          },
+                          onTapOutside: (event) {
+                            FocusScope.of(context).unfocus();
                           },
                           cursorColor: blue,
                         ),
@@ -314,6 +320,9 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                           setState(() {
                             shortText = value;
                           });
+                        },
+                        onTapOutside: (event) {
+                          FocusScope.of(context).unfocus();
                         },
                         cursorColor: blue,
                       ),
@@ -458,8 +467,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                       ),
                       TextFormField(
                         initialValue: description,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.multiline,
                         style: TextStyle(
                           fontSize: 15.w
                         ),
@@ -490,6 +498,9 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                           setState(() {
                             description = value;
                           });
+                        },
+                        onTapOutside: (event) {
+                          FocusScope.of(context).unfocus();
                         },
                         cursorColor: blue,
                       ),

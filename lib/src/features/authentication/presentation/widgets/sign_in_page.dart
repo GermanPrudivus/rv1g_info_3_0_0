@@ -97,6 +97,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     fontSize: 15.w,
                     color: blue,
                   ),
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: "Email",
                     hintStyle: TextStyle(
@@ -126,6 +128,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     fontSize: 15.w,
                     color: blue,
                   ),
+                  textInputAction: TextInputAction.done,
                   decoration: InputDecoration(
                     hintText: "Password",
                     hintStyle: TextStyle(
