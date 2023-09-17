@@ -156,7 +156,7 @@ class _VerificationPageState extends State<VerificationPage> with WidgetsBinding
                 ),
 
                 Padding(
-                  padding: EdgeInsets.only(top: 5.h),
+                  padding: EdgeInsets.only(top: 5.h, bottom: 5.h),
                   child: ElevatedButton(
                     onPressed: _scanImage,
                     style: ElevatedButton.styleFrom(
