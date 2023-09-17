@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "612731394663",
+    "firebase_url": "https://rv1g-info-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "rv1g-info",
     "storage_bucket": "rv1g-info.appspot.com"
   },
@@ -29,10 +30,18 @@
             {
               "client_id": "612731394663-795ru4ipv61b7pik624uf7rmf0bdnivk.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "612731394663-5uueltef7tsrbocvulesopf7luilhmaf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rv1g.info.rv1gInfoo"
+              }
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-1571831472741790~5230591785"
     }
   ],
   "configuration_version": "1"
