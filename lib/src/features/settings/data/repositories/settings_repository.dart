@@ -122,8 +122,8 @@ class SettingsRepository {
           role: res[i]['role'], 
           description: res[i]['description'], 
           userId: res[i]['user_id'], 
-          startedDatetime: res[i]['started_datetime'], 
-          endedDatetime: res[i]['ended_datetime'] ?? ""
+          startedDatetime: res[i]['start_date'], 
+          endedDatetime: res[i]['end_date'] ?? ""
         )
       );
     }

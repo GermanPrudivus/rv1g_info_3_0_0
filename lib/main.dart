@@ -217,12 +217,12 @@ class _MyHomePageState extends State<MyHomePage> {
     for(int i=0;i<resRoles.length;i++){
       String role = resRoles[i]['role'];
       if(role[0] == 'P'){
-        if(differenceInDates(DateTime.parse(resRoles[i]['ended_datetime']), DateTime.now())[0] != "-"){
+        if(differenceInDates(DateTime.parse(resRoles[i]['end_date']), DateTime.now())[0] != "-"){
           events.add(role.substring(22));
           controllers.add(role.substring(22));
         }
       } else if(role == 'B'){
-        if(differenceInDates(DateTime.parse(resRoles[i]['ended_datetime']), DateTime.now())[0] != "-"){
+        if(differenceInDates(DateTime.parse(resRoles[i]['end_date']), DateTime.now())[0] != "-"){
           controllers.add(role.substring(22));
         }
       }
