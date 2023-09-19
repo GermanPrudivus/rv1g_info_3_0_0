@@ -228,7 +228,12 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
 
-    if(DateTime.now().day == 1 && DateTime.now().month == 9){
+    if(DateTime.now().day <=31
+      && DateTime.now().day >=10
+      && DateTime.now().month >=5
+      && DateTime.now().month <=6
+    ){
+
       final form = await supabase
         .from('forms')
         .select()
@@ -238,6 +243,12 @@ class _MyHomePageState extends State<MyHomePage> {
         await supabase
           .from('users')
           .update({'form_id':0})
+          .eq('email', email);
+      } else {
+        int id = dropdownValues['${form[0]['number']+1}.${form[0]['letter']} klase']!;
+        await supabase
+          .from('users')
+          .update({'form_id':id})
           .eq('email', email);
       }
     }
