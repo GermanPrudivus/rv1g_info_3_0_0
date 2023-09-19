@@ -228,6 +228,20 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
 
+    if(DateTime.now().day == 1 && DateTime.now().month == 9){
+      final form = await supabase
+        .from('forms')
+        .select()
+        .eq('id', res[0]['form_id']);
+
+      if(form[0]['number'] == 12){
+        await supabase
+          .from('users')
+          .update({'form_id':0})
+          .eq('email', email);
+      }
+    }
+
     return [
       profilePicUrl,
       name,
