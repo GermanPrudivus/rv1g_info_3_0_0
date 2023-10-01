@@ -393,7 +393,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         const SnackBar(
                           backgroundColor: Colors.red,
                           content: Text(
-                            'Please fill all forms with appropriative values!'
+                            'Please fill out all forms with appropriate values!'
                           )
                         )
                       );

@@ -61,7 +61,7 @@ class EventPage extends StatelessWidget {
           },
         ),
         actions: [
-          if(isAdmin)
+          if(isAdmin || hasRole)
             GestureDetector(
               onTap: () {
                 Navigator.push(
