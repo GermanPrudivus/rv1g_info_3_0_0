@@ -17,6 +17,7 @@ import 'item_page.dart';
 class ShopPage extends ConsumerStatefulWidget {
   final String profilePicUrl;
   final String fullName;
+  final String email;
   final bool isAdmin;
   final List<String> events;
   final List<String> controllers;
@@ -24,6 +25,7 @@ class ShopPage extends ConsumerStatefulWidget {
   const ShopPage({
     required this.profilePicUrl,
     required this.fullName,
+    required this.email,
     required this.isAdmin,
     required this.events,
     required this.controllers,
@@ -74,7 +76,7 @@ class _ShopPageState extends ConsumerState<ShopPage> {
         child: AppBarWidget(
           title: "Veikals", 
           profilePicUrl: widget.profilePicUrl,
-          add: widget.isAdmin, 
+          add: widget.isAdmin && (widget.email == "german.prudivus1008@gmail.com" || widget.email == "rv1g.info@gmail.com"), 
           navigateTo: CRUDShopPage(
             edit: false, 
             itemId: 0, 

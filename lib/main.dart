@@ -66,6 +66,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String profilePicUrl = "";
   String fullName = "";
+  String email = "";
   bool verified = false;
   bool admin = false;
   List<String> events = [];
@@ -82,10 +83,11 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           profilePicUrl = value[0];
           fullName = value[1];
-          verified = value[2];
-          admin = value[3];
-          events = value[4];
-          controllers = value[5];
+          email = value[2];
+          verified = value[3];
+          admin = value[4];
+          events = value[5];
+          controllers = value[6];
 
           screens = [
             NewsPage(
@@ -121,6 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ShopPage(
               profilePicUrl: profilePicUrl,
               fullName: fullName,
+              email: email,
               events: events,
               controllers: controllers,
               isAdmin: admin
@@ -256,6 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return [
       profilePicUrl,
       name,
+      email,
       res[0]['verified'],
       await supabase.auth.currentUser!.userMetadata!['admin'] ?? false,
       events,
