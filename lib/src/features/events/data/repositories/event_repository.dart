@@ -81,8 +81,8 @@ class EventRepository {
         'role' : 'Pasākumu organizators ${title}',
         'description' : 'Tev ir iespēja pievienot sava pasākuma dalībniekus un atļauta pieeja QR kodu skeneru sadaļai.',
         'user_id' : res[0]['id'],
-        'started_datetime': DateTime.now().toIso8601String(),
-        'ended_datetime' : endDate
+        'start_date': DateTime.now().toIso8601String(),
+        'end_date' : endDate
       });
   }
 

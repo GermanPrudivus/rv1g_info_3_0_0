@@ -52,7 +52,6 @@ class _ScanTicketPageState extends ConsumerState<ScanTicketPage> {
       setState(() {
         if(result != scanData.code.toString()){
           result = scanData.code.toString();
-          print(scanData.code.toString());
 
           List info = result.split(" ");
           Scanner scanner = widget.scanner;
@@ -70,9 +69,6 @@ class _ScanTicketPageState extends ConsumerState<ScanTicketPage> {
                 fullName = value![0];
                 form = value[1];
                 active = value[2];
-
-                print(fullName);
-                print(form);
               });
               if(
                 scanner.key == int.parse(info[4]) &&
@@ -157,7 +153,7 @@ class _ScanTicketPageState extends ConsumerState<ScanTicketPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Noskanēt biļeti:",
+                      "Noskenēt biļeti:",
                       style: TextStyle(
                         fontSize: 24.w,
                         fontWeight: FontWeight.bold

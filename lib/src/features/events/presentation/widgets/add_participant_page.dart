@@ -47,7 +47,6 @@ class _AddParticipantPageState extends State<AddParticipantPage> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         if(result != scanData.code.toString()){
-          print(scanData.code.toString());
           result = scanData.code.toString();
           showDialog(
             context: context, 

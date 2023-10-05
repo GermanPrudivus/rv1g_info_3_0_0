@@ -221,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
           events.add(role.substring(22));
           controllers.add(role.substring(22));
         }
-      } else if(role == 'B'){
+      } else if(role[0] == 'B'){
         if(differenceInDates(DateTime.parse(resRoles[i]['end_date']), DateTime.now())[0] != "-"){
           controllers.add(role.substring(22));
         }
@@ -229,9 +229,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     if(DateTime.now().day <=31
-      && DateTime.now().day >=10
+      && DateTime.now().day >=18
       && DateTime.now().month >=5
-      && DateTime.now().month <=6
+      && DateTime.now().month <6
     ){
 
       final form = await supabase

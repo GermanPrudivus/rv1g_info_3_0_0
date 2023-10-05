@@ -34,8 +34,8 @@ class EventService {
   }
 
   Future<void> deleteEvent(int id, List images) async{
-    await eventRepository.deleteEvent(id);
     await eventRepository.deleteRole(id);
+    await eventRepository.deleteEvent(id);
 
     if(images.isNotEmpty){
       for(int i=0;i<images.length;i++){
