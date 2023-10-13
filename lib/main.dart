@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:rv1g_info/src/components/difference_in_dates.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -27,6 +28,12 @@ Future<void> main() async{
     anonKey: supabaseAnnonKey,
     authFlowType: AuthFlowType.pkce,
   );
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, 
+    DeviceOrientation.portraitDown
+  ]);
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
