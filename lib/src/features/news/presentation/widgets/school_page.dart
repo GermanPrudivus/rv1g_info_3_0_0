@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:extended_image/extended_image.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
@@ -12,8 +11,6 @@ import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants/theme_colors.dart';
-import '../../domain/models/answer.dart';
-import '../../domain/models/poll.dart';
 import '../../domain/models/school_news.dart';
 
 class SchoolPage extends ConsumerStatefulWidget {

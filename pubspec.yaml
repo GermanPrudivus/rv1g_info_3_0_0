@@ -33,7 +33,6 @@ dependencies:
   flutter_polls: ^0.1.2
   intl: ^0.18.1
   table_calendar: ^3.0.9
-  extended_image: ^8.1.1
   rename: ^2.1.1
   flutter_native_splash: ^2.3.2
 
