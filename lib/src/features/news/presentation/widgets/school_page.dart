@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polls/flutter_polls.dart';
@@ -125,275 +126,263 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                     onRefresh: () {
                       return getNews();
                     },
-                    child: CustomScrollView(
-                      slivers: [
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContextcontext, int index){
-                              int newsId = news[index].id;
-                              List<String> text = news[index].text;
-                              List<String> media = news[index].media;
-                              String authorName = news[index].authorName;
-                              String authorAvatar = news[index].authorAvatar;
-                              DateTime created = DateTime.parse(news[index].createdDateTime);
-
-                              //poll
-                              Poll poll = news[index].poll;
-                              List<Answer> answersForNews = poll.answers;
-                              bool hasVoted = poll.hasVoted;
-                              int choosedAnswer = poll.choosedAnswer;
-                              DateTime pollEnd = DateTime.parse(poll.pollEnd);
-
-                              return Container(
-                                padding: EdgeInsets.only(top: 10.h, left: 7.5.w, right: 15.w, bottom: 10.h),
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: news[index].pin
-                                        ? blue
-                                        : Colors.grey,
-                                      width: news[index].pin
-                                        ? 2.5.h
-                                        : 0.5.h,
-                                    )
-                                  )
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    //avatar and like button
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        authorAvatar == ""
-                                          ? CircleAvatar(
-                                            radius: 20.h,
-                                            backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-                                            child: Icon(
-                                              Icons.person,
-                                              color: Colors.white,
-                                              size: 30.h,
-                                            )
-                                          )
-                                          : CircleAvatar(
-                                              radius: 20.h,
-                                              backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-                                              backgroundImage: NetworkImage(authorAvatar),
-                                            ),
-                                      ],
-                                    ),
-      
-                                    SizedBox(width: 7.5.w),
-      
-                                    //text
-                                    Flexible(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Expanded(
-                                                child: Row(
-                                                  children: [
-                                                    Flexible(
-                                                      child: Text(
-                                                        authorName,
-                                                        style: TextStyle(
-                                                          fontSize: 15.w,
-                                                          fontWeight: FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(width: 7.5.w),
-                                                    ClipOval(
-                                                      child: Container(
-                                                        color: Colors.grey,
-                                                        height: 3.w,
-                                                        width: 3.w,
-                                                      ),
-                                                    ),
-                                                    SizedBox(width: 7.5.w),
-                                                    Text(
-                                                      differenceInDates(DateTime.now(), created),
-                                                      style: TextStyle(
-                                                        fontSize: 15.w,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              if(widget.isAdmin)
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) {
-                                                          return CRUDSchoolNewsPage(
-                                                            edit: true,
-                                                            newsId: newsId,
-                                                            text: formatedText(text),
-                                                            pin: news[index].pin,
-                                                            poll: poll,
-                                                            images: media,
-                                                          );
-                                                        }
-                                                      )
-                                                    ).whenComplete(() {
-                                                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                                                        getNews();
-                                                      });
-                                                    });
-                                                  },
-                                                  child: Icon(
-                                                    Icons.edit,
-                                                    color: Colors.grey,
-                                                    size: 20.h,
-                                                  ),
-                                                )
-                                            ],
-                                          ),
-
-                                          //main text
-                                          for(int i=0;i<text.length;i++)
-                                            StyledText(
-                                              text: json.decode(text[i])['text'],
-                                              style: TextStyle(
-                                                fontSize: 15.w,
-                                              ),
-                                              textAlign: TextAlign.start,
-                                              tags: {
-                                                'b': StyledTextTag(style: const TextStyle(fontWeight: FontWeight.bold)),
-                                                'u': StyledTextTag(style: const TextStyle(decoration: TextDecoration.underline)),
-                                                'i': StyledTextTag(style: const TextStyle(fontStyle: FontStyle.italic)),
-                                                'link': StyledTextActionTag(
-                                                  (_, attrs) async {
-                                                    await launchUrl(Uri.parse(attrs['href']!));
-                                                  },
-                                                  style: const TextStyle(color: Colors.lightBlue),
-                                                ),
-                                              },
-                                            ),
-      
-                                          if(poll.id != 0 && text.isNotEmpty)
-                                            SizedBox(height: 15.h),
-
-                                          //poll
-                                          if(poll.id != 0)
-                                            FlutterPolls(
-                                              onVoted: (PollOption pollOption, _) async {
-                                                ref
-                                                  .read(schoolControllerProvider.notifier)
-                                                  .updateVotes(poll.id, pollOption.id!, userId)
-                                                  .whenComplete(() {
-                                                    setState(() {
-                                                      getNews();
-                                                    });
-                                                  });
-                                                return true;
-                                              }, 
-                                              pollId: poll.id.toString(),
-                                              pollTitle: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  poll.title,
-                                                  style: TextStyle(
-                                                    fontSize: 15.w,
-                                                    fontWeight: FontWeight.bold
-                                                  ),
-                                                ),
-                                              ),
-                                              pollEnded: differenceInDates(pollEnd, DateTime.now())[0] == "-",
-                                              hasVoted: hasVoted,
-                                              userVotedOptionId: choosedAnswer,
-                                              pollOptions: [
-                                                for(int i=0;i<answersForNews.length;i++)
-                                                  PollOption(
-                                                    id: answersForNews[i].id,
-                                                    title: Padding(
-                                                      padding: EdgeInsets.only(left: 5.w, right: 5.w),
-                                                      child: Align(
-                                                        alignment: Alignment.centerLeft,
-                                                        child: Text(
-                                                          answersForNews[i].answer,
-                                                          style: TextStyle(
-                                                            fontSize: 14.w
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    votes: answersForNews[i].votes
-                                                  )
-                                              ],
-                                              voteInProgressColor: Colors.white,
-                                              votedProgressColor:  transparentLightGrey,
-                                              votedBackgroundColor: Colors.white,
-                                              leadingVotedProgessColor: transparentLightGrey,
-                                              votedPercentageTextStyle: TextStyle(
-                                                fontSize: 14.w,
-                                                color: Colors.black
-                                              ),
-                                              votesText: "nobalsoja",
-                                              votesTextStyle: TextStyle(
-                                                fontSize: 13.w,
-                                                fontWeight: FontWeight.bold
-                                              ),
-                                              metaWidget: Row(
-                                                children: [
-                                                  SizedBox(width: 7.5.w),
-                                                  ClipOval(
-                                                    child: Container(
-                                                      color: Colors.black,
-                                                      height: 2.5.w,
-                                                      width: 2.5.w,
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 7.5.w),
-                                                  Text(
-                                                    differenceInDates(pollEnd, DateTime.now())[0] != "-"
-                                                      ? "${differenceInDates(pollEnd, DateTime.now())} palika nobalsot"
-                                                      : "balsošana beidzās",
-                                                    style: TextStyle(
-                                                      fontSize: 13.w,
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.bold
-                                                    ),
-                                                  ),
-                                                ]
-                                              )
-                                            ),
-                                    
-                                          //images
-                                          for(int i=0;i<media.length;i++)
-                                            Container(
-                                              padding: EdgeInsets.only(top: 5.h),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10.h)
-                                              ),
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(10.h),
-                                                child: Image.network(
-                                                  json.decode(media[i])['image_url'],
-                                                  fit: BoxFit.cover
-                                                ),
-                                              ),
-                                            ),
-                                        ]
+                    child: SingleChildScrollView(
+                      child: Column(
+                      children: [
+                       for(int index=0;index<news.length;index++)
+                        Container(
+                          padding: EdgeInsets.only(top: 10.h, left: 7.5.w, right: 15.w, bottom: 10.h),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: news[index].pin
+                                  ? blue
+                                  : Colors.grey,
+                                width: news[index].pin
+                                  ? 2.5.h
+                                  : 0.5.h,
+                              )
+                            )
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //avatar and like button
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  news[index].authorAvatar == ""
+                                    ? CircleAvatar(
+                                      radius: 20.h,
+                                      backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+                                      child: Icon(
+                                        Icons.person,
+                                        color: Colors.white,
+                                        size: 30.h,
                                       )
                                     )
-                                  ],
+                                    : CircleAvatar(
+                                        radius: 20.h,
+                                        backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+                                        backgroundImage: NetworkImage(news[index].authorAvatar),
+                                    ),
+                                ],
+                              ),
+    
+                              SizedBox(width: 7.5.w),
+      
+                              //text
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Row(
+                                            children: [
+                                              Flexible(
+                                                child: Text(
+                                                  news[index].authorName,
+                                                  style: TextStyle(
+                                                    fontSize: 15.w,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(width: 7.5.w),
+                                              ClipOval(
+                                                child: Container(
+                                                  color: Colors.grey,
+                                                  height: 3.w,
+                                                  width: 3.w,
+                                                ),
+                                              ),
+                                              SizedBox(width: 7.5.w),
+                                              Text(
+                                                differenceInDates(
+                                                  DateTime.now(), 
+                                                  DateTime.parse(news[index].createdDateTime)
+                                                ),
+                                                style: TextStyle(
+                                                  fontSize: 15.w,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        if(widget.isAdmin)
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return CRUDSchoolNewsPage(
+                                                      edit: true,
+                                                      newsId: news[index].id,
+                                                      text: formatedText(news[index].text),
+                                                      pin: news[index].pin,
+                                                      poll: news[index].poll,
+                                                      images: news[index].media,
+                                                    );
+                                                  }
+                                                )
+                                              ).whenComplete(() {
+                                                WidgetsBinding.instance.addPostFrameCallback((_) {
+                                                  getNews();
+                                                });
+                                              });
+                                            },
+                                            child: Icon(
+                                              Icons.edit,
+                                              color: Colors.grey,
+                                              size: 20.h,
+                                            ),
+                                          )
+                                      ],
+                                    ),
+
+                                    //main text
+                                    for(int i=0;i<news[index].text.length;i++)
+                                      StyledText(
+                                        text: json.decode(news[index].text[i])['text'],
+                                        style: TextStyle(
+                                          fontSize: 15.w,
+                                        ),
+                                        textAlign: TextAlign.start,
+                                        tags: {
+                                          'b': StyledTextTag(style: const TextStyle(fontWeight: FontWeight.bold)),
+                                          'u': StyledTextTag(style: const TextStyle(decoration: TextDecoration.underline)),
+                                          'i': StyledTextTag(style: const TextStyle(fontStyle: FontStyle.italic)),
+                                          'link': StyledTextActionTag(
+                                            (_, attrs) async {
+                                              await launchUrl(Uri.parse(attrs['href']!));
+                                            },
+                                            style: const TextStyle(color: Colors.lightBlue),
+                                          ),
+                                        },
+                                      ),
+      
+                                    if(news[index].poll.id != 0 && news[index].text.isNotEmpty)
+                                      SizedBox(height: 15.h),
+
+                                    //poll
+                                    if(news[index].poll.id != 0)
+                                      FlutterPolls(
+                                        onVoted: (PollOption pollOption, _) async {
+                                          ref
+                                            .read(schoolControllerProvider.notifier)
+                                            .updateVotes(news[index].poll.id, pollOption.id!, userId)
+                                            .whenComplete(() {
+                                              setState(() {
+                                                getNews();
+                                              });
+                                            });
+                                          return true;
+                                        }, 
+                                        pollId: news[index].poll.id.toString(),
+                                        pollTitle: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            news[index].poll.title,
+                                            style: TextStyle(
+                                              fontSize: 15.w,
+                                              fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                        ),
+                                        pollEnded: differenceInDates(
+                                          DateTime.parse(news[index].poll.pollEnd), 
+                                          DateTime.now()
+                                        )[0] == "-",
+                                        hasVoted: news[index].poll.hasVoted,
+                                        userVotedOptionId: news[index].poll.choosedAnswer,
+                                        pollOptions: [
+                                          for(int i=0;i<news[index].poll.answers.length;i++)
+                                            PollOption(
+                                              id: news[index].poll.answers[i].id,
+                                              title: Padding(
+                                                padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                                                child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text(
+                                                    news[index].poll.answers[i].answer,
+                                                    style: TextStyle(
+                                                      fontSize: 14.w
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              votes: news[index].poll.answers[i].votes
+                                            )
+                                        ],
+                                        voteInProgressColor: Colors.white,
+                                        votedProgressColor:  transparentLightGrey,
+                                        votedBackgroundColor: Colors.white,
+                                        leadingVotedProgessColor: transparentLightGrey,
+                                        votedPercentageTextStyle: TextStyle(
+                                          fontSize: 14.w,
+                                          color: Colors.black
+                                        ),
+                                        votesText: "nobalsoja",
+                                        votesTextStyle: TextStyle(
+                                          fontSize: 13.w,
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                        metaWidget: Row(
+                                          children: [
+                                            SizedBox(width: 7.5.w),
+                                            ClipOval(
+                                              child: Container(
+                                                color: Colors.black,
+                                                height: 2.5.w,
+                                                width: 2.5.w,
+                                              ),
+                                            ),
+                                            SizedBox(width: 7.5.w),
+                                            Text(
+                                              differenceInDates(DateTime.parse(news[index].poll.pollEnd), DateTime.now())[0] != "-"
+                                                ? "${differenceInDates(DateTime.parse(news[index].poll.pollEnd), DateTime.now())} palika nobalsot"
+                                                : "balsošana beidzās",
+                                              style: TextStyle(
+                                                fontSize: 13.w,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold
+                                              ),
+                                            ),
+                                          ]
+                                        )
+                                      ),
+                                    
+                                    //images
+                                    for(int i=0;i<news[index].media.length;i++)
+                                      Container(
+                                        padding: EdgeInsets.only(top: 5.h),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10.h)
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(10.h),
+                                          child: Image.network(
+                                            json.decode(news[index].media[i])['image_url'],
+                                            fit: BoxFit.cover
+                                          ),
+                                        ),
+                                      ),
+                                  ]
                                 )
-                              );
-                            },
-                            childCount: news.length
+                              )
+                            ],
                           )
-                        )
-                      ],
+                        ),
+                      ]
+                    )
                     )
                   ),
                 )
