@@ -15,9 +15,9 @@ class AuthService {
   }
 
   Future<void> signUp(String avatarPath, String email, String fullName, int form, String password) async {
-    await authRepository.signUp(email, password);
     if(!await authRepository.findCurrentUser(email)){
-      await authRepository.createUserInDB(avatarPath, email, fullName, form, password);
+      final uid = await authRepository.signUp(email, password);
+      await authRepository.createUserInDB(uid, avatarPath, email, fullName, form, password);
     }
   }
 

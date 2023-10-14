@@ -40,17 +40,19 @@ class AuthRepository {
     return userDeleted;
   }
 
-  Future<void> signUp(String email, String password) async {
-    await supabase
+  Future<String> signUp(String email, String password) async {
+    final res = await supabase
       .auth
       .signUp(
         email: email,
         password: password,
       );
+
+    return res.user!.id;
   }
 
-  Future<void> createUserInDB(
-    String avatarPath, String email, String fullName, int form, String password) async {
+  Future<void> createUserInDB(String uid, String avatarPath, String email, 
+     String fullName, int form, String password) async {
 
     final fullname = fullName.split(" ");
 
@@ -85,6 +87,7 @@ class AuthRepository {
       .from('users')
       .insert(
         toJson({
+          'uid': uid,
           'profile_pic_url': imageUrlResponse,
           'name': name,
           'surname': surname,
