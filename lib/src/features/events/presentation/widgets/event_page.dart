@@ -69,7 +69,8 @@ class EventPage extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) {
                       return CRUDEventPage(
-                        edit: true, 
+                        edit: true,
+                        isAdmin: isAdmin,
                         eventId: event.id, 
                         title: event.title, 
                         shortText: event.shortText, 

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -247,6 +248,7 @@ class _VerificationPageState extends State<VerificationPage> with WidgetsBinding
     await _cameraController!.initialize();
     await _cameraController!.setFlashMode(FlashMode.off);
     await _cameraController!.setFocusMode(FocusMode.locked);
+    await _cameraController!.lockCaptureOrientation(DeviceOrientation.portraitUp);
 
     if (!mounted) {
       return;

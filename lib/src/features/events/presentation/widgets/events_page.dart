@@ -65,6 +65,7 @@ class _EventsPageState extends ConsumerState<EventsPage> {
           add: widget.isAdmin, 
           navigateTo: CRUDEventPage(
             edit: false, 
+            isAdmin: widget.isAdmin,
             eventId: 0, 
             title: "", 
             shortText: "", 

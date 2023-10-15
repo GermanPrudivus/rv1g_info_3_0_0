@@ -16,6 +16,7 @@ import '../controllers/crud_event_controller.dart';
 
 class CRUDEventPage extends ConsumerStatefulWidget {
   final bool edit;
+  final isAdmin;
   final int eventId;
   final String title;
   final String shortText;
@@ -26,6 +27,7 @@ class CRUDEventPage extends ConsumerStatefulWidget {
 
   const CRUDEventPage({
     required this.edit,
+    required this.isAdmin,
     required this.eventId,
     required this.title,
     required this.shortText,
@@ -114,7 +116,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
         ),
         toolbarHeight: 60.h,
         actions: [
-          if(widget.edit)
+          if(widget.edit && widget.isAdmin)
             GestureDetector(
               onTap: () {
                 ref

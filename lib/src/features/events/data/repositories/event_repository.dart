@@ -138,7 +138,7 @@ class EventRepository {
     await supabase
       .from('roles')
       .update({
-        'ended_datetime':endDate,
+        'end_date':endDate,
         'role':'Pasākumu organizators ${title}'
       })
       .eq('role', 'Pasākumu organizators ${res[0]['title']}');
