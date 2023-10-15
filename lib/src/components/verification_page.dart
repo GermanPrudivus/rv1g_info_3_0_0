@@ -99,7 +99,7 @@ class _VerificationPageState extends State<VerificationPage> with WidgetsBinding
                 Padding(
                   padding: EdgeInsets.only(left: 2.w, right: 2.w),
                   child: StyledText(
-                    text: "Horizontāli nofotografējat Jūsas Rīgas Skolēna kartes aizmuguri! <b>Izdarot to, Jūs atļaujat apstrādāt datus no Jūsu dokumenta!</b>",
+                    text: "Horizontāli nofotografējiet Jūsu Rīgas Skolēna kartes aizmuguri! <b>Izdarot to, Jūs atļaujat apstrādāt datus no Jūsu dokumenta!</b>",
                     style: TextStyle(
                       fontSize: 16.w,
                       color: blue
@@ -112,7 +112,7 @@ class _VerificationPageState extends State<VerificationPage> with WidgetsBinding
                 ),
                 SizedBox(height: 10.h),
                 Text(
-                  "Jūsu kartes fotogrāfija un informācija no tās netiek nekur glabāta, un tā tiek izmantota tikai vienreizēji!",
+                  "Jūsu kartes fotogrāfija un informācija no tās netiek nekur glabāta, un tā tiek izmantota tikai vienreiz!",
                   style: TextStyle(
                     fontSize: 14.w,
                     color: Colors.red
