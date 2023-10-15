@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -125,31 +126,45 @@ class _VerificationPageState extends State<VerificationPage> with WidgetsBinding
                     Container(
                       margin: EdgeInsets.only(top: 5.h, bottom: 10.h),
                       decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(15.h),
+                        borderRadius: BorderRadius.circular(15.h),
                       ),
                       alignment: Alignment.center,
-                      height: _isPermissionGranted
-                        ? 400.h
-                        : 320.h,
                       child: _isPermissionGranted
                         ? FutureBuilder<List<CameraDescription>>(
                             future: availableCameras(),
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 _initCameraController(snapshot.data!);
-                                return Center(child: CameraPreview(_cameraController!));
+                                return Center(
+                                  child: FittedBox(
+                                    fit: BoxFit.fitWidth,
+                                    child: SizedBox(
+                                      width: _cameraController?.value.previewSize?.height ?? 100.h,
+                                      height: (_cameraController?.value.previewSize?.height ?? 70.h) + 250.h,
+                                      child: CameraPreview(_cameraController!),
+                                    ),
+                                  ),
+                                );
                               } else {
-                                return CircularProgressIndicator(color: blue);
+                                return Container(
+                                  height: 320.h,
+                                  child: Center(
+                                    child: CircularProgressIndicator(color: blue),
+                                  ),
+                                );
                               }
                             },
                           )
-                        : Text(
-                            "Atļaujiet pieeju Jūsu telefona kamerai, lai turpināt!",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 20.w
+                        : SizedBox(
+                            height: 320.h,
+                            child: Text(
+                              "Atļaujiet pieeju Jūsu telefona kamerai, lai turpināt!",
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 20.w
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
                           )
                     ),
                   ],
@@ -253,17 +268,33 @@ class _VerificationPageState extends State<VerificationPage> with WidgetsBinding
 
       String text = recognizedText.text.toLowerCase();
       List<String> fullname = widget.fullName.split(" ");
-
+      print(text);
       if(
         text.contains(fullname[0].toLowerCase()) &&
         text.contains(fullname[1].toLowerCase()) &&
         (
-          text.contains("rigas valsts 1. gimn.") ||
-          text.contains("rīgas valsts 1. gimn.") ||
-          text.contains("rīgas valsts 1. ģimn.") ||
-          text.contains("rigas valsts 1. ģimn.") ||
-          text.contains("rigas valsts 1, gimn.") ||
-          text.contains("rigas valsts 1, gimn") 
+          (
+            text.contains("rigas") ||
+            text.contains("rīgas")
+          )
+          &&
+          (
+            text.contains("valsts")
+          )
+          &&
+          (
+            text.contains("1.") ||
+            text.contains("1,")
+          )
+          &&
+          (
+            text.contains("gimn.") ||
+            text.contains("gimn") ||
+            text.contains("gimn,") ||
+            text.contains("ģimn.") ||
+            text.contains("ģimn") ||
+            text.contains("ģimn,")
+          )
         )
       ){
         verifyUser().whenComplete(() {
