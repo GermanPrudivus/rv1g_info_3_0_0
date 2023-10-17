@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/features/news/presentation/controllers/school_controller.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/crud_school_news_page.dart';
 import 'package:styled_text/styled_text.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants/theme_colors.dart';
@@ -275,7 +276,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                         onVoted: (PollOption pollOption, _) async {
                                           ref
                                             .read(schoolControllerProvider.notifier)
-                                            .updateVotes(news[index].poll.id, pollOption.id!, userId)
+                                            .updateVotes(news[index].poll.id, toInt(pollOption.id)!, userId)
                                             .whenComplete(() {
                                               setState(() {
                                                 getNews();
@@ -299,11 +300,11 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                           DateTime.now()
                                         )[0] == "-",
                                         hasVoted: news[index].poll.hasVoted,
-                                        userVotedOptionId: news[index].poll.choosedAnswer,
+                                        userVotedOptionId: news[index].poll.choosedAnswer.toString(),
                                         pollOptions: [
                                           for(int i=0;i<news[index].poll.answers.length;i++)
                                             PollOption(
-                                              id: news[index].poll.answers[i].id,
+                                              id: news[index].poll.answers[i].id.toString(),
                                               title: Padding(
                                                 padding: EdgeInsets.only(left: 5.w, right: 5.w),
                                                 child: Align(
