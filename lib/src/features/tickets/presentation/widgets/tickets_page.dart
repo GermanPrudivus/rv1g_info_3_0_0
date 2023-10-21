@@ -78,157 +78,152 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                   onRefresh: () {
                     return getTickets();
                   },
-                  child: ListView.builder(
-                   itemCount: tickets.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      bool enabled = true;
-
-                      if(differenceInDates(DateTime.parse(tickets[index].endDateTime), DateTime.now())[0] == "-"){
-                        enabled = false;
-                      }
-                      
-                      return GestureDetector(
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 7.5.w, right: 7.5.w, top: 10.h, bottom: 10.h),
-                              padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 12.5.w, left: 12.5.w),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.w),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: shadowBlue,
-                                    blurRadius: 2.w,
-                                    spreadRadius: 1.w,
-                                    offset: const Offset(0, 2)
-                                    ),
-                                ]
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        tickets[index].title,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 20.w
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for(int index=0;index<tickets.length;index++)
+                          GestureDetector(
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(left: 7.5.w, right: 7.5.w, top: 10.h, bottom: 10.h),
+                                  padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 12.5.w, left: 12.5.w),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.w),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: shadowBlue,
+                                        blurRadius: 2.w,
+                                        spreadRadius: 1.w,
+                                        offset: const Offset(0, 2)
                                         ),
-                                      ),
-                                      SizedBox(height: 7.5.h),
-                                      Row(
+                                    ]
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Biļete derīga:',
-                                                style: TextStyle(
-                                                  fontSize: 15.w,
-                                                  fontWeight: FontWeight.w500
-                                                ),
-                                              ),
-                                              SizedBox(height: 2.5.h,),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Column(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        "No:",
-                                                        style: TextStyle(
-                                                          fontSize: 13.w,
-                                                       ),
-                                                      ),
-                                                      SizedBox(height: 5.h,),
-                                                      Text(
-                                                        DateFormat('dd.MM.yyyy. HH:mm', 'en_US')
-                                                          .format(
-                                                            DateTime.parse(tickets[index].createdDateTime)
-                                                         ),
-                                                        style: TextStyle(
-                                                          fontSize: 14.5.w,
-                                                          fontWeight: FontWeight.bold
-                                                       ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(width: 10.w),
-                                                  Column(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        "Līdz:",
-                                                        style: TextStyle(
-                                                          fontSize: 13.w,
-                                                       ),
-                                                      ),
-                                                      SizedBox(height: 5.h,),
-                                                      Text(
-                                                        DateFormat('dd.MM.yyyy. HH:mm', 'en_US')
-                                                          .format(
-                                                            DateTime.parse(tickets[index].endDateTime)
-                                                         ),
-                                                        style: TextStyle(
-                                                          fontSize: 14.5.w,
-                                                          fontWeight: FontWeight.bold
-                                                       ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              )
-                                            ]
+                                          Text(
+                                            tickets[index].title,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                              fontSize: 20.w
+                                            ),
                                           ),
+                                          SizedBox(height: 7.5.h),
+                                          Row(
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Biļete derīga:',
+                                                    style: TextStyle(
+                                                      fontSize: 15.w,
+                                                      fontWeight: FontWeight.w500
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 2.5.h,),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Column(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            "No:",
+                                                            style: TextStyle(
+                                                              fontSize: 13.w,
+                                                           ),
+                                                          ),
+                                                          SizedBox(height: 5.h,),
+                                                          Text(
+                                                            DateFormat('dd.MM.yyyy. HH:mm', 'en_US')
+                                                              .format(
+                                                                DateTime.parse(tickets[index].createdDateTime)
+                                                             ),
+                                                            style: TextStyle(
+                                                              fontSize: 14.5.w,
+                                                              fontWeight: FontWeight.bold
+                                                           ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      SizedBox(width: 10.w),
+                                                      Column(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            "Līdz:",
+                                                            style: TextStyle(
+                                                              fontSize: 13.w,
+                                                           ),
+                                                          ),
+                                                          SizedBox(height: 5.h,),
+                                                          Text(
+                                                            DateFormat('dd.MM.yyyy. HH:mm', 'en_US')
+                                                              .format(
+                                                                DateTime.parse(tickets[index].endDateTime)
+                                                             ),
+                                                            style: TextStyle(
+                                                              fontSize: 14.5.w,
+                                                              fontWeight: FontWeight.bold
+                                                           ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  )
+                                                ]
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+    
+                                      Column(
+                                        children: [
+                                          if(differenceInDates(DateTime.parse(tickets[index].endDateTime), DateTime.now())[0] != "-")
+                                            Icon(
+                                              Icons.chevron_right,
+                                              size: 26.h,
+                                              color: blue,
+                                          )
                                         ],
                                       )
                                     ],
                                   ),
-
-                                  Column(
-                                    children: [
-                                      if(enabled)
-                                        Icon(
-                                          Icons.chevron_right,
-                                          size: 26.h,
-                                          color: blue,
-                                        )
-                                    ],
-                                  )
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        onTap: () {
-                          Ticket ticket = tickets[index];
-                          String data = "";
-
-                          data = ticket.id.toString() +" "
-                                + ticket.userId.toString() +" "
-                                + ticket.eventId.toString() +" "
-                                + ticket.title +" "
-                                + ticket.key.toString() +" "
-                                + ticket.endDateTime.toString();
-                            
-                          if(enabled){
-                            showDialog(
-                              context: context, 
-                              builder: (context) => TicketQRCodeWidget(data: data),
-                              barrierDismissible: true,
-                            );
-                          }
-                        },
-                      );
-                    }
+                            onTap: () {
+                              Ticket ticket = tickets[index];
+                              String data = "";
+    
+                              data = ticket.id.toString() +" "
+                                    + ticket.userId.toString() +" "
+                                    + ticket.eventId.toString() +" "
+                                    + ticket.title +" "
+                                    + ticket.key.toString() +" "
+                                    + ticket.endDateTime.toString();
+                                
+                              if(differenceInDates(DateTime.parse(tickets[index].endDateTime), DateTime.now())[0] != "-"){
+                                showDialog(
+                                  context: context, 
+                                  builder: (context) => TicketQRCodeWidget(data: data),
+                                  barrierDismissible: true,
+                                );
+                              }
+                            },
+                          )
+                      ]
+                    )
                   ),
                 ),
               )

@@ -99,12 +99,10 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                   onRefresh: () {
                     return getEvents();
                   },
-                  child: ListView.builder(
-                   itemCount: events.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for(int index=0;index<events.length;index++)
                           Container(
                             margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
                             padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 5.w, left: 5.w),
@@ -219,9 +217,8 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                               isThreeLine: true,
                             )
                           ),
-                        ],
-                      );
-                    }
+                      ],
+                    )
                   ),
                 ),
               )

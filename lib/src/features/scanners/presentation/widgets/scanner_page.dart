@@ -120,81 +120,82 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
                   onRefresh: () {
                     return getParticipants();
                   },
-                  child: ListView.builder(
-                   itemCount: participants.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 25.w, left: 25.w),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border(
-                                bottom: BorderSide(
-                                  color:Colors.grey,
-                                  width: 1.h,
-                                )
-                            )
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for(int index=0;index<participants.length;index++)
+                          Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 25.w, left: 25.w),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color:Colors.grey,
+                                      width: 1.h,
+                                    )
+                                  )
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      participants[index].fullName,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: 17.w
-                                      ),
-                                    ),
-                                    SizedBox(height: 5.h),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                        Text(
+                                          participants[index].fullName,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 17.w
+                                          ),
+                                        ),
+                                        SizedBox(height: 5.h),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              participants[index].active
-                                                ? 'Aktīvs dalībnieks'
-                                                : 'Neaktīvs dalībnieks',
-                                              style: TextStyle(
-                                                fontSize: 13.h,
-                                                color: participants[index].active
-                                                  ? Colors.green
-                                                  : Colors.red
-                                              ),
-                                            )
-                                          ]
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  participants[index].active
+                                                    ? 'Aktīvs dalībnieks'
+                                                    : 'Neaktīvs dalībnieks',
+                                                  style: TextStyle(
+                                                    fontSize: 13.h,
+                                                    color: participants[index].active
+                                                      ? Colors.green
+                                                      : Colors.red
+                                                  ),
+                                                )
+                                              ]
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
+    
+                                    Column(
+                                      children: [
+                                        Text(
+                                          participants[index].form,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 16.w
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                   ],
                                 ),
-
-                                Column(
-                                  children: [
-                                    Text(
-                                      participants[index].form,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: 16.w
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    }
+                              ),
+                            ],
+                          )
+                      ]
+                    )
                   ),
                 ),
               )

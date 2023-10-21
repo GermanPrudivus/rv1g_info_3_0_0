@@ -138,10 +138,11 @@ class SettingsRepository {
   }
 
   Future<void> deleteUser() async {
-    final user = await supabase.auth.currentUser!; 
+    final email = await supabase.auth.currentUser!.email;
 
     await supabase
-      .auth.updateUser(
+      .auth
+      .updateUser(
         UserAttributes(
           data: {'deleted':true}
         )
@@ -150,7 +151,7 @@ class SettingsRepository {
     await supabase
       .from('users')
       .delete()
-      .eq('email', user.email);
+      .eq('email', email);
   }
 }
 

@@ -83,106 +83,104 @@ class _ScannersPageState extends ConsumerState<ScannersPage> {
                   onRefresh: () {
                     return getScanners();
                   },
-                  child: ListView.builder(
-                   itemCount: scanners.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      if(widget.controllers.contains(scanners[index].title) || widget.isAdmin){
-                        return GestureDetector(
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
-                                padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 20.w, left: 20.w),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.w),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: shadowBlue,
-                                      blurRadius: 2.w,
-                                      spreadRadius: 1.w,
-                                      offset: const Offset(0, 2)
-                                    ),
-                                  ]
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          scanners[index].title,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            fontSize: 20.w
-                                          ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for(int index=0;index<scanners.length;index++)
+                          if(widget.controllers.contains(scanners[index].title) || widget.isAdmin)
+                            GestureDetector(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
+                                    padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 20.w, left: 20.w),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.w),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: shadowBlue,
+                                          blurRadius: 2.w,
+                                          spreadRadius: 1.w,
+                                          offset: const Offset(0, 2)
                                         ),
-                                        SizedBox(height: 2.5.h),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                      ]
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                            Text(
+                                              scanners[index].title,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                                fontSize: 20.w
+                                              ),
+                                            ),
+                                            SizedBox(height: 2.5.h),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment: MainAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  'Dalībnieku skaits: ${scanners[index].participantQuant}',
-                                                  style: TextStyle(
-                                                    fontSize: 15.w,
-                                                  ),
-                                                )
-                                              ]
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      'Dalībnieku skaits: ${scanners[index].participantQuant}',
+                                                      style: TextStyle(
+                                                        fontSize: 15.w,
+                                                      ),
+                                                    )
+                                                  ]
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    ),
-
-                                    Column(
-                                      children: [
-                                        Icon(
-                                          Icons.chevron_right,
-                                          size: 30.h,
-                                          color: blue,
+    
+                                        Column(
+                                          children: [
+                                            Icon(
+                                              Icons.chevron_right,
+                                              size: 30.h,
+                                              color: blue,
+                                            )
+                                          ],
                                         )
                                       ],
-                                    )
-                                  ],
-                                ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              PageRouteBuilder(
-                                pageBuilder: (context, animation, secondaryAnimation) {
-                                  return ScannerPage(
-                                    scanner: scanners[index]
-                                  );
-                                },
-                                transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                  const begin = Offset(1.0, 0.0);
-                                  const end = Offset.zero;
-                                  const curve = Curves.easeIn;
-                                          
-                                  var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                                          
-                                  return SlideTransition(
-                                    position: animation.drive(tween),
-                                    child: child,
-                                  );
-                                },
-                              )
-                            ).whenComplete(() => getScanners());
-                          },
-                        );
-                      } else {
-                        return null;
-                      }
-                    }
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation, secondaryAnimation) {
+                                      return ScannerPage(
+                                        scanner: scanners[index]
+                                      );
+                                    },
+                                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                      const begin = Offset(1.0, 0.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.easeIn;
+                                              
+                                      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                              
+                                      return SlideTransition(
+                                        position: animation.drive(tween),
+                                        child: child,
+                                      );
+                                    },
+                                  )
+                                ).whenComplete(() => getScanners());
+                              },
+                            )
+                      ]
+                    )
                   ),
                 ),
               )

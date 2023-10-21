@@ -120,134 +120,135 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                     onRefresh: () {
                       return getItems();
                     },
-                    child: ListView.builder(
-                      itemCount: items.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap:() {
-                            Navigator.of(context).push(
-                              PageRouteBuilder(
-                                pageBuilder: (context, animation, secondaryAnimation) {
-                                  return ItemPage(
-                                    isAdmin: widget.isAdmin,
-                                    item: items[index],
-                                  );
-                                },
-                                transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                  const begin = Offset(1.0, 0.0);
-                                  const end = Offset.zero;
-                                  const curve = Curves.easeIn;
-                                          
-                                 var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                                          
-                                  return SlideTransition(
-                                    position: animation.drive(tween),
-                                    child: child,
-                                  );
-                                },
-                              )
-                            ).whenComplete(() => getItems());
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
-                            padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 15.h, bottom: 15.h),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.w),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: shadowBlue,
-                                  blurRadius: 2.w,
-                                  spreadRadius: 1.w,
-                                  offset: const Offset(0, 2)
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          for(int index=0;index<items.length;index++)
+                            GestureDetector(
+                              onTap:() {
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation, secondaryAnimation) {
+                                      return ItemPage(
+                                        isAdmin: widget.isAdmin,
+                                        item: items[index],
+                                      );
+                                    },
+                                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                      const begin = Offset(1.0, 0.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.easeIn;
+                                              
+                                     var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                              
+                                      return SlideTransition(
+                                        position: animation.drive(tween),
+                                        child: child,
+                                      );
+                                    },
+                                  )
+                                ).whenComplete(() => getItems());
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
+                                padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 15.h, bottom: 15.h),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.w),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: shadowBlue,
+                                      blurRadius: 2.w,
+                                      spreadRadius: 1.w,
+                                      offset: const Offset(0, 2)
+                                    ),
+                                  ]
                                 ),
-                              ]
-                            ),
-                            child:  Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  flex: 5,
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10.w),
-                                        ),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(10.w),
-                                          child: items[index].media.isEmpty
-                                            ? Container(
-                                                height: 100.h,
-                                                color: Colors.grey,
-                                              )
-                                            : Image.network(
-                                                json.decode(items[index].media[0])['image_url'],
-                                                fit: BoxFit.fill,
-                                              ),
-                                        )
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 10.w),
-
-                                Expanded(
-                                  flex: 5,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        items[index].title,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 18.w
-                                        ),
-                                      ),
-                                      SizedBox(height: 5.h),
-                                      StyledText(
-                                        text: items[index].shortText,
-                                        style: TextStyle(
-                                          fontSize: 14.w,
-                                         color: Colors.black
-                                        ),
-                                        tags: {
-                                          'b': StyledTextTag(style: const TextStyle(fontWeight: FontWeight.bold)),
-                                          'u': StyledTextTag(style: const TextStyle(decoration: TextDecoration.underline)),
-                                          'i': StyledTextTag(style: const TextStyle(fontStyle:FontStyle.italic))
-                                        },
-                                      ),
-                                      SizedBox(height: 10.h),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                child:  Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      flex: 5,
+                                      child: Column(
                                         children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                items[index].price,
-                                                style: TextStyle(
-                                                  fontSize: 15.w,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black
-                                                ),
-                                              ),
-                                            ]
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10.w),
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(10.w),
+                                              child: items[index].media.isEmpty
+                                                ? Container(
+                                                    height: 100.h,
+                                                    color: Colors.grey,
+                                                  )
+                                                : Image.network(
+                                                    json.decode(items[index].media[0])['image_url'],
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                            )
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
+                                    ), 
+                                    SizedBox(width: 10.w),
+    
+                                    Expanded(
+                                      flex: 5,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            items[index].title,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                              fontSize: 18.w
+                                            ),
+                                          ),
+                                          SizedBox(height: 5.h),
+                                          StyledText(
+                                            text: items[index].shortText,
+                                            style: TextStyle(
+                                              fontSize: 14.w,
+                                             color: Colors.black
+                                            ),
+                                            tags: {
+                                              'b': StyledTextTag(style: const TextStyle(fontWeight: FontWeight.bold)),
+                                              'u': StyledTextTag(style: const TextStyle(decoration: TextDecoration.underline)),
+                                              'i': StyledTextTag(style: const TextStyle(fontStyle:FontStyle.italic))
+                                            },
+                                          ),
+                                          SizedBox(height: 10.h),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    items[index].price,
+                                                    style: TextStyle(
+                                                      fontSize: 15.w,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.black
+                                                    ),
+                                                  ),
+                                                ]
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ]
                                 )
-                              ]
+                              )
                             )
-                          )
-                        );
-                      }
+                        ]
+                      )
                     ),
                   ),
                 )

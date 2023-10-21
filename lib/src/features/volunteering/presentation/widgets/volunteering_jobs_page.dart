@@ -94,109 +94,104 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                   onRefresh: () {
                     return getJobs();
                   },
-                  child: ListView.builder(
-                   itemCount: jobs.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      bool enabled = true;
-
-                      if(differenceInDates(DateTime.parse(jobs[index].endDate), DateTime.now())[0] == "-"){
-                        enabled = false;
-                      }
-
-                      return GestureDetector(
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
-                              padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 15.w, left: 15.w),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.w),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: enabled
-                                      ? shadowBlue
-                                      : Colors.black26,
-                                    blurRadius: 2.w,
-                                    spreadRadius: enabled
-                                      ? 1.w
-                                      : 0.5.w,
-                                    offset: const Offset(0, 2)
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for(int index=0;index<jobs.length;index++)
+                          GestureDetector(
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h, bottom: 10.h),
+                                  padding: EdgeInsets.only(top: 15.h, bottom: 15.h, right: 15.w, left: 15.w),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.w),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: differenceInDates(DateTime.parse(jobs[index].endDate), DateTime.now())[0] != "-"
+                                          ? shadowBlue
+                                          : Colors.black26,
+                                        blurRadius: 2.w,
+                                        spreadRadius: differenceInDates(DateTime.parse(jobs[index].endDate), DateTime.now())[0] != "-"
+                                          ? 1.w
+                                          : 0.5.w,
+                                        offset: const Offset(0, 2)
+                                      ),
+                                    ]
                                   ),
-                                ]
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    jobs[index].title,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: enabled
-                                        ? Colors.black
-                                        : Colors.black45,
-                                      fontSize: 18.w
-                                    ),
-                                  ),
-                                  SizedBox(height: 6.h),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                      Text(
+                                        jobs[index].title,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: differenceInDates(DateTime.parse(jobs[index].endDate), DateTime.now())[0] != "-"
+                                            ? Colors.black
+                                            : Colors.black45,
+                                          fontSize: 18.w
+                                        ),
+                                      ),
+                                      SizedBox(height: 6.h),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
-                                          Text(
-                                            DateFormat('dd.MM.yyyy.', 'en_US')
-                                              .format(
-                                                DateTime.parse(jobs[index].startDate)
-                                              ),
-                                            style: TextStyle(
-                                              fontSize: 13.5.w,
-                                              color: enabled
-                                                ? Colors.black
-                                                : Colors.black45
-                                            ),
-                                          )
-                                        ]
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                DateFormat('dd.MM.yyyy.', 'en_US')
+                                                  .format(
+                                                    DateTime.parse(jobs[index].startDate)
+                                                  ),
+                                                style: TextStyle(
+                                                  fontSize: 13.5.w,
+                                                  color: differenceInDates(DateTime.parse(jobs[index].endDate), DateTime.now())[0] != "-"
+                                                    ? Colors.black
+                                                    : Colors.black45
+                                                ),
+                                              )
+                                            ]
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        onTap: () {
-                          if(!enabled){
-                            FirebaseAnalytics.instance.logEvent(name: "job_page_opened");
-                            Navigator.of(context).push(
-                              PageRouteBuilder(
-                                pageBuilder: (context, animation, secondaryAnimation) {
-                                  return VolunteeringJobPage(
-                                    isAdmin: widget.isAdmin,
-                                    job: jobs[index],
-                                  );
-                                },
-                                transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                  const begin = Offset(1.0, 0.0);
-                                  const end = Offset.zero;
-                                  const curve = Curves.easeIn;
+                            onTap: () {
+                              if(differenceInDates(DateTime.parse(jobs[index].endDate), DateTime.now())[0] != "-"){
+                                FirebaseAnalytics.instance.logEvent(name: "job_page_opened");
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation, secondaryAnimation) {
+                                      return VolunteeringJobPage(
+                                        isAdmin: widget.isAdmin,
+                                        job: jobs[index],
+                                      );
+                                    },
+                                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                      const begin = Offset(1.0, 0.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.easeIn;
                                           
-                                  var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                                          
-                                  return SlideTransition(
-                                    position: animation.drive(tween),
-                                    child: child,
-                                  );
-                                },
-                              )
-                            ).whenComplete(() => getJobs());
-                          }
-                        },
-                      );
-                    }
+                                      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                              
+                                      return SlideTransition(
+                                        position: animation.drive(tween),
+                                        child: child,
+                                      );
+                                    },
+                                  )
+                                ).whenComplete(() => getJobs());
+                              }
+                            },
+                          )
+                      ]
+                    )
                   ),
                 ),
               )

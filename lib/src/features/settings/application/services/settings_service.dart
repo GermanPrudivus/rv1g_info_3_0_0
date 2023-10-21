@@ -38,7 +38,9 @@ class SettingsService {
   }
 
   Future<void> deleteUser(String avatarUrl) async {
-    await settingsRepository.deleteImage(avatarUrl, 'avatars');
+    if(avatarUrl == ""){
+      await settingsRepository.deleteImage(avatarUrl, 'avatars');
+    }
     await settingsRepository.deleteUser();
   }
 }
