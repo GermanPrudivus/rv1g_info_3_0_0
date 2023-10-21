@@ -334,7 +334,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   validator: FieldValidator.password(
                     minLength: 8,
                     shouldContainNumber: true,
-                    errorMessage: "Passwords should be at least 8 characters long and contain at least 1 number!"
+                    errorMessage: "Password should be at least\n8 characters long and contain 1 number!"
                   ),
                 ),
               ),
