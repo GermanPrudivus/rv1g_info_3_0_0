@@ -48,10 +48,14 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
     user = widget.user;
     profilePicUrl = widget.user.profilePicUrl;
     fullName = widget.user.fullName;
-    dropdownValue = dropdownValues.keys.firstWhere(
-      (k) => dropdownValues[k] == widget.user.formId, 
-      orElse: () => ""
-    );
+    if(user.formId != 34){
+      dropdownValue = dropdownValues.keys.firstWhere(
+        (k) => dropdownValues[k] == widget.user.formId, 
+        orElse: () => ""
+      );
+    } else {
+      dropdownValue = "Absolvents";
+    }
     FirebaseAnalytics.instance.logEvent(name: "edit_user_page_opened");
     super.initState();
   }
@@ -227,49 +231,50 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                     ),
                   ),
 
-                  Padding(
-                    padding: EdgeInsets.only(left: 40.w, right: 5.w),
-                    child: DropdownButton<String>(
-                      menuMaxHeight: 350.h,
-                      isExpanded: true,
-                      itemHeight: 50.h,
-                      borderRadius: BorderRadius.circular(20.w),
-                      iconEnabledColor: blue,
-                      dropdownColor: const Color.fromRGBO(241, 244, 251, 1),
-                      value: dropdownValue,
-                      elevation: 60.h.toInt(),
-                      style: TextStyle(
-                        fontSize: 15.w,
-                        color: blue,
-                      ),
-                      underline: Container(
-                        height: 2.h,
-                        color: transparentLightGrey,
-                      ),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownValue = newValue.toString();
-                       });
-                      },
-                      items: dropdownValues.keys
-                          .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: TextStyle(
-                                  color: value == "Izvēlies savu klasi"
-                                    ? lightGrey
-                                    : blue
+                  if(dropdownValue != "Absolvents")
+                    Padding(
+                      padding: EdgeInsets.only(left: 40.w, right: 5.w),
+                      child: DropdownButton<String>(
+                        menuMaxHeight: 350.h,
+                        isExpanded: true,
+                        itemHeight: 50.h,
+                        borderRadius: BorderRadius.circular(20.w),
+                        iconEnabledColor: blue,
+                        dropdownColor: const Color.fromRGBO(241, 244, 251, 1),
+                        value: dropdownValue,
+                        elevation: 60.h.toInt(),
+                        style: TextStyle(
+                          fontSize: 15.w,
+                          color: blue,
+                        ),
+                        underline: Container(
+                          height: 2.h,
+                          color: transparentLightGrey,
+                        ),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue.toString();
+                         });
+                        },
+                        items: dropdownValues.keys
+                            .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(
+                                    color: value == "Izvēlies savu klasi"
+                                      ? lightGrey
+                                      : blue
+                                  ),
                                 ),
-                              ),
-                            );
-                          }).toList(),
+                              );
+                            }).toList(),
+                      ),
                     ),
-                  ),
 
                   Padding(
-                    padding: EdgeInsets.only(left: 5.w, top: 2.5.h, right: 5.w),
+                    padding: EdgeInsets.only(left: 5.w, top: dropdownValue == "Absolvents" ? 10.h : 2.5.h, right: 5.w),
                     child: TextFormField(
                       controller: passwordController,
                       style: TextStyle(
@@ -355,7 +360,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
 
                   //botton
                   Padding(
-                    padding: EdgeInsets.only(top: 160.h),
+                    padding: EdgeInsets.only(top: dropdownValue == "Absolvents" ? 210.h : 170.h),
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate() && dropdownValue != "Choose your class" && fullName.split(' ').length > 1) {

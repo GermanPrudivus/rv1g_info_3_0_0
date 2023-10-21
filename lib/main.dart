@@ -86,7 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     getUserData()
       .then((value) {
-        print(value);
         setState(() {
           profilePicUrl = value[0];
           fullName = value[1];
@@ -240,8 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if(DateTime.now().day <=31
       && DateTime.now().day >=18
-      && DateTime.now().month >=5
-      && DateTime.now().month <6
+      && DateTime.now().month ==5
     ){
 
       final form = await supabase
@@ -252,9 +250,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if(form[0]['number'] == 12){
         await supabase
           .from('users')
-          .update({'form_id':0})
+          .update({'form_id':34})
           .eq('email', email);
-      } else {
+      } else if(form[0]['letter'] != "Absolvents"){
         int id = dropdownValues['${form[0]['number']+1}.${form[0]['letter']} klase']!;
         await supabase
           .from('users')
