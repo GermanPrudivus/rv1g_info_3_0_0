@@ -61,7 +61,7 @@ class EmailVerificationPage extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.only(top: 10.h, left: 30.w, right: 30.w),
                     child: Text(
-                      "Verify your email to secure your account and access exclusive app features.",
+                      "Verify your email to secure your account and access exclusive app features. If you haven't received any emails, please check your spam folder!",
                       style: TextStyle(
                         fontSize: 16.w,
                         color: lightGrey,    
