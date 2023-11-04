@@ -379,7 +379,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 padding: EdgeInsets.only(top: 35.h, left: 30.w, right: 30.w),
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate() && dropdownValue != "Choose your class" && fullNameController.text.split(' ').length > 1) {
+                    if (_formKey.currentState!.validate() && dropdownValue != "Choose your class" && fullNameController.text.trim().split(' ').length > 1) {
                       ref
                         .read(signUpScreenControllerProvider.notifier)
                         .signUp(
