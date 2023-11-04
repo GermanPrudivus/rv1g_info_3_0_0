@@ -268,12 +268,9 @@ class _VerificationPageState extends State<VerificationPage> with WidgetsBinding
       final recognizedText = await textRecognizer.processImage(inputImage);
 
       String text = recognizedText.text.toLowerCase();
-      List<String> fullname = widget.fullName.split(" ");
+      
       print(text);
       if(
-        text.contains(fullname[0].toLowerCase()) &&
-        text.contains(fullname[1].toLowerCase()) &&
-        (
           (
             text.contains("rigas") ||
             text.contains("rīgas")
@@ -296,7 +293,6 @@ class _VerificationPageState extends State<VerificationPage> with WidgetsBinding
             text.contains("ģimn") ||
             text.contains("ģimn,")
           )
-        )
       ){
         verifyUser().whenComplete(() {
           showDialog(

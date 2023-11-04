@@ -368,9 +368,9 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                             .read(editUserControllerProvider.notifier)
                             .updateUser(
                               user.id, 
-                              fullName, 
+                              fullName.trim(), 
                               dropdownValues[dropdownValue] ?? 1, 
-                              passwordController.text
+                              passwordController.text.trim()
                             ).whenComplete(() {
                               Navigator.pop(context);
                             });

@@ -384,10 +384,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         .read(signUpScreenControllerProvider.notifier)
                         .signUp(
                           imagePath,
-                          emailController.text,
-                          fullNameController.text,
+                          emailController.text.trim(),
+                          fullNameController.text.trim(),
                           dropdownValues[dropdownValue]!,
-                          passwordController.text
+                          passwordController.text.trim()
                         );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

@@ -205,7 +205,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   onPressed: () {
                     ref
                       .read(signInScreenControllerProvider.notifier)
-                      .signIn(emailController.text, passwordController.text)
+                      .signIn(emailController.text.trim(), passwordController.text.trim())
                       .then((value) {
                         if(value!){
                           Navigator.popUntil(context, (route) => false);
