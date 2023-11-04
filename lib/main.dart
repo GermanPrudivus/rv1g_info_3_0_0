@@ -26,7 +26,6 @@ Future<void> main() async{
   await Supabase.initialize(
     url: supabaseUrl,
     anonKey: supabaseAnnonKey,
-    authFlowType: AuthFlowType.pkce,
   );
 
   SystemChrome.setPreferredOrientations([
