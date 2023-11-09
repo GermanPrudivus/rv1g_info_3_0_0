@@ -367,7 +367,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
 
                   //botton
                   Padding(
-                    padding: EdgeInsets.only(bottom: 15.h),
+                    padding: EdgeInsets.only(bottom: 10.h),
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate() && dropdownValue != "Choose your class" && fullName.split(' ').length > 1) {
