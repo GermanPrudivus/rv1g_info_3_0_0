@@ -107,260 +107,267 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
+        child: Padding(
             padding: EdgeInsets.only(left: 20.w, right: 20.w),
             child: Form(
               key: _formKey,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 20.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  Expanded(
+                    child: Column(
                       children: [
-                        GestureDetector(
-                          onTap: () async {
-                            PermissionStatus storageStatus = await Permission.storage.request();
-    
-                            if(storageStatus == PermissionStatus.granted){
-                              pickImageFromGallery()
-                                .then((value) {
-                                  ref
-                                    .read(editUserControllerProvider.notifier)
-                                    .updateProfilePicUrl(
-                                      user.id,
-                                      user.email,
-                                      value,
-                                      profilePicUrl
-                                    ).then((value) {
-                                      setState(() {
-                                        profilePicUrl = value!;
-                                      });
-                                    });
-                                });
-                            }
- 
-                            if(storageStatus == PermissionStatus.denied){
-                              if(mounted){
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'You need to provide a Gallery access to upload photo!'
-                                    )
-                                  )
-                                );
-                              }
-                            }
-    
-                            if(storageStatus == PermissionStatus.permanentlyDenied){
-                              openAppSettings();
-                            }
-                          },
-                          child: Stack(
-                            alignment: Alignment.bottomRight,
+                        Padding(
+                          padding: EdgeInsets.only(top: 20.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              profilePicUrl == ""
-                                ? CircleAvatar(
-                                  radius: 50.h,
-                                  backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-                                  child: Icon(
-                                    Icons.person,
-                                    color: Colors.white,
-                                    size: 80.h,
-                                  )
+                              GestureDetector(
+                                onTap: () async {
+                                  PermissionStatus storageStatus = await Permission.storage.request();
+          
+                                  if(storageStatus == PermissionStatus.granted){
+                                    pickImageFromGallery()
+                                      .then((value) {
+                                        ref
+                                          .read(editUserControllerProvider.notifier)
+                                          .updateProfilePicUrl(
+                                            user.id,
+                                            user.email,
+                                            value,
+                                            profilePicUrl
+                                          ).then((value) {
+                                            setState(() {
+                                              profilePicUrl = value!;
+                                            });
+                                          });
+                                      });
+                                  }
+ 
+                                  if(storageStatus == PermissionStatus.denied){
+                                    if(mounted){
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'You need to provide a Gallery access to upload photo!'
+                                          )
+                                        )
+                                      );
+                                    }
+                                  }
+    
+                                  if(storageStatus == PermissionStatus.permanentlyDenied){
+                                    openAppSettings();
+                                  }
+                                },
+                                child: Stack(
+                                  alignment: Alignment.bottomRight,
+                                  children: [
+                                    profilePicUrl == ""
+                                      ? CircleAvatar(
+                                        radius: 50.h,
+                                        backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+                                        child: Icon(
+                                          Icons.person,
+                                          color: Colors.white,
+                                          size: 80.h,
+                                        )
+                                      )
+                                      : CircleAvatar(
+                                          radius: 50.h,
+                                          backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+                                          backgroundImage: NetworkImage(profilePicUrl)
+                                        ),
+                                    ClipOval(
+                                      child: Container(
+                                        height: 25.h,
+                                        width: 25.h,
+                                        color: blue,
+                                        child: Icon(
+                                          Icons.edit,
+                                          size: 15.h,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 )
-                                : CircleAvatar(
-                                    radius: 50.h,
-                                    backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-                                    backgroundImage: NetworkImage(profilePicUrl)
-                                  ),
-                              ClipOval(
-                                child: Container(
-                                  height: 25.h,
-                                  width: 25.h,
-                                  color: blue,
-                                  child: Icon(
-                                    Icons.edit,
-                                    size: 15.h,
-                                    color: Colors.white,
-                                  ),
-                                ),
                               )
-                            ],
-                          )
-                        )
-                      ]
-                    ),
-                  ),
+                            ]
+                          ),
+                        ),
+      
+                        Padding(
+                          padding: EdgeInsets.only(top: 30.h, left: 5.w, right: 5.w),
+                          child: TextFormField(
+                            initialValue: user.fullName,
+                            style: TextStyle(
+                              fontSize: 15.w,
+                              color: blue,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: "Vārds Uzvārds",
+                              hintStyle: TextStyle(
+                                fontSize: 15.w,
+                                color: lightGrey,
+                              ),
+                              icon: const Icon(Icons.person_outline),
+                              iconColor: lightGrey,
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: transparentLightGrey, width: 2.h
+                                )
+                             ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: blue, width: 2.h)
+                              ),
+                            ),
+                            cursorColor: blue,
+                            validator: FieldValidator.required(
+                              message: "Ieraksti savu vārdu un uzvārdu!"
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                fullName = value;
+                              });
+                            },
+                          ),
+                        ),
 
-                  Padding(
-                    padding: EdgeInsets.only(top: 30.h, left: 5.w, right: 5.w),
-                    child: TextFormField(
-                      initialValue: user.fullName,
-                      style: TextStyle(
-                        fontSize: 15.w,
-                        color: blue,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: "Vārds Uzvārds",
-                        hintStyle: TextStyle(
-                          fontSize: 15.w,
-                          color: lightGrey,
-                        ),
-                        icon: const Icon(Icons.person_outline),
-                        iconColor: lightGrey,
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: transparentLightGrey, width: 2.h
-                          )
-                       ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: blue, width: 2.h)
-                        ),
-                      ),
-                      cursorColor: blue,
-                      validator: FieldValidator.required(
-                        message: "Ieraksti savu vārdu un uzvārdu!"
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          fullName = value;
-                        });
-                      },
-                    ),
-                  ),
+                        if(dropdownValue != "Absolvents")
+                          Padding(
+                            padding: EdgeInsets.only(left: 40.w, right: 5.w),
+                            child: DropdownButton<String>(
+                              menuMaxHeight: 350.h,
+                              isExpanded: true,
+                              itemHeight: 50.h,
+                              borderRadius: BorderRadius.circular(20.w),
+                              iconEnabledColor: blue,
+                              dropdownColor: const Color.fromRGBO(241, 244, 251, 1),
+                              value: dropdownValue,
+                              elevation: 60.h.toInt(),
+                              style: TextStyle(
+                                fontSize: 15.w,
+                                color: blue,
+                              ),
+                              underline: Container(
+                                height: 2.h,
+                                color: transparentLightGrey,
+                              ),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownValue = newValue.toString();
+                                });
+                              },
+                              items: dropdownValues.keys
+                                  .map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: TextStyle(
+                                          color: value == "Izvēlies savu klasi"
+                                            ? lightGrey
+                                            : blue
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                            ),
+                          ),
 
-                  if(dropdownValue != "Absolvents")
-                    Padding(
-                      padding: EdgeInsets.only(left: 40.w, right: 5.w),
-                      child: DropdownButton<String>(
-                        menuMaxHeight: 350.h,
-                        isExpanded: true,
-                        itemHeight: 50.h,
-                        borderRadius: BorderRadius.circular(20.w),
-                        iconEnabledColor: blue,
-                        dropdownColor: const Color.fromRGBO(241, 244, 251, 1),
-                        value: dropdownValue,
-                        elevation: 60.h.toInt(),
-                        style: TextStyle(
-                          fontSize: 15.w,
-                          color: blue,
+                        Padding(
+                          padding: EdgeInsets.only(left: 5.w, top: dropdownValue == "Absolvents" ? 10.h : 2.5.h, right: 5.w),
+                          child: TextFormField(
+                            controller: passwordController,
+                            style: TextStyle(
+                              fontSize: 15.w,
+                              color: blue,
+                           ),
+                            decoration: InputDecoration(
+                              hintText: "Jaunā Parole",
+                              hintStyle: TextStyle(
+                                fontSize: 15.w,
+                                color: lightGrey,
+                              ),
+                              icon: const Icon(Icons.lock_outline),
+                              iconColor: lightGrey,
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: transparentLightGrey, width: 2.h
+                                )
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: blue, width: 2.h)
+                              ),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    if(notVisibility == false) {
+                                      notVisibility = true;
+                                    } else {
+                                      notVisibility = false;
+                                    }
+                                  });
+                                },
+                                child: Icon(notVisibility
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined),
+                              ),
+                              suffixIconColor: lightGrey,
+                            ),
+                            obscureText: notVisibility,
+                            cursorColor: blue,
+                            validator: passwordController.text != ""
+                              ? FieldValidator.password(
+                                  minLength: 8,
+                                  shouldContainNumber: true,
+                                )
+                              : FieldValidator.equalTo("")
+                          ),
                         ),
-                        underline: Container(
-                          height: 2.h,
-                          color: transparentLightGrey,
-                        ),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownValue = newValue.toString();
-                         });
-                        },
-                        items: dropdownValues.keys
-                            .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: TextStyle(
-                                    color: value == "Izvēlies savu klasi"
-                                      ? lightGrey
-                                      : blue
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                      ),
-                    ),
 
-                  Padding(
-                    padding: EdgeInsets.only(left: 5.w, top: dropdownValue == "Absolvents" ? 10.h : 2.5.h, right: 5.w),
-                    child: TextFormField(
-                      controller: passwordController,
-                      style: TextStyle(
-                        fontSize: 15.w,
-                        color: blue,
-                     ),
-                      decoration: InputDecoration(
-                        hintText: "Jaunā Parole",
-                        hintStyle: TextStyle(
-                          fontSize: 15.w,
-                          color: lightGrey,
+                        Padding(
+                          padding: EdgeInsets.only(left: 5.w, top: 10.h, right: 5.w),
+                          child: TextFormField(
+                            controller: repeatPasswordController,
+                            style: TextStyle(
+                              fontSize: 15.w,
+                              color: blue,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: "Atkārto Jauno Paroli",
+                              hintStyle: TextStyle(
+                                fontSize: 15.w,
+                                color: lightGrey,
+                              ),
+                              icon: const Icon(Icons.lock_outline),
+                              iconColor: lightGrey,
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: transparentLightGrey, width: 2.h
+                                )
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: blue, width: 2.h)
+                              ),
+                            ),
+                            obscureText: true,
+                            cursorColor: blue,
+                            validator: FieldValidator.equalTo(
+                              passwordController,
+                              message: "Paroles nesakrīt!"
+                            ),
+                          ),
                         ),
-                        icon: const Icon(Icons.lock_outline),
-                        iconColor: lightGrey,
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: transparentLightGrey, width: 2.h
-                          )
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: blue, width: 2.h)
-                        ),
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if(notVisibility == false) {
-                                notVisibility = true;
-                              } else {
-                                notVisibility = false;
-                              }
-                            });
-                          },
-                          child: Icon(notVisibility
-                              ? Icons.visibility_off_outlined
-                              : Icons.visibility_outlined),
-                        ),
-                        suffixIconColor: lightGrey,
-                      ),
-                      obscureText: notVisibility,
-                      cursorColor: blue,
-                      validator: passwordController.text != ""
-                        ? FieldValidator.password(
-                            minLength: 8,
-                            shouldContainNumber: true,
-                          )
-                        : FieldValidator.equalTo("")
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.only(left: 5.w, top: 10.h, right: 5.w),
-                    child: TextFormField(
-                      controller: repeatPasswordController,
-                      style: TextStyle(
-                        fontSize: 15.w,
-                        color: blue,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: "Atkārto Jauno Paroli",
-                        hintStyle: TextStyle(
-                          fontSize: 15.w,
-                          color: lightGrey,
-                        ),
-                        icon: const Icon(Icons.lock_outline),
-                        iconColor: lightGrey,
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: transparentLightGrey, width: 2.h
-                          )
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: blue, width: 2.h)
-                        ),
-                      ),
-                      obscureText: true,
-                      cursorColor: blue,
-                      validator: FieldValidator.equalTo(
-                        passwordController,
-                        message: "Paroles nesakrīt!"
-                      ),
+                      ],
                     ),
                   ),
 
                   //botton
                   Padding(
-                    padding: EdgeInsets.only(top: dropdownValue == "Absolvents" ? 210.h : 170.h),
+                    padding: EdgeInsets.only(bottom: 15.h),
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate() && dropdownValue != "Choose your class" && fullName.split(' ').length > 1) {
@@ -406,7 +413,6 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
               ),
             )
           ),
-        ),
       ),
     );
   }
