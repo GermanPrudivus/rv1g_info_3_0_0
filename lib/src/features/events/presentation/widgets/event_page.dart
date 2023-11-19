@@ -132,7 +132,8 @@ class EventPage extends StatelessWidget {
                         event.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 24.w
+                          fontSize: 24.w,
+                          height: 1.w,
                         ),
                       ),
                     )
@@ -149,6 +150,7 @@ class EventPage extends StatelessWidget {
                         ),
                       style: TextStyle(
                         fontSize: 13.w,
+                        height: 1.w,
                       ),
                     ),
                     SizedBox(width: 5.w),
@@ -156,6 +158,7 @@ class EventPage extends StatelessWidget {
                       "-",
                       style: TextStyle(
                         fontSize: 13.w,
+                        height: 1.w,
                       ),
                     ),
                     SizedBox(width: 5.w),
@@ -166,6 +169,7 @@ class EventPage extends StatelessWidget {
                         ),
                       style: TextStyle(
                         fontSize: 13.w,
+                        height: 1.w,
                       ),
                     ),
                   ],
@@ -185,6 +189,7 @@ class EventPage extends StatelessWidget {
                         text: formatedText(event.description),
                         style: TextStyle(
                           fontSize: 16.w,
+                          height: 1.w,
                         ),
                         textAlign: TextAlign.start,
                         tags: {

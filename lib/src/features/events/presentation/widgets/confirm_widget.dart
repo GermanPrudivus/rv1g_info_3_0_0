@@ -59,6 +59,7 @@ class _ConfirmWidgetState extends ConsumerState<ConfirmWidget> {
 		    borderRadius: BorderRadius.circular(15.h),
 	    ),
       contentPadding: EdgeInsets.zero,
+      surfaceTintColor: Colors.white,
       backgroundColor: Colors.white,
       content: SingleChildScrollView(
         child: Container(
@@ -74,7 +75,8 @@ class _ConfirmWidgetState extends ConsumerState<ConfirmWidget> {
                   Text(
                     "Pievienot jaunu dalībnieku:",
                     style: TextStyle(
-                      fontSize: 18.w
+                      fontSize: 18.w,
+                      height: 1.w,
                     ),
                   )
                 ],
@@ -89,12 +91,14 @@ class _ConfirmWidgetState extends ConsumerState<ConfirmWidget> {
                     fullName,
                     style: TextStyle(
                       fontSize: 18.w,
+                      height: 1.w,
                     ),
                   ),
                   Text(
                     form,
                     style: TextStyle(
                       fontSize: 17.w,
+                      height: 1.w,
                     ),
                   ),
                 ],
@@ -152,6 +156,7 @@ class _ConfirmWidgetState extends ConsumerState<ConfirmWidget> {
                       style: TextStyle(
                         fontSize: 15.w,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ),

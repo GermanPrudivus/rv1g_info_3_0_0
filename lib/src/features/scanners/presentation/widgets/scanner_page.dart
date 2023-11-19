@@ -148,7 +148,8 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black,
-                                            fontSize: 17.w
+                                            fontSize: 17.w,
+                                            height: 1.w,
                                           ),
                                         ),
                                         SizedBox(height: 5.h),
@@ -167,7 +168,8 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
                                                     fontSize: 13.h,
                                                     color: participants[index].active
                                                       ? Colors.green
-                                                      : Colors.red
+                                                      : Colors.red,
+                                                    height: 1.w,
                                                   ),
                                                 )
                                               ]
@@ -184,7 +186,8 @@ class _ScannerPageState extends ConsumerState<ScannerPage> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black,
-                                            fontSize: 16.w
+                                            fontSize: 16.w,
+                                            height: 1.w,
                                           ),
                                         ),
                                       ],

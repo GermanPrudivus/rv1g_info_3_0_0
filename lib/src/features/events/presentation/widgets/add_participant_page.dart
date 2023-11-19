@@ -65,6 +65,7 @@ class _AddParticipantPageState extends State<AddParticipantPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        scrolledUnderElevation: 0,
         elevation: 0,
         leading: IconButton(
           splashRadius: 0.01,
@@ -94,7 +95,8 @@ class _AddParticipantPageState extends State<AddParticipantPage> {
                       "Reģistrēt jaunu dalībnieku:",
                       style: TextStyle(
                         fontSize: 22.w,
-                        fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold,
+                        height: 1.w,
                       ),
                     ),
                   ],
@@ -104,7 +106,8 @@ class _AddParticipantPageState extends State<AddParticipantPage> {
                   "Ievietojiet QR kodu kvadrāta laukā",
                   style: TextStyle(
                     fontSize: 16.w,
-                    color: blue
+                    color: blue,
+                    height: 1.w,
                   ),
                 ),
                 Stack(

@@ -127,7 +127,8 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
-                                      fontSize: 20.w
+                                      fontSize: 20.w,
+                                      height: 1.w,
                                     ),
                                   ),
                                 ],
@@ -157,6 +158,7 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                                     style: TextStyle(
                                       fontSize: 14.w,
                                       color: Colors.black54,
+                                      height: 1.w,
                                     ),
                                     textAlign: TextAlign.start,
                                     tags: {
@@ -180,6 +182,7 @@ class _EventsPageState extends ConsumerState<EventsPage> {
                                               ),
                                             style: TextStyle(
                                               fontSize: 13.w,
+                                              height: 1.w,
                                             ),
                                           )
                                         ]

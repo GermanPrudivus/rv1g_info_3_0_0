@@ -156,7 +156,8 @@ class _ScanTicketPageState extends ConsumerState<ScanTicketPage> {
                       "Noskenēt biļeti:",
                       style: TextStyle(
                         fontSize: 24.w,
-                        fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold,
+                        height: 1.w,
                       ),
                     ),
                   ],
@@ -166,7 +167,8 @@ class _ScanTicketPageState extends ConsumerState<ScanTicketPage> {
                   "Ievietojiet QR kodu kvadrāta laukā",
                   style: TextStyle(
                     fontSize: 17.w,
-                    color: blue
+                    color: blue,
+                    height: 1.w,
                   ),
                 ),
                 Stack(

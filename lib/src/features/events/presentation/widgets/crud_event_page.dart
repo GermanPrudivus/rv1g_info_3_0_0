@@ -102,6 +102,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        scrolledUnderElevation: 0,
         elevation: 0,
         leading: IconButton(
           splashRadius: 0.01,
@@ -155,6 +156,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                       : "Pievienot pasākumu:",
                       style: TextStyle(
                         fontSize: 24.w,
+                        height: 1.w,
                       ),
                     ),
                   ],
@@ -171,6 +173,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                           "Nosaukums",
                           style: TextStyle(
                             fontSize: 14.w,
+                            height: 1.w,
                           ),
                         ),
                       ),
@@ -179,7 +182,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -199,7 +203,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti pasākuma nosaukumu',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         onChanged: (value) {
@@ -228,6 +233,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                             "Organizatora e-pasts",
                             style: TextStyle(
                               fontSize: 14.w,
+                              height: 1.w,
                             ),
                           ),
                         ),
@@ -236,7 +242,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                           textInputAction: TextInputAction.done,
                           keyboardType: TextInputType.text,
                           style: TextStyle(
-                            fontSize: 15.w
+                            fontSize: 15.w,
+                            height: 1.w,
                           ),
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -256,7 +263,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                             floatingLabelBehavior: FloatingLabelBehavior.always,
                             hintText: 'Ieraksti organizatora e-pastu (ja nav VD)',
                             hintStyle: TextStyle(
-                              fontSize: 14.w
+                              fontSize: 14.w,
+                              height: 1.w,
                             )
                           ),
                           onChanged: (value) {
@@ -284,6 +292,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                           "Īss apraksts",
                           style: TextStyle(
                             fontSize: 14.w,
+                            height: 1.w,
                           ),
                         ),
                       ),
@@ -292,7 +301,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -312,7 +322,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti pasākuma īso aprakstu, kuru redzēs sākumā',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         maxLength: 200,
@@ -341,7 +352,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                       Text(
                         "Pasākuma ilgums:",
                         style: TextStyle(
-                          fontSize: 14.w
+                          fontSize: 14.w,
+                          height: 1.w,
                         ),
                       )
                     ],
@@ -376,7 +388,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                                   .format(startDate),
                                 style: TextStyle(
                                   fontSize: 14.w,
-                                    fontWeight: FontWeight.bold
+                                  height: 1.w,
+                                  fontWeight: FontWeight.bold
                                 ),
                               ),
                             )
@@ -386,6 +399,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                             style: TextStyle(
                               fontSize: 14.w,
                               fontWeight: FontWeight.bold,
+                              height: 1.w,
                             ),
                           ),
                           GestureDetector(
@@ -401,7 +415,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                                   .format(endDate),
                                 style: TextStyle(
                                   fontSize: 14.w,
-                                    fontWeight: FontWeight.bold
+                                  height: 1.w,
+                                  fontWeight: FontWeight.bold
                                 ),
                               ),
                             )
@@ -422,6 +437,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                                     : 'Līdz:',
                                   style: TextStyle(
                                     fontSize: 14.w,
+                                    height: 1.w,
                                   ),
                                 ),
                               ],
@@ -464,6 +480,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                           "Teksts",
                           style: TextStyle(
                             fontSize: 14.w,
+                            height: 1.w,
                           ),
                         ),
                       ),
@@ -471,7 +488,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                         initialValue: description,
                         keyboardType: TextInputType.multiline,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -491,7 +509,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti pasākuma aprakstu',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         minLines: 25,
@@ -515,7 +534,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                   child: Text(
                     '<b></b> - lai uztaisītu tekstu treknrakstā\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu tekstu kursīvā\n<link href=your_link></link> - lai pievienotu saiti',
                     style: TextStyle(
-                      fontSize: 15.w
+                      fontSize: 15.w,
+                      height: 1.w,
                     ),
                   ),
                 ),
@@ -523,7 +543,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                 Text(
                   "Pievienot attēlu:",
                   style: TextStyle(
-                    fontSize: 15.w
+                    fontSize: 15.w,
+                    height: 1.w,
                   ),
                 ),
                 
@@ -603,7 +624,8 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                           style: TextStyle(
                             fontSize: 15.w,
                             color: Colors.black45,
-                            fontWeight: FontWeight.bold
+                            fontWeight: FontWeight.bold,
+                            height: 1.w,
                           ),
                         )
                       ],
@@ -686,6 +708,7 @@ class _CRUDEventPageState extends ConsumerState<CRUDEventPage> {
                       style: TextStyle(
                         fontSize: 17.w,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ),

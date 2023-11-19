@@ -17,6 +17,7 @@ class TicketQRCodeWidget extends StatelessWidget {
 		    borderRadius: BorderRadius.circular(15.h),
 	    ),
       contentPadding: EdgeInsets.zero,
+      surfaceTintColor: Colors.white,
       backgroundColor: Colors.white,
       content: SingleChildScrollView(
         child: Container(
@@ -35,7 +36,8 @@ class TicketQRCodeWidget extends StatelessWidget {
                     "Biļetes QR kods:",
                     style: TextStyle(
                       fontSize: 20.w,
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold,
+                      height: 1.w,
                     ),
                   ),
                 ],

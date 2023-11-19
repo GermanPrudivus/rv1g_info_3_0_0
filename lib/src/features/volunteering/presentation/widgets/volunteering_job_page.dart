@@ -106,7 +106,8 @@ class VolunteeringJobPage extends StatelessWidget {
                         job.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 24.w
+                          fontSize: 24.w,
+                          height: 1.w,
                         ),
                       ),
                     )
@@ -123,6 +124,7 @@ class VolunteeringJobPage extends StatelessWidget {
                         ),
                       style: TextStyle(
                         fontSize: 13.w,
+                        height: 1.w,
                       ),
                     ),
                     SizedBox(width: 5.w),
@@ -130,6 +132,7 @@ class VolunteeringJobPage extends StatelessWidget {
                       "-",
                       style: TextStyle(
                         fontSize: 13.w,
+                        height: 1.w,
                       ),
                     ),
                     SizedBox(width: 5.w),
@@ -140,6 +143,7 @@ class VolunteeringJobPage extends StatelessWidget {
                         ),
                       style: TextStyle(
                         fontSize: 13.w,
+                        height: 1.w,
                       ),
                     ),
                   ],
@@ -159,6 +163,7 @@ class VolunteeringJobPage extends StatelessWidget {
                         text: formatedText(job.description),
                         style: TextStyle(
                           fontSize: 16.w,
+                          height: 1.w,
                         ),
                         textAlign: TextAlign.start,
                         tags: {

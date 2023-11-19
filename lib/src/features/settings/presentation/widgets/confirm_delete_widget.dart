@@ -35,6 +35,7 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
 		    borderRadius: BorderRadius.circular(15.h),
 	    ),
       contentPadding: EdgeInsets.zero,
+      surfaceTintColor: Colors.white,
       backgroundColor: Colors.white,
       content: SingleChildScrollView(
         child: Container(
@@ -53,7 +54,8 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
                     "Apstiprini savas darbības:",
                     style: TextStyle(
                       fontSize: 19.w,
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold,
+                      height: 1.w,
                     ),
                   ),
                 ],
@@ -63,8 +65,10 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
                 "Ieraksti vārdu un uzvārdu, lai turpinātu!",
                 style: TextStyle(
                   fontSize: 14.w,
-                  color: blue
+                  color: blue,
+                  height: 1.w,
                 ),
+                textAlign: TextAlign.center,
               ),
               SizedBox(height: 5.h),
               Form(
@@ -76,12 +80,14 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
                     style: TextStyle(
                       fontSize: 15.w,
                       color: blue,
+                      height: 1.w,
                     ),
                     decoration: InputDecoration(
                       hintText: "${widget.fullName}",
                       hintStyle: TextStyle(
                         fontSize: 14.w,
                         color: Colors.grey,
+                        height: 1.w,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -139,6 +145,7 @@ class _ConfirmDeleteWidgetState extends ConsumerState<ConfirmDeleteWidget> {
                     style: TextStyle(
                       fontSize: 17.w,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white
                     ),
                   ),
                 ),

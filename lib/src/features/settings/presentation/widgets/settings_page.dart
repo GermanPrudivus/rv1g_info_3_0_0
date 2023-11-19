@@ -122,7 +122,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 17.w,
-                                      fontWeight: FontWeight.bold
+                                      fontWeight: FontWeight.bold,
+                                      height: 1.w,
                                     ),
                                   )
                                 ],
@@ -134,7 +135,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                     user.email,
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 14.w
+                                      fontSize: 14.w,
+                                      height: 1.w,
                                     ),
                                   )
                                 ],
@@ -194,7 +196,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                         "Nav amatu",
                         style: TextStyle(
                           color: blue,
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                       ),
                     )
@@ -231,7 +234,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                 title,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16.w
+                                  fontSize: 16.w,
+                                  height: 1.w,
                                 ),
                               ),
                               SizedBox(height: 5.w,),
@@ -239,7 +243,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                 roles[index].description,
                                 style: TextStyle(
                                   color: Colors.black54,
-                                  fontSize: 14.w
+                                  fontSize: 14.w,
+                                  height: 1.w,
                                 ),
                               ),
                               SizedBox(height: 5.h,),
@@ -252,15 +257,17 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                         DateTime.parse(roles[index].startedDatetime)
                                       ),
                                     style: TextStyle(
-                                     color: Colors.black54,
-                                      fontSize: 13.w
+                                      color: Colors.black54,
+                                      fontSize: 13.w,
+                                      height: 1.w,
                                     ),
                                   ),
                                   Text(
                                     " - ",
                                     style: TextStyle(
-                                     color: Colors.black54,
-                                      fontSize: 13.w
+                                      color: Colors.black54,
+                                      fontSize: 13.w,
+                                      height: 1.w,
                                     ),
                                   ),
                                   Text(
@@ -271,8 +278,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                                           )
                                       : "Nav noteikts",
                                     style: TextStyle(
-                                     color: Colors.black54,
-                                      fontSize: 13.w
+                                      color: Colors.black54,
+                                      fontSize: 13.w,
+                                      height: 1.w,
                                     ),
                                   ),
                                 ],

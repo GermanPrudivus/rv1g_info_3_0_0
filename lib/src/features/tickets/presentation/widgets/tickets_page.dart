@@ -111,7 +111,8 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
-                                              fontSize: 20.w
+                                              fontSize: 20.w,
+                                              height: 1.w,
                                             ),
                                           ),
                                           SizedBox(height: 7.5.h),
@@ -124,7 +125,8 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                                     'Biļete derīga:',
                                                     style: TextStyle(
                                                       fontSize: 15.w,
-                                                      fontWeight: FontWeight.w500
+                                                      fontWeight: FontWeight.w500,
+                                                      height: 1.w,
                                                     ),
                                                   ),
                                                   SizedBox(height: 2.5.h,),
@@ -139,6 +141,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                                             "No:",
                                                             style: TextStyle(
                                                               fontSize: 13.w,
+                                                              height: 1.w,
                                                            ),
                                                           ),
                                                           SizedBox(height: 5.h,),
@@ -149,7 +152,8 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                                              ),
                                                             style: TextStyle(
                                                               fontSize: 14.5.w,
-                                                              fontWeight: FontWeight.bold
+                                                              fontWeight: FontWeight.bold,
+                                                              height: 1.w,
                                                            ),
                                                           ),
                                                         ],
@@ -163,6 +167,7 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                                             "Līdz:",
                                                             style: TextStyle(
                                                               fontSize: 13.w,
+                                                              height: 1.w,
                                                            ),
                                                           ),
                                                           SizedBox(height: 5.h,),
@@ -173,7 +178,8 @@ class _TicketsPageState extends ConsumerState<TicketsPage> {
                                                              ),
                                                             style: TextStyle(
                                                               fontSize: 14.5.w,
-                                                              fontWeight: FontWeight.bold
+                                                              fontWeight: FontWeight.bold,
+                                                              height: 1.w,
                                                            ),
                                                           ),
                                                         ],

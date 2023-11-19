@@ -130,7 +130,8 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                                           color: differenceInDates(DateTime.parse(jobs[index].endDate), DateTime.now())[0] != "-"
                                             ? Colors.black
                                             : Colors.black45,
-                                          fontSize: 18.w
+                                          fontSize: 18.w,
+                                          height: 1.w,
                                         ),
                                       ),
                                       SizedBox(height: 6.h),
@@ -150,7 +151,8 @@ class _VolunteeringJobsPageState extends ConsumerState<VolunteeringJobsPage> {
                                                   fontSize: 13.5.w,
                                                   color: differenceInDates(DateTime.parse(jobs[index].endDate), DateTime.now())[0] != "-"
                                                     ? Colors.black
-                                                    : Colors.black45
+                                                    : Colors.black45,
+                                                  height: 1.w,
                                                 ),
                                               )
                                             ]

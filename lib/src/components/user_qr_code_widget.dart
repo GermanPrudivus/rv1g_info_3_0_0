@@ -21,6 +21,7 @@ class UserQRCodeWidget extends StatelessWidget {
 		    borderRadius: BorderRadius.circular(15.h),
 	    ),
       contentPadding: EdgeInsets.zero,
+      surfaceTintColor: Colors.white,
       backgroundColor: Colors.white,
       content: SingleChildScrollView(
         child: Container(
@@ -39,7 +40,8 @@ class UserQRCodeWidget extends StatelessWidget {
                     "Tava profila QR kods:",
                     style: TextStyle(
                       fontSize: 18.w,
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold,
+                      height: 1.w,
                     ),
                   ),
                 ],
@@ -49,7 +51,8 @@ class UserQRCodeWidget extends StatelessWidget {
                 "Rādi to, lai nopirktu biļeti",
                 style: TextStyle(
                   fontSize: 15.w,
-                  color: blue
+                  color: blue,
+                  height: 1.w,
                 ),
               ),
               SizedBox(height: 10.h),

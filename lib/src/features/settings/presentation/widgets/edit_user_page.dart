@@ -205,12 +205,14 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                             style: TextStyle(
                               fontSize: 15.w,
                               color: blue,
+                              height: 1.w,
                             ),
                             decoration: InputDecoration(
                               hintText: "Vārds Uzvārds",
                               hintStyle: TextStyle(
                                 fontSize: 15.w,
                                 color: lightGrey,
+                                height: 1.w,
                               ),
                               icon: const Icon(Icons.person_outline),
                               iconColor: lightGrey,
@@ -284,12 +286,14 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                             style: TextStyle(
                               fontSize: 15.w,
                               color: blue,
+                              height: 1.w,
                            ),
                             decoration: InputDecoration(
                               hintText: "Jaunā Parole",
                               hintStyle: TextStyle(
                                 fontSize: 15.w,
                                 color: lightGrey,
+                                height: 1.w,
                               ),
                               icon: const Icon(Icons.lock_outline),
                               iconColor: lightGrey,
@@ -335,12 +339,14 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                             style: TextStyle(
                               fontSize: 15.w,
                               color: blue,
+                              height: 1.w,
                             ),
                             decoration: InputDecoration(
                               hintText: "Atkārto Jauno Paroli",
                               hintStyle: TextStyle(
                                 fontSize: 15.w,
                                 color: lightGrey,
+                                height: 1.w,
                               ),
                               icon: const Icon(Icons.lock_outline),
                               iconColor: lightGrey,
@@ -405,6 +411,7 @@ class _EditUserPageState extends ConsumerState<EditUserPage> {
                         style: TextStyle(
                           fontSize: 17.w,
                           fontWeight: FontWeight.bold,
+                          color: Colors.white
                         ),
                       ),
                     ),

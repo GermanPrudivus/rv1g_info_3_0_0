@@ -29,6 +29,7 @@ class ContactInfoPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16.w,
+                    height: 1.w,
                   ),
                 )
               ),
@@ -139,6 +140,7 @@ class ContactInfoPage extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16.w,
+                        height: 1.w,
                       ),
                     ),
                     SizedBox(height: 8.h),
@@ -147,7 +149,8 @@ class ContactInfoPage extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18.w,
-                        fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold,
+                        height: 1.w,
                       ),
                     )
                   ],

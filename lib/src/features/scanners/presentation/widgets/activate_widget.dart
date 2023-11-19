@@ -31,6 +31,7 @@ class _ActivateWidgetState extends ConsumerState<ActivateWidget> {
 		    borderRadius: BorderRadius.circular(15.h),
 	    ),
       contentPadding: EdgeInsets.zero,
+      surfaceTintColor: Colors.white,
       backgroundColor: Colors.white,
       content: SingleChildScrollView(
         child: Container(
@@ -46,7 +47,8 @@ class _ActivateWidgetState extends ConsumerState<ActivateWidget> {
                   Text(
                     "Aktivizēt jaunu dalībnieku:",
                     style: TextStyle(
-                      fontSize: 18.w
+                      fontSize: 18.w,
+                      height: 1.w,
                     ),
                   )
                 ],
@@ -61,12 +63,14 @@ class _ActivateWidgetState extends ConsumerState<ActivateWidget> {
                     widget.fullName,
                     style: TextStyle(
                       fontSize: 18.w,
+                      height: 1.w,
                     ),
                   ),
                   Text(
                     widget.form,
                     style: TextStyle(
                       fontSize: 17.w,
+                      height: 1.w,
                     ),
                   ),
                 ],
@@ -124,6 +128,7 @@ class _ActivateWidgetState extends ConsumerState<ActivateWidget> {
                       style: TextStyle(
                         fontSize: 15.w,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ),

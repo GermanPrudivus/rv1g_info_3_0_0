@@ -94,6 +94,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        scrolledUnderElevation: 0,
         elevation: 0,
         leading: IconButton(
           splashRadius: 0.01,
@@ -147,6 +148,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                       : "Pievienot darbu:",
                       style: TextStyle(
                         fontSize: 24.w,
+                        height: 1.w,
                       ),
                     ),
                   ],
@@ -163,6 +165,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                           "Nosaukums",
                           style: TextStyle(
                             fontSize: 14.w,
+                            height: 1.w,
                           ),
                         ),
                       ),
@@ -171,7 +174,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -191,7 +195,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti amata nosaukumu',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         onChanged: (value) {
@@ -217,7 +222,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                       Text(
                         "Darba ilgums:",
                         style: TextStyle(
-                          fontSize: 14.w
+                          fontSize: 14.w,
+                          height: 1.w,
                         ),
                       )
                     ],
@@ -252,7 +258,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                                   .format(startDate),
                                 style: TextStyle(
                                   fontSize: 14.w,
-                                    fontWeight: FontWeight.bold
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.w,
                                 ),
                               ),
                             )
@@ -262,6 +269,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                             style: TextStyle(
                               fontSize: 14.w,
                               fontWeight: FontWeight.bold,
+                              height: 1.w,
                             ),
                           ),
                           GestureDetector(
@@ -277,7 +285,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                                   .format(endDate),
                                 style: TextStyle(
                                   fontSize: 14.w,
-                                    fontWeight: FontWeight.bold
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.w,
                                 ),
                               ),
                             )
@@ -298,6 +307,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                                     : 'Līdz:',
                                   style: TextStyle(
                                     fontSize: 14.w,
+                                    height: 1.w,
                                   ),
                                 ),
                               ],
@@ -340,6 +350,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                           "Teksts",
                           style: TextStyle(
                             fontSize: 14.w,
+                            height: 1.w,
                           ),
                         ),
                       ),
@@ -347,7 +358,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                         initialValue: description,
                         keyboardType: TextInputType.multiline,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -367,7 +379,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti darba aprakstu',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         minLines: 25,
@@ -391,7 +404,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                   child: Text(
                     '<b></b> - lai uztaisītu tekstu treknrakstā\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu tekstu kursīvā\n<link href=your_link></link> - lai pievienotu saiti',
                     style: TextStyle(
-                      fontSize: 15.w
+                      fontSize: 15.w,
+                      height: 1.w,
                     ),
                   ),
                 ),
@@ -400,6 +414,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                   "Pievienot attēlu:",
                   style: TextStyle(
                     fontSize: 15.w,
+                    height: 1.w,
                   ),
                 ),
                 
@@ -479,7 +494,8 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                           style: TextStyle(
                             fontSize: 15.w,
                             color: Colors.black45,
-                            fontWeight: FontWeight.bold
+                            fontWeight: FontWeight.bold,
+                            height: 1.w,
                           ),
                         )
                       ],
@@ -559,6 +575,7 @@ class _CRUDVolunteeringPageState extends ConsumerState<CRUDVolunteeringPage> {
                       style: TextStyle(
                         fontSize: 17.w,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ),
