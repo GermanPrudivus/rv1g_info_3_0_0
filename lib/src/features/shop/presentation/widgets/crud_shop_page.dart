@@ -145,6 +145,7 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                       : "Pievienot preci:",
                       style: TextStyle(
                         fontSize: 24.w,
+                        height: 1.w,
                       ),
                     ),
                   ],
@@ -161,6 +162,7 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                           "Nosaukums",
                           style: TextStyle(
                             fontSize: 14.w,
+                            height: 1.w,
                           ),
                         ),
                       ),
@@ -169,7 +171,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -189,7 +192,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti preces nosaukumu',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         onChanged: (value) {
@@ -225,7 +229,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         maxLength: 100,
                         decoration: InputDecoration(
@@ -246,7 +251,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti preces īso aprakstu, kuru redzēs sākumā',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         minLines: 3,
@@ -276,6 +282,7 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                           "Cena",
                           style: TextStyle(
                             fontSize: 14.w,
+                            height: 1.w,
                           ),
                         ),
                       ),
@@ -284,7 +291,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -304,7 +312,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti cenas diapazonu',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         onChanged: (value) {
@@ -332,6 +341,7 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                           "Apraksts",
                           style: TextStyle(
                             fontSize: 14.w,
+                            height: 1.w,
                           ),
                         ),
                       ),
@@ -339,7 +349,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                         initialValue: description,
                         keyboardType: TextInputType.multiline,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -359,7 +370,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti preces aprakstu',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         minLines: 25,
@@ -383,7 +395,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                   child: Text(
                     '<b></b> - lai uztaisītu tekstu treknrakstā\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu tekstu kursīvā\n<link href=your_link></link> - lai pievienotu saiti',
                     style: TextStyle(
-                      fontSize: 15.w
+                      fontSize: 15.w,
+                      height: 1.w,
                     ),
                   ),
                 ),
@@ -391,7 +404,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                 Text(
                   "Pievienot attēlu:",
                   style: TextStyle(
-                    fontSize: 15.w
+                    fontSize: 15.w,
+                    height: 1.w,
                   ),
                 ),
                 
@@ -471,7 +485,8 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                           style: TextStyle(
                             fontSize: 15.w,
                             color: Colors.black45,
-                            fontWeight: FontWeight.bold
+                            fontWeight: FontWeight.bold,
+                            height: 1.w,
                           ),
                         )
                       ],
@@ -551,6 +566,7 @@ class _CRUDShopPageState extends ConsumerState<CRUDShopPage> {
                       style: TextStyle(
                         fontSize: 17.w,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ),

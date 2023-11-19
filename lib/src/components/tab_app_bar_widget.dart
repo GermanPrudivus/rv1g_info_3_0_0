@@ -34,8 +34,12 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      surfaceTintColor: Colors.white,
       backgroundColor: Colors.white,
+
       shadowColor: appBarShadow,
+      scrolledUnderElevation: 0,
+      elevation: 3,
 
       toolbarHeight: 60.h,
 
@@ -111,9 +115,11 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
         isScrollable: widget.parametrs[2],
         indicatorColor: blue,
         indicatorWeight: 2.5.h,
+        indicatorSize: TabBarIndicatorSize.tab,
         controller: widget.tabController,
         labelColor: Colors.black,
         unselectedLabelColor: Colors.black45,
+        tabAlignment: widget.parametrs[2] ? TabAlignment.center : TabAlignment.fill,
         labelStyle: TextStyle(
           fontSize: widget.parametrs[2]
             ? 15.w
@@ -123,7 +129,7 @@ class _TabAppBarWidgetState extends State<TabAppBarWidget> with TickerProviderSt
           for(int i=0;i<widget.tabQuant;i++)
             SizedBox(
               height: 30.h,
-              child: Tab(text: widget.tabNames[i],),
+              child: Tab(text: widget.tabNames[i]),
             )
         ],
       ),

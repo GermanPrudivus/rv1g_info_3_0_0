@@ -74,7 +74,7 @@ class _CRUDMenuWidgetState extends ConsumerState<CRUDMenuWidget> {
 		    borderRadius: BorderRadius.circular(15.h),
 	    ),
       contentPadding: EdgeInsets.zero,
-      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
       content: SingleChildScrollView(
         child: Container(
           width: 1.sw,
@@ -248,6 +248,7 @@ class _CRUDMenuWidgetState extends ConsumerState<CRUDMenuWidget> {
                       style: TextStyle(
                         fontSize: 15.w,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ),

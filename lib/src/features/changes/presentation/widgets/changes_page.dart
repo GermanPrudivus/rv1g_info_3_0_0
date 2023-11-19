@@ -235,6 +235,7 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
                           'Šodien vārda dienu svin:',
                           style: TextStyle(
                             fontSize: 17.w,
+                            height: 1.w,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -242,6 +243,7 @@ class _ChangesPageState extends ConsumerState<ChangesPage> {
                           vardaDiena,
                           style: TextStyle(
                             fontSize: 18.w,
+                            height: 1.w,
                             fontWeight: FontWeight.bold
                           ),
                           textAlign: TextAlign.center,

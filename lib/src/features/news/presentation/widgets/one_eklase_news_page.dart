@@ -61,6 +61,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        scrolledUnderElevation: 0,
         elevation: 0,
         leading: IconButton(
           splashRadius: 0.01,
@@ -123,7 +124,8 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                         news.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 24.w
+                          fontSize: 24.w,
+                          height: 1.w,
                         ),
                       ),
                     )
@@ -140,6 +142,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                         ),
                       style: TextStyle(
                         fontSize: 13.w,
+                        height: 1.w,
                       ),
                     ),
                   ],
@@ -159,6 +162,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                         text: formatedText(news.text),
                         style: TextStyle(
                           fontSize: 16.w,
+                          height: 1.w,
                         ),
                         textAlign: TextAlign.start,
                         tags: {
@@ -187,6 +191,7 @@ class _OneEklaseNewsPageState extends State<OneEklaseNewsPage> {
                           fontSize: 15.w,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
+                          height: 1.w,
                         ),
                       ),
                     ),

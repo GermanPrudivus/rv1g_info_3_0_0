@@ -204,7 +204,8 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
-                                              fontSize: 18.w
+                                              fontSize: 18.w,
+                                              height: 1.w,
                                             ),
                                           ),
                                           SizedBox(height: 5.h),
@@ -212,7 +213,8 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                                             text: items[index].shortText,
                                             style: TextStyle(
                                               fontSize: 14.w,
-                                             color: Colors.black
+                                             color: Colors.black,
+                                             height: 1.w,
                                             ),
                                             tags: {
                                               'b': StyledTextTag(style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -233,7 +235,8 @@ class _ShopPageState extends ConsumerState<ShopPage> {
                                                     style: TextStyle(
                                                       fontSize: 15.w,
                                                       fontWeight: FontWeight.bold,
-                                                      color: Colors.black
+                                                      color: Colors.black,
+                                                      height: 1.w,
                                                     ),
                                                   ),
                                                 ]

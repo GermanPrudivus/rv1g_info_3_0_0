@@ -108,7 +108,8 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black,
-                                            fontSize: 20.w
+                                            fontSize: 20.w,
+                                            height: 1.w,
                                           ),
                                         ),
                                       ],
@@ -138,6 +139,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                           style: TextStyle(
                                             fontSize: 14.w,
                                             color: Colors.black54,
+                                            height: 1.w,
                                           ),
                                           textAlign: TextAlign.start,
                                           tags: {
@@ -158,6 +160,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                                   news[index].author,
                                                   style: TextStyle(
                                                     fontSize: 13.w,
+                                                    height: 1.w,
                                                   ),
                                                 ),
                                                 Text(
@@ -167,6 +170,7 @@ class _EklasePageState extends ConsumerState<EklasePage> {
                                                     ),
                                                   style: TextStyle(
                                                     fontSize: 13.w,
+                                                    height: 1.w,
                                                   ),
                                                 )
                                               ]

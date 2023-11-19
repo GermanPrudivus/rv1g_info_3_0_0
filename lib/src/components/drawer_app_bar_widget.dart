@@ -35,9 +35,11 @@ class _DrawerAppBarWidgetState extends State<DrawerAppBarWidget> {
         },
       ),
 
+      surfaceTintColor: Colors.white,
       backgroundColor: Colors.white,
       shadowColor: appBarShadow,
-
+      scrolledUnderElevation: 0,
+      elevation: 3,
       toolbarHeight: 60.h,
 
       centerTitle: true,

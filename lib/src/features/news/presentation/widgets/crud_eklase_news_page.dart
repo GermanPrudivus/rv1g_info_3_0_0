@@ -147,6 +147,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                       : "Pievienot ziņu:",
                       style: TextStyle(
                         fontSize: 24.w,
+                        height: 1.w,
                       ),
                     ),
                   ],
@@ -163,6 +164,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                           "Nosaukums",
                           style: TextStyle(
                             fontSize: 14.w,
+                            height: 1.w,
                           ),
                         ),
                       ),
@@ -171,7 +173,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -191,7 +194,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti ziņas nosaukumu',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         onChanged: (value) {
@@ -219,6 +223,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                           "Īss apraksts",
                           style: TextStyle(
                             fontSize: 14.w,
+                            height: 1.w,
                           ),
                         ),
                       ),
@@ -227,7 +232,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -247,7 +253,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti ziņas īso aprakstu, kuru redzēs sākumā',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         maxLength: 200,
@@ -278,6 +285,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                           "Autors",
                           style: TextStyle(
                             fontSize: 14.w,
+                            height: 1.w,
                           ),
                         ),
                       ),
@@ -286,7 +294,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -300,13 +309,14 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
                               width: 2.h,
-                              color: blue
+                              color: blue,
                             ),
                           ),
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti autora vārdu',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         onChanged: (value) {
@@ -334,6 +344,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                           "Teksts",
                           style: TextStyle(
                             fontSize: 14.w,
+                            height: 1.w,
                           ),
                         ),
                       ),
@@ -341,7 +352,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                         initialValue: text,
                         keyboardType: TextInputType.multiline,
                         style: TextStyle(
-                          fontSize: 15.w
+                          fontSize: 15.w,
+                          height: 1.w,
                         ),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -361,7 +373,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           hintText: 'Ieraksti ziņas tekstu',
                           hintStyle: TextStyle(
-                            fontSize: 14.w
+                            fontSize: 14.w,
+                            height: 1.w,
                           )
                         ),
                         minLines: 25,
@@ -385,7 +398,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                   child: Text(
                     '<b></b> - lai uztaisītu tekstu treknrakstā\n<u></u> - lai pasvītrotu tekstu\n<i></i> - lai uztaisītu tekstu kursīvā\n<link href=your_link></link> - lai pievienotu saiti',
                     style: TextStyle(
-                      fontSize: 15.w
+                      fontSize: 15.w,
+                      height: 1.w,
                     ),
                   ),
                 ),
@@ -418,6 +432,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                           "Piestiprināt ziņu augšā",
                           style: TextStyle(
                             fontSize: 15.w,
+                            height: 1.w,
                           ),
                         )
                       ],
@@ -428,7 +443,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                 Text(
                   "Pievienot attēlu:",
                   style: TextStyle(
-                    fontSize: 15.w
+                    fontSize: 15.w,
+                    height: 1.w,
                   ),
                 ),
                 
@@ -508,7 +524,8 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                           style: TextStyle(
                             fontSize: 15.w,
                             color: Colors.black45,
-                            fontWeight: FontWeight.bold
+                            fontWeight: FontWeight.bold,
+                            height: 1.w,
                           ),
                         )
                       ],
@@ -590,6 +607,7 @@ class _CRUDEklaseNewsPageState extends ConsumerState<CRUDEklaseNewsPage> {
                       style: TextStyle(
                         fontSize: 17.w,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white
                       ),
                     ),
                   ),

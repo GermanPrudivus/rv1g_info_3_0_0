@@ -413,6 +413,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     style: TextStyle(
                       fontSize: 17.w,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white
                     ),
                   ),
                 ),

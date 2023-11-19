@@ -252,6 +252,7 @@ class _SchoolPageState extends ConsumerState<SchoolPage> {
                                         text: json.decode(news[index].text[i])['text'],
                                         style: TextStyle(
                                           fontSize: 15.w,
+                                          height: 1.w,
                                         ),
                                         textAlign: TextAlign.start,
                                         tags: {

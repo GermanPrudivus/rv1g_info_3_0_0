@@ -120,7 +120,8 @@ class _ItemPageState extends State<ItemPage> {
                         item.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 24.w
+                          fontSize: 24.w,
+                          height: 1.w,
                         ),
                       ),
                     )
@@ -143,6 +144,7 @@ class _ItemPageState extends State<ItemPage> {
                         text: formatedText(item.description),
                         style: TextStyle(
                           fontSize: 16.w,
+                          height: 1.w,
                         ),
                         textAlign: TextAlign.start,
                         tags: {
@@ -168,6 +170,7 @@ class _ItemPageState extends State<ItemPage> {
                                 fontSize: 17.w,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
+                                height: 1.w,
                               ),
                             ),
                           ),

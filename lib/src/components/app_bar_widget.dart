@@ -30,7 +30,11 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
+      
       shadowColor: appBarShadow,
+      scrolledUnderElevation: 0,
+      elevation: 3,
 
       toolbarHeight: 60.h,
 
