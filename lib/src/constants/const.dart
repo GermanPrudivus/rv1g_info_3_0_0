@@ -6,7 +6,7 @@ const String supabaseUrl = String.fromEnvironment(
 
 const String supabaseAnnonKey = String.fromEnvironment(
   'SUPABASE_ANNON_KEY',
-  defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16bmZucnNxdGd6aGhsdG1wd3doIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzY4MzE1NzMsImV4cCI6MTk5MjQwNzU3M30.6-A5IXsAaTfpp1vEjdthjeHg8Dj41wgzyUgTtKKV19Y',
+  defaultValue: '',
 );
 
 //auth
