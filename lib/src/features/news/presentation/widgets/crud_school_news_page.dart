@@ -11,7 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:rv1g_info/src/features/news/presentation/controllers/crud_school_news_controller.dart';
 import 'package:rv1g_info/src/utils/exception.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/poll.dart';
 
 class CRUDSchoolNewsPage extends ConsumerStatefulWidget {

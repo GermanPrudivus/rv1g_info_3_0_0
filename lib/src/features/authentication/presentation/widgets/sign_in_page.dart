@@ -3,15 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
-import 'package:rv1g_info/main.dart';
-import 'package:rv1g_info/src/constants/const.dart';
-import 'package:rv1g_info/src/features/authentication/presentation/widgets/forgot_password_page.dart';
+import 'package:rv1g_info/src/constants/theme.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/components/text_form.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/controllers/sign_in_controller.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/state/sign_in_state.dart';
 import 'package:rv1g_info/src/utils/auth_exception.dart';
-import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_up_page.dart';
-
-import '../../../../constants/theme_colors.dart';
-import '../controllers/sign_in_controller.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -21,8 +19,6 @@ class SignInPage extends ConsumerStatefulWidget {
 }
 
 class _SignInPageState extends ConsumerState<SignInPage> {
-  bool notVisibility = true;
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -34,6 +30,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool notVisibility = ref.watch(notVisibleProvider);
 
     ref.listen<AsyncValue>(
       signInScreenControllerProvider,
@@ -44,14 +41,8 @@ class _SignInPageState extends ConsumerState<SignInPage> {
             barrierDismissible: false,
             builder: (context) => Center(child: CircularProgressIndicator(color: blue))
           );
-        } else if (state.asData == null){
-          Navigator.pop(context);
         } else {
-          Navigator.pushAndRemoveUntil(
-            context, 
-            MaterialPageRoute(builder: (context) => const MyHomePage()),
-            (route) => false
-          );
+          Navigator.pop(context);
         }
         state.showSnackbarOnError(context);
       }
@@ -59,23 +50,25 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-        body: SafeArea(
+      body: SafeArea(
+        bottom: false,
         child: SingleChildScrollView(
           reverse: true,
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 100.h),
-                child: SizedBox(
-                  height: 146.h,
-                  child: SvgPicture.network(loginSvg),
+          child: Padding(
+            padding: EdgeInsets.only(left: 25.w, right: 25.w),
+            child: Column(
+              children: [
+                SizedBox(height: 70.h),
+                SvgPicture.asset(
+                  "assets/login.svg",
+                  height: 150.h,
                 ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 40.h, left: 30.w),
-                    child: Text(
+                SizedBox(height: 30.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
                       "Login",
                       style: TextStyle(
                         fontSize: 30.w,
@@ -83,104 +76,47 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                         fontWeight: FontWeight.bold,
                       )
                     ),
-                  ),
-                ],
-              ),
-
-              //TextForms
-
-              Padding(
-                padding: EdgeInsets.only(left: 30.w, top: 25.h, right: 30.w),
-                child: TextFormField(
-                  controller: emailController,
-                  style: TextStyle(
-                    fontSize: 15.w,
-                    color: blue,
-                  ),
-                  textInputAction: TextInputAction.done,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    hintText: "Email",
-                    hintStyle: TextStyle(
-                      fontSize: 15.w,
-                      color: lightGrey,
-                    ),
-                    icon: const Icon(Icons.alternate_email),
-                    iconColor: lightGrey,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: transparentLightGrey, 
-                        width: 2.h
-                      )
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: blue, width: 2.h)
-                    ),
-                  ),
-                  cursorColor: blue,
+                  ],
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 30.w, top: 15.h, right: 30.w),
-                child: TextFormField(
-                  controller: passwordController,
-                  style: TextStyle(
-                    fontSize: 15.w,
-                    color: blue,
-                  ),
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    hintStyle: TextStyle(
-                      fontSize: 15.w,
-                      color: lightGrey,
-                    ),
-                    icon: const Icon(Icons.lock_outline),
-                    iconColor: lightGrey,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: transparentLightGrey, 
-                        width: 2.h
-                      )
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: blue, width: 2.h)
-                    ),
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if(notVisibility == false) {
-                            notVisibility = true;
-                          } else {
-                            notVisibility = false;
-                          }
-                        });
-                      },
-                      child: Icon(notVisibility
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined),
-                    ),
-                    suffixIconColor: lightGrey,
-                  ),
-                  obscureText: notVisibility,
-                  cursorColor: blue,
+                SizedBox(height: 25.h),
+                TextForm(
+                  value: ref.watch(emailProvider), 
+                  hintText: "Email", 
+                  onChanged: (value) => ref.read(emailProvider.notifier).state = value, 
+                  onValidated: (value) => ref.read(hasValidEmailProvider.notifier).state = value
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 5.h, right: 30.w),
-                    child: GestureDetector(
-                      onTap: () {
-                        //Nav to forgot password page
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(
-                            builder: (context) => const ForgotPasswordPage()
-                          )
-                        );
-                      },
+                SizedBox(height: 10.h),
+                TextForm(
+                  value: ref.watch(passwordProvider), 
+                  hintText: "Password", 
+                  onChanged: (value) => ref.read(passwordProvider.notifier).state = value, 
+                  onValidated: (value) => ref.read(hasValidPasswordProvider.notifier).state = value,
+                  visible: notVisibility,
+                  suffix: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if(notVisibility == false) {
+                          ref.read(notVisibleProvider.notifier).state = true;
+                        } else {
+                          ref.read(notVisibleProvider.notifier).state  = false;
+                        }
+                      });
+                    },
+                    child: Icon(notVisibility
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                      color: surface,
+                      size: 20.r,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 5.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () => context.push('/authentication/forgot-password'),
                       child: Container(
                         height: 30.h,
                         width: 130.w,
@@ -190,41 +126,19 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                           style: TextStyle(
                             color: blue, 
                             fontSize: 14.w
-                            ),
+                          ),
                         )
                       ),
                     )
-                  )
-                ],
-              ),
-
-              //Button
-              Padding(
-                padding: EdgeInsets.only(top: 17.h, left: 30.w, right: 30.w),
-                child: ElevatedButton(
+                  ],
+                ),
+                SizedBox(height: 20.h),
+                ElevatedButton(
                   onPressed: () {
                     ref
                       .read(signInScreenControllerProvider.notifier)
                       .signIn(emailController.text.trim(), passwordController.text.trim())
-                      .then((value) {
-                        if(value!){
-                          Navigator.popUntil(context, (route) => false);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SignInPage()
-                            )
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Text(
-                                'Account is deleted! Please try different one!'
-                              )
-                            )
-                          );
-                        }
-                      });
+                      .whenComplete(() => context.pushReplacement('/main'));
                   },
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(1.sw, 50.h),
@@ -243,74 +157,64 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                     ),
                   ),
                 ),
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(top: 13.h, left: 30.w, right: 30.w),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 10.w),
-                        child: Container(
-                          height: 1.h,
-                          color: lightGrey,
+                SizedBox(height: 12.5.h),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 1.h,
+                        width: 1.sw/3.5,
+                        color: lightGrey,
+                      ),
+                      Text(
+                        "OR",
+                        style: TextStyle(
+                          fontSize: 15.w, 
+                          color: lightGrey
                         ),
                       ),
-                    ),
-                    Text(
-                      "OR",
-                        style: TextStyle(fontSize: 15.w, color: lightGrey),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10.w),
-                        child: Container(
-                          height: 1.h,
-                          color: lightGrey,
-                        ),
+                      Container(
+                        height: 1.h,
+                        width: 1.sw/3.5,
+                        color: lightGrey,
                       ),
-                    ),
-                  ]
+                    ]
+                  ),
                 ),
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(top: 2.5.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center, 
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       "New to school?",
-                      style: TextStyle(fontSize: 15.w, color: lightGrey),
+                      style: TextStyle(
+                        fontSize: 15.w, 
+                        color: lightGrey
+                      ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        //Nav to signup page
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignUpPage()
-                          ),
-                        );
-                      },
+                      onTap: () => context.push('/authentication/sign-up'),
                       child: Container(
-                        height: 30.h,
+                        height: 27.5.h,
                         width: 70.w,
                         alignment: Alignment.center,
                         child: Text(
                           "Register",
-                          style: TextStyle(color: blue, fontSize: 15.w),
+                          style: TextStyle(
+                            color: blue, 
+                            fontSize: 15.w
+                          ),
                         )
                       ),
                     ),
                   ]
                 ),
-              )
-            ],
-          ),
+              ],
+            ),
+          )
         )
       )
     );

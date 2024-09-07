@@ -2,17 +2,22 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rv1g_info/src/components/difference_in_dates.dart';
 import 'package:rv1g_info/src/constants/firebase_options.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/widgets/email_verification_page.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/widgets/forgot_password_page.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_up_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:rv1g_info/src/constants/const.dart';
-import 'package:rv1g_info/src/constants/theme_colors.dart';
+import 'package:rv1g_info/src/constants/theme.dart';
 
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_in_page.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/news_page.dart';
+import 'src/constants/api_keys.dart';
 import 'src/features/changes/presentation/widgets/changes_page.dart';
 import 'package:rv1g_info/src/features/schedule/presentation/widgets/schedule_page.dart';
 import 'package:rv1g_info/src/features/menu/presentation/widgets/menu_page.dart';
@@ -21,6 +26,8 @@ import 'package:rv1g_info/src/features/shop/presentation/widgets/shop_page.dart'
 Future<void> main() async{
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
@@ -31,34 +38,67 @@ Future<void> main() async{
     anonKey: supabaseAnnonKey,
   );
 
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp, 
-    DeviceOrientation.portraitDown
-  ]);
-
   runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final session = Supabase.instance.client.auth.currentSession;
+    final _router = GoRouter(
+      initialLocation: '/',
+      redirect: (context, state) {
+        if (Supabase.instance.client.auth.currentSession != null && state.fullPath == "/") {
+          return '/main';
+        } else {
+          return null;
+        }
+      },
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => const SignInPage(),
+        ),
+        GoRoute(
+          path: '/authentication',
+          builder: (context, state) => const SignInPage(),
+          routes: [
+            GoRoute(
+              path: 'sign-in',
+              builder: (context, state) => SignInPage(),
+            ),
+            GoRoute(
+              path: 'sign-up',
+              builder: (context, state) => SignUpPage(),
+            ),
+            GoRoute(
+              path: 'forgot-password',
+              builder: (context, state) => ForgotPasswordPage(),
+            ),
+            GoRoute(
+              path: 'email-verification',
+              builder: (context, state) => EmailVerificationPage(),
+            ),
+          ]
+        ),
+        GoRoute(
+          path: '/main',
+          builder: (context, state) => MyHomePage(),
+        ),
+      ]
+    );
 
     return ScreenUtilInit(
       useInheritedMediaQuery: true,
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) {
-        return MaterialApp(
+      builder: (_, child) {
+        return MaterialApp.router(
           theme: ThemeData(
-            primaryColor: blue,
+            primaryColor: blue
           ),
-          home: session == null
-            ? const SignInPage()
-            : const MyHomePage(),
+          routerConfig: _router,
         );
       }
     );
@@ -167,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           child: NavigationBar(
             height: 50.h,
-            backgroundColor: navigationBarColor,
+            backgroundColor: const Color.fromRGBO(241, 244, 251, 1),
             labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
             selectedIndex: index,
             onDestinationSelected: (index) =>

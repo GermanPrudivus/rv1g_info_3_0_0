@@ -7,7 +7,7 @@ import 'package:rv1g_info/src/components/difference_in_dates.dart';
 import 'package:rv1g_info/src/components/drawer_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/volunteering/presentation/widgets/volunteering_job_page.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/job.dart';
 import '../controllers/volunteering_controller.dart';
 import 'crud_volunteering_job_page.dart';

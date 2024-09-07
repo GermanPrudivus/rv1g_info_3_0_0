@@ -24,6 +24,7 @@ dependencies:
 
   flutter_screenutil: ^5.8.4
   flutter_svg: ^2.0.7
+  go_router: ^14.2.7
   the_validator: ^2.0.0
   image_picker: ^1.0.4
   permission_handler: ^10.4.3
@@ -71,6 +72,11 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/login.svg
+    - assets/forgot_password.svg
+    - assets/password.svg
+    - assets/email.svg
+
     - assets/Instagram_icon.png
     - assets/2021_Facebook_icon.png
 

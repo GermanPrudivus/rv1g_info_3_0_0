@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/features/scanners/presentation/controllers/scan_ticket_controller.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 
 class ActivateWidget extends ConsumerStatefulWidget {
   final int id;

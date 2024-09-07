@@ -10,7 +10,7 @@ import 'package:rv1g_info/src/features/authentication/presentation/widgets/email
 import 'package:rv1g_info/src/utils/auth_exception.dart';
 import 'package:the_validator/the_validator.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../controllers/sign_up_controller.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {

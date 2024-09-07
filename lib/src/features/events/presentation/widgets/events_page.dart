@@ -8,7 +8,7 @@ import 'package:rv1g_info/src/features/events/presentation/widgets/crud_event_pa
 import 'package:styled_text/styled_text.dart';
 
 import '../../../../constants/const.dart';
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../doamain/models/event.dart';
 import '../controllers/events_controller.dart';
 import 'event_page.dart';

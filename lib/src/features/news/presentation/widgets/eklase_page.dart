@@ -7,7 +7,7 @@ import 'package:rv1g_info/src/constants/const.dart';
 import 'package:rv1g_info/src/features/news/presentation/widgets/one_eklase_news_page.dart';
 import 'package:styled_text/styled_text.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/eklase_news.dart';
 import '../controllers/eklase_controller.dart';
 

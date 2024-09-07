@@ -9,7 +9,7 @@ import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../components/image_zoom_widget.dart';
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../doamain/models/event.dart';
 
 class EventPage extends StatelessWidget {

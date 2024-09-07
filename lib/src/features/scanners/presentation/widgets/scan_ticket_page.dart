@@ -9,7 +9,7 @@ import 'package:rv1g_info/src/utils/exception.dart';
 
 import '../../../../components/difference_in_dates.dart';
 import '../../../../components/scanner_border_painter.dart';
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/scanner.dart';
 import '../controllers/scan_ticket_controller.dart';
 

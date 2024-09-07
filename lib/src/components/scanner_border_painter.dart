@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../constants/theme_colors.dart';
+import '../constants/theme.dart';
 
 class ScannerBorderPainter extends CustomPainter {
   @override

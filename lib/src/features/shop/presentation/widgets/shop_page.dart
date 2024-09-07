@@ -10,7 +10,7 @@ import 'package:rv1g_info/src/features/shop/presentation/widgets/crud_shop_page.
 import 'package:styled_text/styled_text.dart';
 
 import '../../../../components/drawer_widget.dart';
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/item.dart';
 import 'item_page.dart';
 

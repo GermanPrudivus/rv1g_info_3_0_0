@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../constants/const.dart';
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 
 class EmailVerificationPage extends StatelessWidget {
   const EmailVerificationPage({super.key});

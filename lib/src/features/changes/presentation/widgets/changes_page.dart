@@ -8,7 +8,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../components/drawer_widget.dart';
 import '../../../../components/image_zoom_widget.dart';
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/changes.dart';
 import '../controllers/changes_controller.dart';
 import 'crud_changes_widget.dart';

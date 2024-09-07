@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/features/scanners/presentation/widgets/scan_ticket_page.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/participant.dart';
 import '../../domain/models/scanner.dart';
 import '../controllers/scanner_page.dart';

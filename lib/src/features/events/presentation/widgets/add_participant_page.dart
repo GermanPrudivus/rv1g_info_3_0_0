@@ -6,7 +6,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:rv1g_info/src/components/scanner_border_painter.dart';
 import 'package:rv1g_info/src/features/events/presentation/widgets/confirm_widget.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../doamain/models/event.dart';
 
 class AddParticipantPage extends StatefulWidget {

@@ -2,6 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:rv1g_info/src/components/drawer_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_in_page.dart';
@@ -10,7 +11,7 @@ import 'package:rv1g_info/src/features/settings/presentation/widgets/confirm_del
 import 'package:rv1g_info/src/features/settings/presentation/widgets/contact_info_page.dart';
 import 'package:rv1g_info/src/features/settings/presentation/widgets/edit_user_page.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/app_user.dart';
 import '../../domain/models/role.dart';
 
@@ -347,15 +348,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                         ref
                           .read(settingsControllerProvider.notifier)
                           .logout()
-                          .whenComplete(() {
-                            Navigator.popUntil(context, (route) => false);
-                            Navigator.push(
-                              context, 
-                              MaterialPageRoute(
-                                builder: (context) => SignInPage()
-                              )
-                            );
-                          });
+                          .whenComplete(() => context.pushReplacement('/'));
                         FirebaseAnalytics.instance.logEvent(name: "user_logout");
                       },
                     ),

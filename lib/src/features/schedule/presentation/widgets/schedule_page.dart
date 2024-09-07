@@ -9,7 +9,7 @@ import 'package:rv1g_info/src/features/schedule/presentation/widgets/crud_schedu
 
 import '../../../../components/drawer_widget.dart';
 import '../../../../components/image_zoom_widget.dart';
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../../../components/app_bar_widget.dart';
 import '../../domain/models/schedule.dart';
 

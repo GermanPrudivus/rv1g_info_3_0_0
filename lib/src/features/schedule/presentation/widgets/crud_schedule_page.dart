@@ -8,7 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:rv1g_info/src/features/schedule/presentation/controllers/schedule_controller.dart';
 import 'package:rv1g_info/src/utils/exception.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 
 class CRUDScheduleWidget extends ConsumerStatefulWidget {
   final String tag;

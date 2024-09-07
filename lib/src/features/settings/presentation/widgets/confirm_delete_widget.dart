@@ -6,7 +6,7 @@ import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_
 import 'package:rv1g_info/src/features/settings/presentation/controllers/settings_controller.dart';
 import 'package:the_validator/the_validator.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 
 class ConfirmDeleteWidget extends ConsumerStatefulWidget {
   final String fullName;

@@ -10,7 +10,7 @@ import 'package:rv1g_info/src/features/menu/presentation/widgets/crud_menu_widge
 
 import '../../../../components/verification_page.dart';
 import '../../../../constants/const.dart';
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/menu.dart';
 
 class MenuPage extends ConsumerStatefulWidget {

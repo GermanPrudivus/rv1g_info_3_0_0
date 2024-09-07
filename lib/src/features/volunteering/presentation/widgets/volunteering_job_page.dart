@@ -7,7 +7,7 @@ import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../components/image_zoom_widget.dart';
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/job.dart';
 import 'crud_volunteering_job_page.dart';
 

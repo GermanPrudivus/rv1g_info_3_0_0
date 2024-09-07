@@ -12,7 +12,7 @@ import 'package:the_validator/the_validator.dart';
 
 import '../../../../components/drawer_app_bar_widget.dart';
 import '../../../../constants/const.dart';
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/app_user.dart';
 
 class EditUserPage extends ConsumerStatefulWidget {

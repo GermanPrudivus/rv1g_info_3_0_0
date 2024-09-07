@@ -1,17 +1,3 @@
-
-const String supabaseUrl = String.fromEnvironment(
-  'SUPABASE_URL',
-  defaultValue: 'https://mznfnrsqtgzhhltmpwwh.supabase.co',
-);
-
-const String supabaseAnnonKey = String.fromEnvironment(
-  'SUPABASE_ANNON_KEY',
-  defaultValue: '',
-);
-
-//auth
-String loginSvg = "https://mznfnrsqtgzhhltmpwwh.supabase.co/storage/v1/object/public/assets/undraw_login_re_4vu2.svg";
-
 const Map<String, int> dropdownValues = {
       "Choose your class": -1,
       "7.a klase" : 1,

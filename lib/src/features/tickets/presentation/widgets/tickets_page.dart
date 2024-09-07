@@ -7,7 +7,7 @@ import 'package:rv1g_info/src/features/tickets/presentation/widgets/ticket_qr_co
 
 import '../../../../components/difference_in_dates.dart';
 import '../../../../components/drawer_app_bar_widget.dart';
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/ticket.dart';
 
 class TicketsPage extends ConsumerStatefulWidget {

@@ -5,7 +5,7 @@ import 'package:rv1g_info/src/components/drawer_app_bar_widget.dart';
 import 'package:rv1g_info/src/features/scanners/presentation/controllers/scanners_controller.dart';
 import 'package:rv1g_info/src/features/scanners/presentation/widgets/scanner_page.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/scanner.dart';
 
 class ScannersPage extends ConsumerStatefulWidget {

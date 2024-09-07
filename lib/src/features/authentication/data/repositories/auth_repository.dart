@@ -29,17 +29,6 @@ class AuthRepository {
     }
   }
 
-  Future<bool> checkUserDeleted() async{
-    final userDeleted = await supabase.auth.currentUser?.userMetadata?['deleted'] ?? false;
-
-    if(userDeleted){
-      await supabase
-        .auth
-        .signOut();
-    }
-    return userDeleted;
-  }
-
   Future<String> signUp(String email, String password) async {
     final res = await supabase
       .auth

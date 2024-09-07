@@ -44,3 +44,6 @@ app.*.map.json
 /android/app/release
 
 .vscode
+
+api_keys.dart
+firebase_options.dart

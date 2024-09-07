@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rv1g_info/src/utils/exception.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../controllers/crud_shop_controller.dart';
 
 class CRUDShopPage extends ConsumerStatefulWidget {

@@ -11,7 +11,7 @@ import 'package:styled_text/tags/styled_text_tag.dart';
 import 'package:styled_text/widgets/styled_text.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../constants/theme_colors.dart';
+import '../constants/theme.dart';
 
 class VerificationPage extends StatefulWidget {
   final String fullName;

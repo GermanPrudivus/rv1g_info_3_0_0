@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rv1g_info/src/features/events/presentation/controllers/add_participant_controller.dart';
 import 'package:rv1g_info/src/utils/exception.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../doamain/models/event.dart';
 
 class ConfirmWidget extends ConsumerStatefulWidget {

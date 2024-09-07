@@ -11,7 +11,7 @@ import 'package:styled_text/styled_text.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/school_news.dart';
 
 class SchoolPage extends ConsumerStatefulWidget {

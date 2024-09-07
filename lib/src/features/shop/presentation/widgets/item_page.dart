@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:rv1g_info/src/features/shop/presentation/widgets/crud_shop_page.dart';
 
 import '../../../../components/image_zoom_widget.dart';
-import '../../../../constants/theme_colors.dart';
+import '../../../../constants/theme.dart';
 import '../../domain/models/item.dart';
 
 class ItemPage extends StatefulWidget {
