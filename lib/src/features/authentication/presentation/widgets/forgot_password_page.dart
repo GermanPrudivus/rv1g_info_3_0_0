@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rv1g_info/src/constants/theme.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/components/button.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/components/text_form.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/controllers/forgot_password_page.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/state/forgot_password_state.dart';
 import 'package:rv1g_info/src/utils/auth_exception.dart';
-import 'package:the_validator/the_validator.dart';
-
-import '../../../../constants/const.dart';
-import '../../../../constants/theme.dart';
 
 class ForgotPasswordPage extends ConsumerStatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -30,7 +30,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (context) => Center(child: CircularProgressIndicator(color: blue))
+            builder: (context) => Center(child: CircularProgressIndicator(color: onBackground))
           );
         } else {
           context.pop();
@@ -52,12 +52,13 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     GestureDetector(
                       onTap: () => context.pop(),
                       child: Icon(
                         Icons.chevron_left,
-                        color: blue, 
+                        color: onBackground, 
                         size: 34.h,
                       ),
                     ),
@@ -72,10 +73,10 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                 Row(
                   children: [
                     Text(
-                      "Forgot password?",
+                      "Aizmirsi paroli?",
                       style: TextStyle(
                         fontSize: 30.w,
-                        color: blue,
+                        color: onBackground,
                         fontWeight: FontWeight.bold,
                       )
                     ),
@@ -83,66 +84,28 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                 ),
                 SizedBox(height: 10.h),
                 Text(
-                  "Don’t worry! It happens. Please enter the address associated with your account.",
+                  "Neuztraucies! Tas gadās. Lūdzu ievadi e-pastu, ar kuru tika reģistrēts profils!",
                   style: TextStyle(
                     fontSize: 15.w,
-                    color: surface.withOpacity(0.4),    
+                    color: surface,    
                   )
                 ),
                 SizedBox(height: 25.h),
-                TextFormField(
-                  controller: emailController,
-                  style: TextStyle(
-                    fontSize: 15.w,
-                    color: blue,
-                  ),
-                  textInputAction: TextInputAction.done,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    hintText: "Email",
-                    hintStyle: TextStyle(
-                      fontSize: 15.w,
-                      color: lightGrey,
-                    ),
-                    icon: const Icon(Icons.alternate_email),
-                    iconColor: lightGrey,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: transparentLightGrey, width: 2.h
-                      )
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: blue, width: 2.h)
-                    ),
-                  ),
-                  cursorColor: blue,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: FieldValidator.email(message: "Type a valid email")
+                TextForm(
+                  value: ref.watch(emailProvider), 
+                  hintText: "E-pasts", 
+                  onChanged: (value) => ref.read(emailProvider.notifier).state = value.trim(), 
+                  onValidated: (value) => ref.read(hasValidEmailProvider.notifier).state = value
                 ),
-                SizedBox(height: 50.h),
-                ElevatedButton(
+                SizedBox(height: 40.h),
+                Button(
+                  text: "Nosūtīt e-pastu", 
                   onPressed: () {
                     ref
                       .read(forgotPasswordScreenControllerProvider.notifier)
                       .resetPassword(emailController.text);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: Size(1.sw, 50.h),
-                    backgroundColor: blue,
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.h)
-                    )
-                  ),
-                  child: Text(
-                    "Send an email",
-                    style: TextStyle(
-                      fontSize: 17.w,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
-                    ),
-                  ),
-                ),
+                  }
+                )
               ],
             ),
           )

@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:rv1g_info/src/components/drawer_app_bar_widget.dart';
-import 'package:rv1g_info/src/features/authentication/presentation/widgets/sign_in_page.dart';
 import 'package:rv1g_info/src/features/settings/presentation/controllers/settings_controller.dart';
 import 'package:rv1g_info/src/features/settings/presentation/widgets/confirm_delete_widget.dart';
 import 'package:rv1g_info/src/features/settings/presentation/widgets/contact_info_page.dart';

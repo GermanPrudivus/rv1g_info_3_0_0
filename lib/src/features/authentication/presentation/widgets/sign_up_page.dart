@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rv1g_info/src/constants/const.dart';
-import 'package:rv1g_info/src/features/authentication/presentation/widgets/email_verification_page.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/components/button.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/components/text_form.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/state/sign_up_page.dart';
 import 'package:rv1g_info/src/utils/auth_exception.dart';
-import 'package:the_validator/the_validator.dart';
 
 import '../../../../constants/theme.dart';
 import '../controllers/sign_up_controller.dart';
@@ -21,32 +23,6 @@ class SignUpPage extends ConsumerStatefulWidget {
 }
 
 class _SignUpPageState extends ConsumerState<SignUpPage> {
-
-  String dropdownValue = "Choose your class";
-
-  bool notVisibility = true;
-  bool validPassword = true;
-
-  TextEditingController emailController = TextEditingController();
-  TextEditingController fullNameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController repeatPasswordController = TextEditingController();
-
-  final _formKey = GlobalKey<FormState>();
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  late String imagePath = "";
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    fullNameController.dispose();
-    passwordController.dispose();
-    repeatPasswordController.dispose();
-
-    super.dispose();
-  }
-
   Future pickImageFromGallery() async {
     final XFile? image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -57,14 +33,14 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
     File imageFile;
 
-    setState(() {
-      imageFile = File(image!.path);
-      imagePath = imageFile.path;
-    });
+    imageFile = File(image!.path);
+    ref.read(imagePathProvider.notifier).state = imageFile.path;
   }
 
   @override
   Widget build(BuildContext context) {
+    String imagePath = ref.watch(imagePathProvider);
+    bool notVisibile = ref.watch(notVisibleProvider);
 
     ref.listen<AsyncValue>(
       signUpScreenControllerProvider,
@@ -73,382 +49,224 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (context) => Center(child: CircularProgressIndicator(color: blue))
+            builder: (context) => Center(child: CircularProgressIndicator(color: onBackground))
           );
-        } else if (state.asData == null){
-          Navigator.pop(context);
         } else {
-          Navigator.pop(context);
-          Navigator.pop(context);
-          Navigator.push(
-            context, 
-            MaterialPageRoute(builder: (context) => const EmailVerificationPage()),
-          );
+          context.pop();
         }
         state.showSnackbarOnError(context);
       },
     );
 
     return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          splashRadius: 0.01,
-          icon: Icon(
-            Icons.chevron_left,
-            color: blue, 
-            size: 34.h,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        toolbarHeight: 60.h,
-      ),
-      backgroundColor: Colors.white,
+      backgroundColor: background,
       body: SafeArea(
+        bottom: false,
         child: SingleChildScrollView(
           reverse: true,
-          child: Form(
-            key: _formKey,
-            child:Column(
+          child: Padding(
+            padding: EdgeInsets.only(right: 25.w, left: 25.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 30.w),
-                    child: Text(
-                      "Sign up",
-                      style: TextStyle(
-                        color: blue,
-                        fontSize: 30.w,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(top: 20.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     GestureDetector(
-                      onTap: () async {
-                        PermissionStatus storageStatus = await Permission.storage.request();
+                      onTap: () => context.pop(),
+                      child: Icon(
+                        Icons.chevron_left,
+                        color: onBackground, 
+                        size: 34.h,
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  "Reģistrējies",
+                  style: TextStyle(
+                    color: onBackground,
+                    fontSize: 30.w,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 15.h),
+                GestureDetector(
+                  onTap: () async {
+                    PermissionStatus storageStatus = await Permission.storage.request();
 
-                        if(storageStatus == PermissionStatus.granted){
-                          pickImageFromGallery();
-                        }
+                    if(storageStatus == PermissionStatus.granted){
+                      pickImageFromGallery();
+                    }
  
-                        if(storageStatus == PermissionStatus.denied){
-                          if(mounted){
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'You need to provide a Gallery access to upload photo!'
-                                )
-                              )
-                            );
-                          }
-                        }
+                    if(storageStatus == PermissionStatus.denied){
+                      if(mounted){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'You need to provide a Gallery access to upload photo!'
+                            )
+                          )
+                        );
+                      }
+                    }
   
-                        if(storageStatus == PermissionStatus.permanentlyDenied){
-                          openAppSettings();
-                        }
-                      },
-                      child: imagePath == ""
-                        ? CircleAvatar(
-                          radius: 50.h,
-                          backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.white,
-                            size: 80.h,
-                          )
+                    if(storageStatus == PermissionStatus.permanentlyDenied){
+                      openAppSettings();
+                    }
+                  },
+                  child: imagePath == ""
+                    ? CircleAvatar(
+                        radius: 50.h,
+                        backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+                        child: Icon(
+                          Icons.person,
+                          color: background,
+                          size: 80.h,
                         )
-                        : CircleAvatar(
-                            radius: 50.h,
-                            backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
-                            backgroundImage: FileImage(File(imagePath)),
-                          )
-                    )
-                  ]
-                ),
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(left: 30.w, top: 25.h, right: 30.w),
-                child: TextFormField(
-                  controller: emailController,
-                  style: TextStyle(
-                    fontSize: 15.w,
-                    color: blue,
-                  ),
-                  textInputAction: TextInputAction.done,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    hintText: "Email",
-                    hintStyle: TextStyle(
-                      fontSize: 15.w,
-                      color: lightGrey,
-                    ),
-                    icon: const Icon(Icons.alternate_email),
-                    iconColor: lightGrey,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: transparentLightGrey, width: 2.h
                       )
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: blue, width: 2.h)
-                    ),
-                  ),
-                  cursorColor: blue,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: FieldValidator.email(message: "Type a valid email"),
-                ),
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(left: 30.w, top: 10.h, right: 30.w),
-                child: TextFormField(
-                  controller: fullNameController,
-                  style: TextStyle(
-                    fontSize: 15.w,
-                    color: blue,
-                  ),
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    hintText: "Full Name",
-                    hintStyle: TextStyle(
-                      fontSize: 15.w,
-                      color: lightGrey,
-                    ),
-                    icon: const Icon(Icons.person_outline),
-                    iconColor: lightGrey,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: transparentLightGrey, width: 2.h
+                    : CircleAvatar(
+                        radius: 50.h,
+                        backgroundColor: const Color.fromRGBO(217, 217, 217, 1),
+                        backgroundImage: FileImage(File(imagePath)),
                       )
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: blue, width: 2.h)
-                    ),
-                  ),
-                  cursorColor: blue,
-                  validator: FieldValidator.required(
-                    message: "Type your full name"
-                  ),
                 ),
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(top: 0, left: 65.w, right: 30.w),
-                child: DropdownButton<String>(
+                SizedBox(height: 15.h),
+                TextForm(
+                  value: ref.watch(emailProvider), 
+                  hintText: "E-pasts", 
+                  onChanged: (value) => ref.read(emailProvider.notifier).state = value.trim(), 
+                  onValidated: (value) => ref.read(hasValidEmailProvider.notifier).state = value
+                ),
+                SizedBox(height: 10.h),
+                TextForm(
+                  value: ref.watch(fullNameProvider), 
+                  hintText: "Vārds Uzvārds", 
+                  onChanged: (value) => ref.read(fullNameProvider.notifier).state = value.trim(), 
+                  onValidated: (value) => ref.read(hasFullNameProvider.notifier).state = value
+                ),
+                SizedBox(height: 10.h),
+                DropdownButtonFormField<String>(
                   menuMaxHeight: 350.h,
                   isExpanded: true,
-                  itemHeight: 55.h,
-                  borderRadius: BorderRadius.circular(20.w),
-                  iconEnabledColor: blue,
+                  itemHeight: 50.h,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: background,
+                    contentPadding: EdgeInsets.all(20.r),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14.r),
+                      borderSide: BorderSide(
+                        color: onBackground.withOpacity(0.3),
+                        width: 2.r,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14.r),
+                      borderSide: BorderSide(
+                        color: onBackground.withOpacity(0.3),
+                        width: 2.r,
+                      ),
+                    ),
+                    hintText: 'Izvēlies savu klasi',
+                    hintStyle: TextStyle(
+                      color: onBackground.withOpacity(0.7),
+                      fontSize: 16.r,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  iconEnabledColor: onBackground,
                   dropdownColor: const Color.fromRGBO(241, 244, 251, 1),
-                  value: dropdownValue,
+                  value: ref.watch(dropDownValueProvider),
                   elevation: 60.h.toInt(),
                   style: TextStyle(
-                    fontSize: 15.w,
-                    color: blue,
+                    fontSize: 16.r,
+                    color: onBackground,
                   ),
-                  underline: Container(
-                    height: 2.h,
-                    color: transparentLightGrey,
-                  ),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownValue = newValue.toString();
-                    });
-                  },
-                  items: dropdownValues.keys
-                      .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(
-                              color: value == "Choose your class"
-                                ? lightGrey
-                                : blue
-                            ),
+                  onChanged: (String? newValue) => ref.read(dropDownValueProvider.notifier).state = newValue.toString(),
+                  items: dropdownValues.keys.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(
+                          fontSize: 16.r,
+                          color: onBackground.withOpacity(
+                            value == "Izvēlies savu klasi"
+                              ? 0.7
+                              : 1
                           ),
-                        );
-                      }).toList(),
+                        ),
+                      ),
+                    );
+                  }).toList(),
                 ),
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(left: 30.w, top: 2.5.h, right: 30.w),
-                child: TextFormField(
-                  controller: passwordController,
-                  style: TextStyle(
-                    fontSize: 15.w,
-                    color: blue,
-                  ),
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    hintStyle: TextStyle(
-                      fontSize: 15.w,
-                      color: lightGrey,
+                SizedBox(height: 10.h),
+                TextForm(
+                  value: ref.watch(passwordProvider), 
+                  hintText: "Parole", 
+                  onChanged: (value) => ref.read(passwordProvider.notifier).state = value.trim(), 
+                  onValidated: (value) => ref.read(hasValidPasswordProvider.notifier).state = value,
+                  visible: notVisibile,
+                  suffix: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if(notVisibile == false) {
+                          ref.read(notVisibleProvider.notifier).state = true;
+                        } else {
+                          ref.read(notVisibleProvider.notifier).state  = false;
+                        }
+                      });
+                    },
+                    child: Icon(notVisibile
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                      color: surface,
+                      size: 20.r,
                     ),
-                    icon: const Icon(Icons.lock_outline),
-                    iconColor: lightGrey,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: transparentLightGrey, width: 2.h
-                      )
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: blue, width: 2.h)
-                    ),
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if(notVisibility == false) {
-                            notVisibility = true;
-                          } else {
-                            notVisibility = false;
-                          }
-                        });
-                      },
-                      child: Icon(notVisibility
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined),
-                    ),
-                    suffixIconColor: lightGrey,
-                  ),
-                  obscureText: notVisibility,
-                  cursorColor: blue,
-                  validator: FieldValidator.password(
-                    minLength: 8,
-                    shouldContainNumber: true,
-                    errorMessage: "Password should be at least\n8 characters long and contain 1 number!"
                   ),
                 ),
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(left: 30.w, top: 10.h, right: 30.w),
-                child: TextFormField(
-                  controller: repeatPasswordController,
-                  style: TextStyle(
-                    fontSize: 15.w,
-                    color: blue,
-                  ),
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    hintText: "Repeat Password",
-                    hintStyle: TextStyle(
-                      fontSize: 15.w,
-                      color: lightGrey,
-                    ),
-                    icon: const Icon(Icons.lock_outline),
-                    iconColor: lightGrey,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: transparentLightGrey, width: 2.h
-                      )
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: blue, width: 2.h)
-                    ),
-                  ),
-                  obscureText: true,
-                  cursorColor: blue,
-                  validator: FieldValidator.equalTo(
-                    passwordController,
-                    message: "Password Mismatch"
-                  ),
+                SizedBox(height: 10.h),
+                TextForm(
+                  value: ref.watch(repeatPasswordProvider), 
+                  hintText: "Atkārto paroli", 
+                  password: ref.watch(passwordProvider),
+                  visible: true,
+                  onChanged: (value) => ref.read(repeatPasswordProvider.notifier).state = value.trim(), 
+                  onValidated: (value) => ref.read(hasValidRepeatPasswordProvider.notifier).state = value
                 ),
-              ),
-
-              //botton
-              Padding(
-                padding: EdgeInsets.only(top: 35.h, left: 30.w, right: 30.w),
-                child: ElevatedButton(
+                SizedBox(height: 30.h),
+                Button(
+                  text: "Reģistrēties",
                   onPressed: () {
-                    if (_formKey.currentState!.validate() && dropdownValue != "Choose your class" && fullNameController.text.trim().split(' ').length > 1) {
+                    if (ref.read(dropDownValueProvider) != "Izvēlies savu klasi" && ref.read(fullNameProvider).trim().split(' ').length > 1) {
                       ref
                         .read(signUpScreenControllerProvider.notifier)
                         .signUp(
                           imagePath,
-                          emailController.text.trim(),
-                          fullNameController.text.trim(),
-                          dropdownValues[dropdownValue]!,
-                          passwordController.text.trim()
+                          ref.read(emailProvider).trim(),
+                          ref.read(fullNameProvider).trim(),
+                          dropdownValues[ref.read(dropDownValueProvider)]!,
+                          ref.read(passwordProvider).trim()
                         );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           backgroundColor: Colors.red,
                           content: Text(
-                            'Please fill out all forms with appropriate values!'
+                            'Lūdzu ievadi pareizas vērtības visos laukos!'
                           )
                         )
                       );
                     }
                   },
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: Size(1.sw, 50.h),
-                    backgroundColor: blue,
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.h)
-                    )
-                  ),
-                  child: Text(
-                    "Sign Up",
-                    style: TextStyle(
-                      fontSize: 17.w,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
-                    ),
-                  ),
                 ),
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(top: 10.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center, 
-                  children: [
-                    Text(
-                      "Already have a profile?",
-                      style: TextStyle(fontSize: 15.w, color: lightGrey),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        //Nav to login page
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        height: 30.h,
-                        width: 50.w,
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Login",
-                          style: TextStyle(color: blue, fontSize: 15.w),
-                        )
-                      ),
-                    ),
-                  ]
-                ),
-              )
-            ],
-          ),
-        ),
+              ],
+            ),
+          )
         ),
       ),
     );

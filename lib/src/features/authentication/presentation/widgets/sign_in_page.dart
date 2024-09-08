@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:rv1g_info/src/constants/theme.dart';
+import 'package:rv1g_info/src/features/authentication/presentation/components/button.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/components/text_form.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/controllers/sign_in_controller.dart';
 import 'package:rv1g_info/src/features/authentication/presentation/state/sign_in_state.dart';
@@ -39,7 +40,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (context) => Center(child: CircularProgressIndicator(color: blue))
+            builder: (context) => Center(child: CircularProgressIndicator(color: onBackground))
           );
         } else {
           Navigator.pop(context);
@@ -49,7 +50,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: background,
       body: SafeArea(
         bottom: false,
         child: SingleChildScrollView(
@@ -69,10 +70,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Login",
+                      "Autorizējies",
                       style: TextStyle(
                         fontSize: 30.w,
-                        color: blue,
+                        color: onBackground,
                         fontWeight: FontWeight.bold,
                       )
                     ),
@@ -81,15 +82,15 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                 SizedBox(height: 25.h),
                 TextForm(
                   value: ref.watch(emailProvider), 
-                  hintText: "Email", 
-                  onChanged: (value) => ref.read(emailProvider.notifier).state = value, 
+                  hintText: "E-pasts", 
+                  onChanged: (value) => ref.read(emailProvider.notifier).state = value.trim(), 
                   onValidated: (value) => ref.read(hasValidEmailProvider.notifier).state = value
                 ),
                 SizedBox(height: 10.h),
                 TextForm(
                   value: ref.watch(passwordProvider), 
-                  hintText: "Password", 
-                  onChanged: (value) => ref.read(passwordProvider.notifier).state = value, 
+                  hintText: "Parole", 
+                  onChanged: (value) => ref.read(passwordProvider.notifier).state = value.trim(), 
                   onValidated: (value) => ref.read(hasValidPasswordProvider.notifier).state = value,
                   visible: notVisibility,
                   suffix: GestureDetector(
@@ -119,12 +120,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                       onTap: () => context.push('/authentication/forgot-password'),
                       child: Container(
                         height: 30.h,
-                        width: 130.w,
-                        alignment: Alignment.centerRight,
+                        width: 140.w,
+                        alignment: Alignment.center,
                         child: Text(
-                          "Forgot password?",
+                          "Aizmirsi paroli?",
                           style: TextStyle(
-                            color: blue, 
+                            color: onBackground, 
                             fontSize: 14.w
                           ),
                         )
@@ -133,29 +134,16 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   ],
                 ),
                 SizedBox(height: 20.h),
-                ElevatedButton(
+                Button(
+                  text: "Autorzēties",
                   onPressed: () {
-                    ref
-                      .read(signInScreenControllerProvider.notifier)
-                      .signIn(emailController.text.trim(), passwordController.text.trim())
-                      .whenComplete(() => context.pushReplacement('/main'));
+                    if(ref.read(hasValidEmailProvider) && ref.read(hasValidPasswordProvider)){
+                      ref
+                        .read(signInScreenControllerProvider.notifier)
+                        .signIn(ref.read(emailProvider), ref.read(passwordProvider))
+                        .whenComplete(() => context.pushReplacement('/'));
+                    }
                   },
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: Size(1.sw, 50.h),
-                    backgroundColor: blue,
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.h)
-                    )
-                  ),
-                  child: Text(
-                    "Login",
-                    style: TextStyle(
-                      fontSize: 17.w,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
-                    ),
-                  ),
                 ),
                 SizedBox(height: 12.5.h),
                 Padding(
@@ -170,7 +158,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                         color: lightGrey,
                       ),
                       Text(
-                        "OR",
+                        "VAI",
                         style: TextStyle(
                           fontSize: 15.w, 
                           color: lightGrey
@@ -189,7 +177,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "New to school?",
+                      "Jauns skolēns?",
                       style: TextStyle(
                         fontSize: 15.w, 
                         color: lightGrey
@@ -199,12 +187,12 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                       onTap: () => context.push('/authentication/sign-up'),
                       child: Container(
                         height: 27.5.h,
-                        width: 70.w,
+                        width: 100.w,
                         alignment: Alignment.center,
                         child: Text(
-                          "Register",
+                          "Reģistrēties",
                           style: TextStyle(
-                            color: blue, 
+                            color: onBackground, 
                             fontSize: 15.w
                           ),
                         )

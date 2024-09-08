@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../../../../constants/const.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../constants/theme.dart';
 
 class EmailVerificationPage extends StatelessWidget {
@@ -12,67 +11,63 @@ class EmailVerificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          splashRadius: 0.01,
-          icon: Icon(
-            Icons.chevron_left,
-            color: blue, 
-            size: 34.h,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        toolbarHeight: 60.h,
-      ),
-      backgroundColor: Colors.white,
+      backgroundColor: background,
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 100.h),
-              child: SizedBox(
-                height: 220.h,
-                child: SvgPicture.network(emailSvg),
+        child: Padding(
+          padding: EdgeInsets.only(top: 20.h, left: 25.w, right: 25.w),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  GestureDetector(
+                    onTap: () => context.pop(),
+                    child: Icon(
+                      Icons.chevron_left,
+                      color: onBackground, 
+                      size: 34.h,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 60.h, left: 30.w),
-                  child: Text(
-                    "Email\nverification",
+              SizedBox(height: 100.h),
+              SizedBox(
+                height: 230.h,
+                child: SvgPicture.asset("assets/email.svg"),
+              ),
+              SizedBox(height: 60.h),
+              Row(
+                children: [
+                  Text(
+                    "Email verification",
                     style: TextStyle(
                       fontSize: 30.w,
-                      color: blue,
+                      color: onBackground,
                       fontWeight: FontWeight.bold,
                     )
                   ),
-                ),
-              ],
-            ),
-
-            Row(
-              children: [
-                Flexible(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 10.h, left: 30.w, right: 30.w),
+                ],
+              ),
+              SizedBox(height: 15.h),
+              Row(
+                children: [
+                  Flexible(
                     child: Text(
-                      "Verify your email to secure your account and access exclusive app features. If you haven't received any emails, please check your spam folder!",
+                      "Verificē savu e-pastu, lai pasargātu savu profilu. Ja tu neesi saņēmis e-pastu, tad pārbaudi 'Spam' sadaļu!",
+                      textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 16.w,
                         color: lightGrey,    
                       )
                     ),
-                  )
-                ),
-              ],
-            ),
-          ]
-        ),
+                  ),
+                ],
+              ),
+            ]
+          ),
+        )
       ),
     );
   }

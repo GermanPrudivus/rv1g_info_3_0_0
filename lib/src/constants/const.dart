@@ -1,5 +1,5 @@
 const Map<String, int> dropdownValues = {
-      "Choose your class": -1,
+      "Izvēlies savu klasi": -1,
       "7.a klase" : 1,
       "7.b klase" : 2,
       "7.c klase" : 3,
