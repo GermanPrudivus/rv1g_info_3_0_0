@@ -141,13 +141,13 @@ class _TextFormState extends State<TextForm> {
             _validate();
           },
         ),
-        if(_hasError && (widget.hintText == "Password" || widget.hintText == "Repeat Password"))
+        if(_hasError && (widget.hintText == "Parole" || widget.hintText == "Atkārto paroli"))
           Padding(
             padding: EdgeInsets.only(top:5.h, left: 10.w, right: 10.w),
             child: Text(
-              widget.hintText == "Password"
-                ? "Password should be at least 8 characters long and contain 1 number!"
-                : "Passwords should match each other!",
+              widget.hintText == "Parole"
+                ? "Parolei jābūt minimāli 8 simbolu garumā un jāsatur 1 ciparu!"
+                : "Parolēm jābūt vienādām!",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 15.r,

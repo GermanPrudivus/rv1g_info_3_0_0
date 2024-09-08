@@ -32,7 +32,10 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
             barrierDismissible: false,
             builder: (context) => Center(child: CircularProgressIndicator(color: onBackground))
           );
+        } else if (state.asData == null){
+          context.pop();
         } else {
+          context.pop();
           context.pop();
         }
         state.showSnackbarOnError(context);

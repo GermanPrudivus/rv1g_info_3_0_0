@@ -43,7 +43,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
             builder: (context) => Center(child: CircularProgressIndicator(color: onBackground))
           );
         } else {
-          Navigator.pop(context);
+          context.pop();
         }
         state.showSnackbarOnError(context);
       }

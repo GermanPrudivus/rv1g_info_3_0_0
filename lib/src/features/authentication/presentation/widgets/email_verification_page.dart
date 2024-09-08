@@ -41,7 +41,7 @@ class EmailVerificationPage extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "Email verification",
+                    "Verificē e-pastu",
                     style: TextStyle(
                       fontSize: 30.w,
                       color: onBackground,

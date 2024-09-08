@@ -51,8 +51,11 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
             barrierDismissible: false,
             builder: (context) => Center(child: CircularProgressIndicator(color: onBackground))
           );
+        } else if (state.asData == null){
+          context.pop();
         } else {
           context.pop();
+          context.push("/authentication/email-verification");
         }
         state.showSnackbarOnError(context);
       },
